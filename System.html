@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System</title>
+    <link rel="stylesheet" href="/css/Frame.css">
+    <link rel="stylesheet" href="/css/layui/css/layui.css">
+    
+    <script src="/js/d3.v4.min.js"></script>
+    <script src="/js/pixi.min.js"></script>
+    <script src="https://unpkg.com/d3-sankey@0"></script>
+    <script src="/js/echarts.js"></script>
+    
+    
+    <script src="/js/function.js"></script>
+    <script src="/js/button.js"></script>
+    <script src="/js/tableButtonClick.js"></script>
+    
+
+
+</head>
+<body style="overflow-x: hidden; overflow-y: hidden ">
+    <div id="Left">
+        <div id="Left_Info" class="border">
+            <div class="mytitle">Control Panel</div>
+            <div id="Info">
+                <div id="L_1_1">
+                    <table class="table" >
+                        <tr class="table">
+                            <th class="table">
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <select name="Data_select" style="border: 0ch; font-weight: lighter;" id="Left_d" >
+                                    <option value="cit-HepTh">cit-HepTh</option>
+                                </select>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                            </th>
+                            <th class="table bgc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nodes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            <th class="table bgc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edges&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            <th class="table bgc">&nbsp;&nbsp;&nbsp;&nbsp;Community&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        </tr>
+                        <tr class="table">
+                            <th id="th_data_name" class="table bgc">Origin:</th>
+                            <th id="th_nodes_num" class="table">11174</th>
+                            <th id="th_edges_num" class="table">23410</th>
+                            <th id="th_community_num" class="table">34</th>
+                        </tr>
+                        <tr class="table">
+                            <th class="table bgc">Sample:</th>
+                            <th id="sample_nodes_num" class="table"></th>
+                            <th id="sample_edges_num" class="table"></th>
+                            <th id="sample_community_num" class="table"></th>
+                        </tr>
+                    </table>
+                </div>
+                <br>
+                <div id="L_1_2" style="line-height:40px">
+                    <select name="Left-select" id="Left-s">
+                            <option value="" selected disabled hidden>Sampling</option>
+                            <option value="OUR">OUR</option>
+                            <option value="ISRW">ISRW</option>
+                            <option value="TIES">TIES</option>
+                            <option value="SRW">SRW</option>
+                            <option value="RES">RES</option>
+                            <option value="RJ">RJ</option>
+                            <option value="RNS">RNS</option>
+                    </select>
+                    Density:
+                    <input type="range" min="5" max="100" value="0" class="range_ab" id="range1" step="5" >
+                    <b class="b1">0</b>
+                    &nbsp;&nbsp;
+                    Betweeness：
+                    <input type="range" min="5" max="100" value="100" class="range_ab" id="range2" step="5"> 
+                    <b class="b2">100</b>
+                    <br>                
+                </div>
+                <div id="L_1_3" class="noselect">
+
+                    Sampling Rate: &nbsp;&nbsp;&nbsp;
+                    <input type="range" min="5" max="100" value="100" class="range" id="range3" step="5">
+                    <b class="b3">100</b>
+                    <br>
+                    <script>
+                        var elem1 = document.querySelector('input[id="range1"]');
+                        var elem2 = document.querySelector('input[id="range2"]');
+
+                        var rangeValue1 = function(){
+                            var newValue1 = elem1.value;
+                            var target1 = document.querySelector('.b1');
+                            var target2 = document.querySelector('.b2');
+
+                            target1.innerHTML = newValue1;
+                            target2.innerHTML = 100 - newValue1;
+                            elem2.value = 100 - newValue1;
+                        };
+                        elem1.addEventListener("input", rangeValue1);
+
+
+                        var rangeValue2 = function(){
+                            var newValue1 = elem2.value;
+                            var target1 = document.querySelector('.b1');
+                            var target2 = document.querySelector('.b2');
+
+                            target2.innerHTML = newValue2;
+                            target1.innerHTML = 100 - newValue2;
+                            elem1.value = 100 - newValue2;
+                        };
+                        elem2.addEventListener("input", rangeValue2);
+
+                        var elem3 = document.querySelector('input[id="range3"]');
+                        var rangeValue3 = function(){
+                            var newValue3 = elem3.value;
+                            var target3 = document.querySelector('.b3');
+                            target3.innerHTML = newValue3;
+                        };
+                        elem3.addEventListener("input", rangeValue3);
+                    </script>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <script src="/js/buttom_gai.js"></script>                    
+                    <button id="button-sample" class="button_common ripple" value="Sample" onclick="buttom_sample_click()">Sample</button>
+                    &nbsp;
+                    <button id="button-Reset" class="button_common ripple" value="Reset" onclick="sampling_func()">Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="Left_Control" class="border">
+            <div class="mytitle">Metrics</div>
+            <div id="Control_Up" >
+                <div id="Control_Up_Button">
+                    <button id="button_ABD" class="button_control_up" onclick="tableButton_click(this),button_table_click_ABD()">ABD</button>
+                    <button id="button_ACC" class="button_control_up" onclick="tableButton_click(this)">ACC</button>
+                    <button id="button_APL" class="button_control_up" onclick="tableButton_click(this)">APL</button>
+                    <button id="button_LCC" class="button_control_up" onclick="tableButton_click(this)">LCC</button>
+                    <button id="button_CC"  class="button_control_up" onclick="tableButton_click(this)">CC</button>
+                    <button id="button_SCC" class="button_control_up" onclick="tableButton_click(this)">SCC</button>
+                    <button id="button_QCS" class="button_control_up" onclick="tableButton_click(this)">QCS</button>
+                    <button id="button_GCC" class="button_control_up" onclick="tableButton_click(this)">GCC</button>
+                </div>
+                <div id="Histogram">
+                    <script src="/js/Histogram.js"></script>
+                    <script src="/js/superNode.js"></script>
+                </div>
+            </div>
+        </div>
+
+        <div id="Left_Node2vec" class="border">
+            <div class="mytitle">Node2vec</div>
+            <div id="Node2vec">
+                <div id="Tsne_Button">
+                    <script src="/js/tsne.js"></script>
+                    <button id="buttom_tsne_choose" class="button_tsne ripple" onclick="button_move_click_on()"></button>
+                    <button id="buttom_tsne_reflash" class="button_tsne ripple" onclick="reflash()"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="Right">
+        
+        <div id="Right_Force" class="border">
+            <div class="mytitle">Node-Link Diagram
+                <select name="Center_select" id="s2" style="font-size: 15px;" onchange="select2_change()">
+                    <option value="force_origin">Origin</option>
+                    <option value="force_sample">Sample</option>
+                    <option value="force_re">Re</option>
+                </select>
+            </div>
+            <div id="Force">
+                <script src="/js/force.js"></script>
+                <div id="Force_Botton">
+                    <button id="button_move" class="button_force ripple" onclick="button_move_click_on()"></button>
+                    <button id="button_point_click" class="button_force ripple" onclick="button_choose_point_click_on()"></button>
+                    <button id="button_circle_choose" class="button_force ripple" onclick="button_circle_choose_click_on()"></button>
+                    <button id="button_reflash" class="button_force ripple" onclick="reflash()"></button>
+                </div>
+            </div>
+
+            <div id="radar">
+                <script src="/js/radar.js"></script>
+            </div>
+
+            
+        </div>
+    </div>
+
+
+
+</body>
+</html>
