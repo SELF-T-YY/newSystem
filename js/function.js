@@ -39,9 +39,17 @@ function if_button_circle_choose(flag){
 }
 
 
-function force_change_color(i){
+function force_change_color(i, color){
+    var community_circle_color = color;
+    if(color == null){
+        community_circle_color = 0xff0000;
+    }
+    // 9
     // d3.selectAll('.tsne_node').attr('fill', tsne_unselected_color);
-    d3.json("/data/community_id.json", function(data_community)
+    // var community_id_fileName = "/data_forSystem/cit-HepTh/community_num/community_id.json"
+    var community_id_fileName = "/data_forSystem/soc-sign-bitcoinotc.csv/community_num/community_id.json"
+
+    d3.json(community_id_fileName, function(data_community)
     {
         d3.json(force_file_name, function(force_datas){
                 let temp_datas = force_datas['nodes'];
@@ -53,16 +61,16 @@ function force_change_color(i){
                 var circles_change_color = 0xff00ff;
                 choosed_point_data = data_community[i];
                 // console.log(choosed_point_data)
-                circles_choose.clear();
-                circles_choose_change_color.clear();
+                // circles_choose.clear();
+                // circles_choose_change_color.clear();
                 for(let node in  choosed_point_data)
                 {
                     if(choosed_point_data[node] in datas){
                         const now_x = (datas[choosed_point_data[node]].x);
                         const now_y = (datas[choosed_point_data[node]].y);
                         d3.select("#tsne_node_"+choosed_point_data[node]).style("fill",circles_change_color);
-                        circles_choose_change_color.beginFill(circles_change_color);
-                        circles_choose_change_color.drawCircle(now_x,now_y,5);
+                        circles_choose_change_color.beginFill(community_circle_color);
+                        circles_choose_change_color.drawCircle(now_x,now_y,1);
                         circles_choose_change_color.endFill();                        
                     }
                 }
@@ -152,16 +160,101 @@ function reflash(){
 }
 
 function button_table_click_ABD(){
-    d3.json('/data_forSystem/cit-HepTh/10ANB_10ACC/ORI.json', function(data){
-        // console.log(data)
+    d3.json('/data_forSystem/cit-HepTh/10ANB_10ACC/TIES.json', function(data){
+        console.log(data)
         ANB_data_List = data['ANB']
         ACC_data_List = data['ACC']
         d3.selectAll('.tsne_circle').attr('fill', 'gray').style('opacity', 0.1);
         for(let key in ANB_data_List){
-            d3.select('#tsne_circle_' + ANB_data_List[key]).attr('fill','steelblue');
+            d3.select('#tsne_circle_' + ANB_data_List[key]).attr('fill','blue').style('opacity', 1);
         }
         // for(let key in ACC_data_List){
         //     d3.select('#tsne_circle_' + ACC_data_List[key]).attr('fill','purple').style('opacity', 1);
         // }
     })
+}
+
+
+function force_change_color_shortestPath(){
+    // d3.selectAll('.tsne_node').attr('fill', tsne_unselected_color);
+    d3.json("/data_forSystem/cit-HepTh/shortest_path/ORI_force.json", function(shortest_path_data)
+    {
+        console.log(shortest_path_data.length)
+        d3.json(force_file_name, function(force_datas){
+                let temp_datas = force_datas['nodes'];
+                let datas = {};
+                for(let key in temp_datas){
+                    data_id = temp_datas[key]['id'];
+                    datas[data_id] = temp_datas[key];
+                }
+                var circles_change_color = 0xFF4242
+                choosed_point_data = shortest_path_data;
+                // console.log(choosed_point_data)
+                circles_choose.clear();
+                circles_choose_change_color.clear();
+                for(let node in  choosed_point_data)
+                {
+                    if(choosed_point_data[node] in datas){
+                        const now_x = (datas[choosed_point_data[node]].x);
+                        const now_y = (datas[choosed_point_data[node]].y);
+                        d3.select("#tsne_node_"+choosed_point_data[node]).style("fill",circles_change_color);
+                        circles_choose_change_color.beginFill(circles_change_color);
+                        circles_choose_change_color.drawCircle(now_x,now_y,2);
+                        circles_choose_change_color.endFill();                        
+                    }
+                }
+
+                force_links_shortestPath = new PIXI.Graphics();
+                for(var node in choosed_point_data)
+                {
+                    const now_x = (datas[choosed_point_data[node]].x);
+                    const now_y = (datas[choosed_point_data[node]].y);
+                    force_PIXIJS_lines.lineStyle(0.2, circles_change_color, 0.5);
+                    force_PIXIJS_lines.moveTo(datas['8191'].x, datas['8191'].y);
+                    force_PIXIJS_lines.lineTo(now_x,now_y);
+                }
+
+                // app.stage.addChild(force_links_shortestPath);
+                app.stage.addChild(circles_choose_change_color);
+                //tsne该颜色
+                tsne_chanege_color_by_list(choosed_point_data);
+                // d3.select('#tsne_brush').remove()
+                d3.select('#tsne_brush').style('opacity', 0)
+        })
+
+    })
+}
+
+function xx(){
+    d3.json(force_file_name, function(force_datas){
+            let temp_datas = force_datas['nodes'];
+            let datas = {};
+            for(let key in temp_datas){
+                data_id = temp_datas[key]['id'];
+                datas[data_id] = temp_datas[key];
+            }
+            console.log(datas)
+            var circles_change_color = 0xFF4242
+            // console.log(choosed_point_data)
+            circles_choose.clear();
+            circles_choose_change_color.clear();
+            const now_x = parseInt(datas['8191'].x);
+            const now_y = parseInt(datas['8191'].y);
+            circles_choose_change_color.beginFill(circles_change_color);
+            circles_choose_change_color.drawCircle(now_x,now_y,2);
+            circles_choose_change_color.endFill();                        
+
+            // app.stage.addChild(force_links_shortestPath);
+            app.stage.addChild(circles_choose_change_color);
+            //tsne该颜色
+            // d3.select('#tsne_brush').remove()
+            d3.select('#tsne_brush').style('opacity', 0)
+    })
+
+}
+
+
+function ssb_change_force(){
+    force_change_color(3, 0xff0000);
+    force_change_color(5, 0x00ff00);
 }

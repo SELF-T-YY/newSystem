@@ -32,6 +32,7 @@
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <select name="Data_select" style="border: 0ch; font-weight: lighter;" id="Left_d" >
                                     <option value="cit-HepTh">cit-HepTh</option>
+                                    <option value="cit-HepTh">soc-sign</option>
                                 </select>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                             </th>
@@ -134,9 +135,9 @@
             <div id="Control_Up" >
                 <div id="Control_Up_Button">
                     <button id="button_ABD" class="button_control_up" onclick="tableButton_click(this),button_table_click_ABD()">ABD</button>
-                    <button id="button_ACC" class="button_control_up" onclick="tableButton_click(this)">ACC</button>
-                    <button id="button_APL" class="button_control_up" onclick="tableButton_click(this)">APL</button>
-                    <button id="button_LCC" class="button_control_up" onclick="tableButton_click(this)">LCC</button>
+                    <button id="button_ACC" class="button_control_up" onclick="tableButton_click(this),force_change_color_shortestPath()">ACC</button>
+                    <button id="button_APL" class="button_control_up" onclick="tableButton_click(this),xx()">APL</button>
+                    <button id="button_LCC" class="button_control_up" onclick="tableButton_click(this),ssb_change_force()">LCC</button>
                     <button id="button_CC"  class="button_control_up" onclick="tableButton_click(this)">CC</button>
                     <button id="button_SCC" class="button_control_up" onclick="tableButton_click(this)">SCC</button>
                     <button id="button_QCS" class="button_control_up" onclick="tableButton_click(this)">QCS</button>
@@ -182,14 +183,12 @@
             </div>
 
             <div id="radar">
-                <script src="/js/radar.js"></script>
+                <!-- <script src="/js/radar.js"></script> -->
             </div>
 
             
         </div>
     </div>
-
-
 
 </body>
 </html>

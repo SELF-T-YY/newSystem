@@ -3,7 +3,9 @@ var if_choose_point = false;
 var if_circle_choose = false;
 var force_community_num = 0;
 
-var force_file_name = "/data_forSystem/cit-HepTh/CH_force_gai.json"
+// var force_file_name = "/data_forSystem/cit-HepTh/CH_force_gai.json"
+var force_file_name = "/data_forSystem/soc-sign-bitcoinotc.csv/SSB_force_gai.json"
+
 var force_file_origin_name = "/data_forSystem/cit-HepTh/CH_force_gai.json"
 var force_re = ''
 
@@ -23,6 +25,7 @@ var app = new PIXI.Application({
 });
 var line_Color = 0xc6c6c6;
 var force_community_circle_Color = 0x3A435E;
+// var force_community_circle_Color = 0x5378E8;
 
 
 document.querySelector('#Force').appendChild(app.view);
@@ -36,7 +39,7 @@ function drawforce(if_draw_again){
     let moveAll_x = 0;//整体x移动
     let moveAll_y = 0;//整体y移动
     const circles_change_color = 0xff00ff;
-    var force_community_circle_Color = 0x3A435E;
+    // var force_community_circle_Color = 0x3A435E;
     var line_Color = 0xc6c6c6;
     var circle_Choose_Color = 0x3A435E;
 
@@ -52,8 +55,6 @@ function drawforce(if_draw_again){
 
         force_PIXIJS_lines = new PIXI.Graphics();
         for(var i = 0 ; i < f_links.length ; i++){
-            // console.log(f_nodes[f_nodeID_key[f_links[i].source]].x)
-            // console.log()
             force_PIXIJS_lines.lineStyle(0.1,line_Color,1);
             force_PIXIJS_lines.moveTo(f_nodes[f_nodeID_key[f_links[i].source]].x,f_nodes[f_nodeID_key[f_links[i].source]].y);
             force_PIXIJS_lines.lineTo(f_nodes[f_nodeID_key[f_links[i].target]].x,f_nodes[f_nodeID_key[f_links[i].target]].y);

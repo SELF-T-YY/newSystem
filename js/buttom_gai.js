@@ -80,13 +80,12 @@ function buttom_sample_click(){
         if(document.getElementById('tsne_svg'))document.getElementById('tsne_svg').remove()
         draw_tsne(tsne_filename);
 
-        drawRadar(parseInt(sample_rate));
+        // drawRadar(parseInt(sample_rate));
 
         // community_num_file_name = '/data/oregonf/all_oregonf_rate_community_num/oregonf_sample_tsne_' + sample_name + '_' + sample_rate + '_community_num.json';
         community_num_file_name = '/data_forSystem/cit-HepTh/community_num/' + sx(data_name) + sample_name + '_rate_' + sample_rate+'_community_num.json'
 
         draw_community_disribution_again();
-        draw_sankey_again();
     }
 }
 
