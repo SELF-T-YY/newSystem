@@ -3,8 +3,10 @@ var if_choose_point = false;
 var if_circle_choose = false;
 var force_community_num = 0;
 
-// var force_file_name = "/data_forSystem/cit-HepTh/CH_force_gai.json"
-var force_file_name = "/data_forSystem/soc-sign-bitcoinotc.csv/SSB_force_gai.json"
+var force_file_name = "/data_forSystem/cit-HepTh/CH_force_gai.json"
+// var force_file_name = "/data_forSystem/soc-sign-bitcoinotc.csv/SSB_force_gai.json"
+// var force_file_name = "/data_forSystem/soc-sign-bitcoinotc.csv/cs.json"
+
 
 var force_file_origin_name = "/data_forSystem/cit-HepTh/CH_force_gai.json"
 var force_re = ''
@@ -24,8 +26,8 @@ var app = new PIXI.Application({
     resolution : 1,
 });
 var line_Color = 0xc6c6c6;
-var force_community_circle_Color = 0x3A435E;
-// var force_community_circle_Color = 0x5378E8;
+// var force_community_circle_Color = 0x3A435E;
+var force_community_circle_Color = 0x9a9a9a;
 
 
 document.querySelector('#Force').appendChild(app.view);
@@ -47,7 +49,9 @@ function drawforce(if_draw_again){
     d3.json(force_file_name, function(datas){
         console.log(datas);
         f_nodes = datas['nodes'];
+        // f_links = datas['edges'];
         f_links = datas['edges'];
+
         f_nodeID_key = {}
         for(let key in f_nodes){
             f_nodeID_key[f_nodes[key]['id']] = key;

@@ -23,8 +23,8 @@ function draw_bar_chart()
             // if(cnum>=10)break;
             var data = {};
             data['id'] = key;
-            // data['num'] = Math.log10(datas[key]);
-            data['num'] = (datas[key]);
+            data['num'] = Math.log10(datas[key]);
+            // data['num'] = (datas[key]);
             dataset.push(data);
         }
 
@@ -95,36 +95,36 @@ function draw_bar_chart()
                 .attr("transform","translate(" + padding.left + "," + padding.top + ")")
                 .call(d3.axisLeft(yScale));//d3.axisLeft(yScale) --V4版本
         
-        // svg.append('text')
-        //         .text("lgx")
-        //         .attr('x', padding.left-20)
-        //         .attr('y', padding.top-10)
+        svg.append('text')
+                .text("lgx")
+                .attr('x', padding.left-20)
+                .attr('y', padding.top-10)
 
 
-        // svg.append('rect')
-        //         .attr('width', 10)
-        //         .attr('height', 10)
-        //         .style('opacity', 0.5)
-        //         .style('fill', 'steelblue')
-        //         .attr('x', c_width - padding.right - 40)
-        //         .attr('y', 10)
+        svg.append('rect')
+                .attr('width', 10)
+                .attr('height', 10)
+                .style('opacity', 0.5)
+                .style('fill', 'steelblue')
+                .attr('x', c_width - padding.right - 40)
+                .attr('y', 10)
 
-        // svg.append('text')
-        //         .text('origin')
-        //         .attr('x', c_width - padding.right - 25)
-        //         .attr('y', 18)
+        svg.append('text')
+                .text('origin')
+                .attr('x', c_width - padding.right - 25)
+                .attr('y', 18)
                 
-        // svg.append('rect')
-        //         .attr('width', 10)
-        //         .attr('height', 10)
-        //         .style('fill', 'steelblue')
-        //         .attr('x', c_width - padding.right - 40)
-        //         .attr('y', 25)
+        svg.append('rect')
+                .attr('width', 10)
+                .attr('height', 10)
+                .style('fill', 'steelblue')
+                .attr('x', c_width - padding.right - 40)
+                .attr('y', 25)
 
-        // svg.append('text')
-        //         .text('sample')
-        //         .attr('x', c_width - padding.right - 25)
-        //         .attr('y', 33)
+        svg.append('text')
+                .text('sample')
+                .attr('x', c_width - padding.right - 25)
+                .attr('y', 33)
 
 
                                 

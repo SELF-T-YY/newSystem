@@ -47,7 +47,7 @@ function force_change_color(i, color){
     // 9
     // d3.selectAll('.tsne_node').attr('fill', tsne_unselected_color);
     // var community_id_fileName = "/data_forSystem/cit-HepTh/community_num/community_id.json"
-    var community_id_fileName = "/data_forSystem/soc-sign-bitcoinotc.csv/community_num/community_id.json"
+    var community_id_fileName = "/data_forSystem/soc-sign-bitcoinotc.csv/community_num/community_id__.json"
 
     d3.json(community_id_fileName, function(data_community)
     {
