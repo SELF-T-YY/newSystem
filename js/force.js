@@ -12,7 +12,7 @@ var force_file_origin_name = "/data_forSystem/cit-HepTh/CH_force_gai.json"
 var force_re = ''
 
 // var force_file_name = "/data/oregonf/ISRW/oregonf_sample_tsne_ISRW_15_nodes_edges.json"
-// force_file_name = "/data/cit-HepTh/CH_force_gai.json"
+force_file_name = "/data_forSystem/block2000/block2000_force_data_gai.json"
 
 var force_circle_r = 1;
 
@@ -314,49 +314,45 @@ function drawforce_again(file_name){
 }
 
 
-// function temp_draw_community(community_num){
-//     d3.json('/data_forSystem/cit-HepTh/community_num/CHori_community.json', function(data){
-//         var choosed_point_data = []
-//         for(var i in data){
-//             if(data[i] == community_num){
-//                 choosed_point_data.push(i);
-//             }
-//         }
-//         d3.json(force_file_name, function(force_datas){
-//                 let temp_datas = force_datas['nodes'];
-//                 let temp_edges = force_datas['edges'];
-//                 let datas = {};
-//                 for(let key in temp_datas){
-//                     data_id = temp_datas[key]['id'];
-//                     datas[data_id] = temp_datas[key];
-//                 }
-//                 var circles_change_color = 0xff00ff;
-//                 // console.log(choosed_point_data)
-//                 circles_choose.clear();
-//                 circles_choose_change_color.clear();
-//                 for(let node in  choosed_point_data)
-//                 {
-//                     if(choosed_point_data[node] in datas){
-//                         const now_x = (datas[choosed_point_data[node]].x);
-//                         const now_y = (datas[choosed_point_data[node]].y);
-//                         d3.select("#tsne_node_"+choosed_point_data[node]).style("fill",circles_change_color);
-//                         circles_choose_change_color.beginFill(circles_change_color);
-//                         circles_choose_change_color.drawCircle(now_x,now_y,1);
-//                         circles_choose_change_color.endFill();                        
-//                     }
-//                 }
-//                 app.stage.addChild(circles_choose_change_color);
-//                 //tsne该颜色
-//                 tsne_chanege_color_by_list(choosed_point_data);
-//                 // d3.select('#tsne_brush').remove()
-//                 d3.select('#tsne_brush').style('opacity', 0)
-//         })
+function temp_draw_community(){
+    d3.json('/data_forSystem/block2000/block2000_community_num.json', function(community_num_data){
+        // var choosed_point_data = []
+        var color_list = [0xff0000, 0xffff00, 0x008000, 0x0000ff, 0xff00ff, 0x800080, 0x000080, 0x808000, 0x00ff00]
+        var color_list_tsne = ['#ff0000', '#ffff00', '#008000', '#0000ff', '#ff00ff', '#800080', '#000080', '#808000', '#00ff00']
+        // for(var i in data){
+        //     if(data[i] == community_num){
+        //         choosed_point_data.push(i);
+        //     }
+        // }
+        d3.json(force_file_name, function(force_datas){
+                let temp_datas = force_datas['nodes'];
+                let temp_edges = force_datas['edges'];
+                let datas = {};
+                for(let key in temp_datas){
+                    data_id = temp_datas[key]['id'];
+                    datas[data_id] = temp_datas[key];
+                }
+                var circles_change_color = 0xff00ff;
+                // console.log(choosed_point_data)
+                circles_choose.clear();
+                circles_choose_change_color.clear();
+                for(let node in  datas)
+                {
+                    const now_x = (datas[node].x);
+                    const now_y = (datas[node].y);
+                    // d3.select("#tsne_node_"+ node).style("fill",color_list[community_num_data[node]]);
+                    d3.select('#tsne_circle_' + node).attr('fill', color_list_tsne[community_num_data[node]]);
+                    circles_choose_change_color.beginFill(color_list[community_num_data[node]]);
+                    circles_choose_change_color.drawCircle(now_x,now_y,1);
+                    circles_choose_change_color.endFill();
+                }
+                app.stage.addChild(circles_choose_change_color);
+                //tsne该颜色
+                // tsne_chanege_color_by_list(choosed_point_data);
+                // d3.select('#tsne_brush').remove()
+                // d3.select('#tsne_brush').style('opacity', 0)
+        })
 
 
-//     })
-// }
-
-
-// temp_draw_community(0)
-
-
+    })
+}

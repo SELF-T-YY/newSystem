@@ -2,7 +2,7 @@ let dataset = [];
 const filter_color = 0x123123;
 const rest_color = 0x354985;
 const choose_color = 0xff00ff;
-const padding = {left:40, right: 20, top:70, bottom:30};
+const padding = {left:40, right: 20, top:50, bottom:30};
 
 const c_width = document.getElementById('Histogram').offsetWidth;
 const c_height = document.getElementById('Histogram').offsetHeight;
@@ -14,7 +14,7 @@ var community_num_data_= '/data_forSystem/cit-HepTh/'
 function draw_bar_chart()
 {
     d3.json('/data_forSystem/cit-HepTh/shortest_path/CH_shortestPath.json', function(datas)
-    // d3.json('/data_forSystem/cit-HepTh/shortest_path/ORI.json', function(datas)‘
+    // d3.json('/data_forSystem/cit-HepTh/shortest_path/CH_ISRW_rate_10_shortestPath.json', function(datas)
     {
         // var cnum = 1
         for(let key in datas)
@@ -39,10 +39,12 @@ function draw_bar_chart()
                     .attr('width',c_width)
                     .attr('height', c_height);
         var xScale = d3.scaleBand()
-                .domain(d3.range(0, rect_data.length))
+                // .domain(d3.range(0, rect_data.length))
+                .domain(d3.range(0, 22))
                 .range([0, c_width - padding.left - padding.right]);
         yScale = d3.scaleLinear()//V4版本
-                .domain([0,d3.max(rect_data)])
+                // .domain([0, 7])
+                .domain([0, 7])
                 .range([c_height-padding.bottom-padding.top,0]);
         
         var rects_re = svg.selectAll('MyRect_re')
@@ -93,7 +95,7 @@ function draw_bar_chart()
         svg.append('g')
                 .attr('class','axis')
                 .attr("transform","translate(" + padding.left + "," + padding.top + ")")
-                .call(d3.axisLeft(yScale));//d3.axisLeft(yScale) --V4版本
+                .call(d3.axisLeft(yScale).ticks(7))//d3.axisLeft(yScale) --V4版本
         
         svg.append('text')
                 .text("lgx")
@@ -101,30 +103,30 @@ function draw_bar_chart()
                 .attr('y', padding.top-10)
 
 
-        svg.append('rect')
-                .attr('width', 10)
-                .attr('height', 10)
-                .style('opacity', 0.5)
-                .style('fill', 'steelblue')
-                .attr('x', c_width - padding.right - 40)
-                .attr('y', 10)
+        // svg.append('rect')
+        //         .attr('width', 10)
+        //         .attr('height', 10)
+        //         .style('opacity', 0.5)
+        //         .style('fill', 'steelblue')
+        //         .attr('x', c_width - padding.right - 40)
+        //         .attr('y', 10)
 
-        svg.append('text')
-                .text('origin')
-                .attr('x', c_width - padding.right - 25)
-                .attr('y', 18)
+        // svg.append('text')
+        //         .text('origin')
+        //         .attr('x', c_width - padding.right - 25)
+        //         .attr('y', 18)
                 
-        svg.append('rect')
-                .attr('width', 10)
-                .attr('height', 10)
-                .style('fill', 'steelblue')
-                .attr('x', c_width - padding.right - 40)
-                .attr('y', 25)
+        // svg.append('rect')
+        //         .attr('width', 10)
+        //         .attr('height', 10)
+        //         .style('fill', 'steelblue')
+        //         .attr('x', c_width - padding.right - 40)
+        //         .attr('y', 25)
 
-        svg.append('text')
-                .text('sample')
-                .attr('x', c_width - padding.right - 25)
-                .attr('y', 33)
+        // svg.append('text')
+        //         .text('sample')
+        //         .attr('x', c_width - padding.right - 25)
+        //         .attr('y', 33)
 
 
                                 

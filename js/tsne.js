@@ -4,7 +4,8 @@ const tsne_height = document.getElementById('Node2vec').offsetHeight - 25;
 const tsne_circle_color = '#3A435E';
 const tsne_circle_choose_color = '#ff00ff'
 
-var tsne_filename = "/data_forSystem/cit-HepTh/CH_Tsne.csv";
+// var tsne_filename = "/data_forSystem/cit-HepTh/CH_Tsne.csv";
+var tsne_filename = "/data_forSystem/block2000/B2_Tsne.csv";
 
 function draw_tsne(filename){
     d3.csv(filename, function(tsne_datas){
