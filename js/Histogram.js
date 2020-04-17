@@ -13,8 +13,8 @@ var community_num_data_= '/data_forSystem/cit-HepTh/'
 
 function draw_bar_chart()
 {
-    d3.json('/data_forSystem/cit-HepTh/shortest_path/CH_shortestPath.json', function(datas)
-    // d3.json('/data_forSystem/cit-HepTh/shortest_path/CH_ISRW_rate_10_shortestPath.json', function(datas)
+    // d3.json('/data_forSystem/cit-HepTh/shortest_path/CH_shortestPath.json', function(datas)
+    d3.json('/data_forSystem/web-webbase-2001/shortest_path/WW_ISRW_rate-10_shortestPath.json', function(datas)
     {
         // var cnum = 1
         for(let key in datas)
@@ -40,7 +40,7 @@ function draw_bar_chart()
                     .attr('height', c_height);
         var xScale = d3.scaleBand()
                 // .domain(d3.range(0, rect_data.length))
-                .domain(d3.range(0, 22))
+                .domain(d3.range(0, 25))
                 .range([0, c_width - padding.left - padding.right]);
         yScale = d3.scaleLinear()//V4版本
                 // .domain([0, 7])
