@@ -12,9 +12,9 @@ var force_file_origin_name = "/data_forSystem/cit-HepTh/CH_force_gai.json"
 var force_re = ''
 
 // var force_file_name = "/data/oregonf/ISRW/oregonf_sample_tsne_ISRW_15_nodes_edges.json"
-force_file_name = "/data_forSystem/block2000/block2000_force_data_gai.json"
+force_file_name = "/data_forSystem/block2000/cs1.json"
 
-var force_circle_r = 1;
+var force_circle_r = 2;
 
 const force_width = document.getElementById('Force').offsetWidth;
 const force_height = document.getElementById('Force').offsetHeight-25;
@@ -59,7 +59,7 @@ function drawforce(if_draw_again){
 
         force_PIXIJS_lines = new PIXI.Graphics();
         for(var i = 0 ; i < f_links.length ; i++){
-            force_PIXIJS_lines.lineStyle(0.1,line_Color,1);
+            force_PIXIJS_lines.lineStyle(0.5,line_Color,1);
             force_PIXIJS_lines.moveTo(f_nodes[f_nodeID_key[f_links[i].source]].x,f_nodes[f_nodeID_key[f_links[i].source]].y);
             force_PIXIJS_lines.lineTo(f_nodes[f_nodeID_key[f_links[i].target]].x,f_nodes[f_nodeID_key[f_links[i].target]].y);
         }
@@ -343,7 +343,7 @@ function temp_draw_community(){
                     // d3.select("#tsne_node_"+ node).style("fill",color_list[community_num_data[node]]);
                     d3.select('#tsne_circle_' + node).attr('fill', color_list_tsne[community_num_data[node]]);
                     circles_choose_change_color.beginFill(color_list[community_num_data[node]]);
-                    circles_choose_change_color.drawCircle(now_x,now_y,1);
+                    circles_choose_change_color.drawCircle(now_x,now_y,3);
                     circles_choose_change_color.endFill();
                 }
                 app.stage.addChild(circles_choose_change_color);

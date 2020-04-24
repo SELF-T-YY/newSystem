@@ -5,7 +5,9 @@ const tsne_circle_color = '#3A435E';
 const tsne_circle_choose_color = '#ff00ff'
 
 // var tsne_filename = "/data_forSystem/cit-HepTh/CH_Tsne.csv";
-var tsne_filename = "/data_forSystem/block2000/B2_Tsne.csv";
+// var tsne_filename = "/data_forSystem/block2000/B2_Tsne.csv";
+
+var tsne_filename = "/data_forSystem/soc-sign-bitcoinotc.csv/old/SSB_Tsne.csv";
 
 function draw_tsne(filename){
     d3.csv(filename, function(tsne_datas){
@@ -22,7 +24,7 @@ function draw_tsne(filename){
                 data.x = parseFloat(tsne_datas[key].x);
                 data.y = parseFloat(tsne_datas[key].y);
                 data.id = parseInt(tsne_datas[key].id);
-                if(tsne_datas[key].id in force_node)
+                // if(force_node.indexOf(tsne_datas[key]['id'])> -1)
                     tsne_dataset.push(data);
             }
 

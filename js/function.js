@@ -134,7 +134,7 @@ function tsne_chanege_color_by_list(circle_list){
     // console.log(circle_list)
     d3.selectAll('.tsne_circle').attr('fill', tsne_circle_color);
     for(let key in circle_list){
-        d3.select('#tsne_circle_' + circle_list[key]).attr('fill','red');
+        d3.select('#tsne_circle_' + circle_list[key]).attr('fill','red').attr('r', 3);
     }
 }
 
@@ -257,4 +257,25 @@ function xx(){
 function ssb_change_force(){
     force_change_color(3, 0xff0000);
     force_change_color(5, 0x00ff00);
+}
+
+
+function show_theBiggestBetweenness(){
+    d3.json('/data_forSystem/ieee_visC/IV_id_x_y_kde_edges_betweenness.json', function(betweennessData){
+        var arrList = []
+        for(var node in betweennessData){
+            arrList.push({'node': node,'betweenness':betweennessData[node]['betweenness']})
+        }
+        var sort_list = arrList.sort(function(a,b){
+            return b['betweenness'] - a['betweenness'];
+        })
+        console.log(sort_list)
+        var choose_circle_list = []
+        for(var i=0; i<5; i++){
+            choose_circle_list.push(sort_list[i]['node'])
+        }
+        tsne_chanege_color_by_list(choose_circle_list);
+        
+          
+    })
 }
