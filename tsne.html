@@ -18,41 +18,41 @@
         var tsne_filename = "/data_forSystem/ieee_visC/IV_Tsne.csv";
         // var tsne_filename = "/data_forSystem/web-webbase-2001/WW_Tsne.csv";
 
-        // var force_file_name = '/data_forSystem/ieee_visC/clh/ieee_ClassicalSample1.json'
-        var force_file_name = '/data_forSystem/ieee_visC/our_sample_adv/our_sample_times_0_a_0.5_b_0.5_rata_10.json'
+        var force_file_name = '/data_forSystem/ieee_visC/clh/ieee_ClassicalSample1.json'
+        // var force_file_name = '/data_forSystem/ieee_visC/our_sample_adv/our_sample_times_0_a_0.5_b_0.5_rata_10.json'
         function draw_tsne(filename){
             d3.csv(filename, function(tsne_datas){
                 let tsne_dataset = [];
                 let force_node = []
                 d3.json(force_file_name, function(f_datas){
                     var datas;
-                    // for(var i in f_datas){
-                    //     if(f_datas[i]['name'] == 'SRW'){
-                    //         datas = f_datas[i]['rate-15'][0]
-                    //         break
-                    //     }
-                    // }
-                    // var force_node = datas['nodes'];
-
-                    var force_node = []
-                    f_datas_X = f_datas.nodes
-                    for(var i in f_datas_X){
-                        force_node.push(f_datas_X[i]['id']);
+                    for(var i in f_datas){
+                        if(f_datas[i]['name'] == 'ISRW'){
+                            datas = f_datas[i]['rate-10'][0]
+                            break
+                        }
                     }
+                    var force_node = datas['nodes'];
+
+                    // var force_node = []
+                    // f_datas_X = f_datas.nodes
+                    // for(var i in f_datas_X){
+                    //     force_node.push(f_datas_X[i]['id']);
+                    // }
 
 
                     console.log(force_node)
                     for(var key=0;key<tsne_datas.length; key++){
                         // console.log(tsne_datas[key]['id'])
                         // console.log(force_node.indexOf(tsne_datas[key]['id']))
-                        // if(force_node.indexOf(parseInt(tsne_datas[key]['id']))> -1){
+                        if(force_node.indexOf(parseInt(tsne_datas[key]['id']))> -1){
                         //=================== 
-                        if(force_node.indexOf(tsne_datas[key]['id'])> -1){
+                        // if(force_node.indexOf(tsne_datas[key]['id'])> -1){
                             tsne_dataset.push(tsne_datas[key]);                            
                         }
                         // =============
                     }
-                    // tsne_dataset = tsne_datas
+                    tsne_dataset = tsne_datas
                     console.log(tsne_dataset)
                     var svg = d3.select('body')
                                 .append('svg')

@@ -7,8 +7,7 @@ const tsne_circle_choose_color = '#ff00ff'
 // var tsne_filename = "/data_forSystem/cit-HepTh/CH_Tsne.csv";
 // var tsne_filename = "/data_forSystem/block2000/B2_Tsne.csv";
 
-var tsne_filename = "/data_forSystem/soc-sign-bitcoinotc.csv/old/SSB_Tsne.csv";
-
+var tsne_filename = "/data_forSystem/ieee_visC/IV.csv";
 function draw_tsne(filename){
     d3.csv(filename, function(tsne_datas){
         let tsne_dataset = [];
