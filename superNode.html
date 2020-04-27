@@ -9,18 +9,28 @@
 <body>
     <script>
         const superNode_width = 500;
-        const superNode_height = 200;
+        // const superNode_height = 200;
+        const superNode_height = 500;
+
         const superNode_circle_Color = 0x3A435E;
         const superNode_line_Color = 0xc6c6c6;
 
+        var mcolor = ['rgb(255,63,63)', 'rgb(254,217,239)',
+      'rgb(255,178,101)', 'rgb(178,255,101)',
+      'rgb(83,255,255)', 'rgb(89,196,120)',
+      'rgb(83,168,255)', 'rgb(185,122,87)',
+      'rgb(168,83,255)', 'rgb(20,230,0)',
+      'rgb(230,230,0)', 'rgb(255,73,254)',
+      'rgb(112,106,220)', 'rgb(255,255,107)'];
 
-        var a = d3.rgb(133, 193, 233);	//绿色
-        var b = d3.rgb(3, 56, 92 );	//红色
+        var a = d3.rgb(133, 193, 233);//绿色
+        var b = d3.rgb(3, 56, 92 );//红色
         
         var compute_color = d3.interpolate(a,b);
 
         // const superNode_Data_reFile = '/data_forSystem/cit-HepTh/superNodeData/CH_superNodeData.json'
-        const superNode_Data_reFile = '/data_forSystem/web-webbase-2001/superNodeData/WW_TIES_rate_10_superNodeData.json'
+        // const superNode_Data_reFile = '/data_forSystem/web-webbase-2001/superNodeData/WW_TIES_rate_10_superNodeData.json'
+        const superNode_Data_reFile = '/data_forSystem/web-webbase-2001/superNodeData/our_15_noChange_community.json'
         draw_community(superNode_Data_reFile)
         console.log('x')
         function draw_community(fileName){
@@ -126,7 +136,41 @@
                                         .attr('id', function(d,i){
                                             return 'community_' + i;
                                         })
-                                        .attr("fill", d =>(compute_color(Math.log(d.num)/8)))
+                                        // .attr("fill", d =>(compute_color(Math.log(d.num)/8)))
+                                        .attr("fill", function(d){
+                                            comm = parseInt(d.id);
+                                            if (comm == 44) {
+                                            return mcolor[0]
+                                            }
+                                            if (comm == 8) {
+                                            return mcolor[6]
+                                            }
+                                            if (comm == 12) {
+                                            return mcolor[10]
+                                            }
+                                            if (comm == 6) {
+                                            return mcolor[8]
+                                            }
+                                            if (comm == 39) {
+                                            return mcolor[2]
+                                            }
+                                            if (comm == 42) {
+                                            return mcolor[12]
+                                            } if (comm == 57) {
+                                            return mcolor[4]
+                                            }
+                                            if (comm == 14) {
+                                            return mcolor[5]
+                                            }
+                                            if (comm == 43) {
+                                            return mcolor[7]
+                                            }
+                                            if (comm == 40) {
+                                            return mcolor[11]
+                                            }
+                                            return 'rgb(126, 126, 126)'
+                                        })
+
                                         // .on("click",community_click_do);
 
                 function dragstarted(d) {
@@ -201,3 +245,50 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+
+<!-- 
+'c001','TipTop','Duluth',10.00,
+'c002','Basics','Dallas',12.00
+'c003','Allied','Dallas',8.00
+'c004','ACME','Duluth',8.00
+'c006','ACME','Kyoto',0.00
+
+
+'a01','Smith','New York',6
+'a02','Jones','Newark',6
+'a03','Brown','Tokyo',7
+'a04','Gray','New York',6
+'a05','Otasi','Duluth',5
+'a06','Smith','Dallas',5
+
+'p01','comb','Dallas','111400',0.50
+'p02','brush','Newark','203000',0.50
+'p03','razor','Duluth','150600',1.00
+'p04','pen','Duluth','125300',1.00
+'p05','pencil','Dallas','221400',1.00
+'p06','folder','Dallas','123100',2.00
+'p07','case','Newark','100500',1.00 -->
+
+
+
+<!-- '1011','Jan','c001','a01','p01','1000',450.00
+'1012','Jan','c001','a01','p01','1000',450.00
+'1019','Feb','c001','a02','p02','400',180.00
+'1017','Feb','c001','a06','p03','600',540.00
+'1018','Feb','c001','a03','p04','600',540.00
+'1023','Mar','c001','a04','p05','500',450.00
+'1022','Mar','c001','a05','p06','400',720.00
+'1025','Apr','c001','a05','p07','800',720.00
+'1013','Jan','c002','a03','p03','1000',880.00
+'1026','May','c002','a05','p03','800',704.00
+'1015','Jan','c003','a03','p05','1200',1104.00
+'1014','Jan','c003','a03','p05','1200',1104.00
+'1021','Feb','c004','a06','p01','1000',460.00
+'1016','Jan','c006','a01','p01','1000',500.00
+'1020','Feb','c006','a03','p07','600',600.00
+'1024','Feb','c006','a06','p01','800',400.00 -->
