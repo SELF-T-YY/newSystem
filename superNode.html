@@ -177,19 +177,19 @@
                             return (d.y = Math.max(radius, Math.min(superNode_height - radius, d.y)));
                         })
 
-                    var temp_x = 50
-                    var temp_y = 10
-                    for(var i in node_Unexisted_list){
-                        d3.select('#community_' + String(node_Unexisted_list[i].id))
-                            .attr('cx', temp_x)
-                            .attr('cy', temp_y)
-                            temp_y += 10
-                            if(temp_y > superNode_height)
-                            {
-                                temp_y = 10;
-                                temp_x += 10;
-                            }
-                    } 
+                    // var temp_x = 50
+                    // var temp_y = 10
+                    // for(var i in node_Unexisted_list){
+                    //     d3.select('#community_' + String(node_Unexisted_list[i].id))
+                    //         .attr('cx', temp_x)
+                    //         .attr('cy', temp_y)
+                    //         temp_y += 10
+                    //         if(temp_y > superNode_height)
+                    //         {
+                    //             temp_y = 10;
+                    //             temp_x += 10;
+                    //         }
+                    // } 
                 }
 
 

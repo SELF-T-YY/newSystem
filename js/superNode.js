@@ -10,7 +10,7 @@ var b = d3.rgb(0,255,255);	//绿色
 var compute_color = d3.interpolate(a,b);
 
 // const superNode_Data_reFile = '/data_forSystem/cit-HepTh/superNodeData/CH_superNodeData.json'
-const superNode_Data_reFile = '/data_forSystem/web-webbase-2001/superNodeData/WW_shotestPath.json'
+const superNode_Data_reFile = '/data_forSystem/web-webbase-2001/superNodeData/cs.json'
 
 function draw_community(fileName){
     d3.json(fileName, function (datas)
