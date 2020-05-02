@@ -14,39 +14,42 @@
     
     
     <script src="/js/function.js"></script>
-    <script src="/js/button.js"></script>
+    <!-- <script src="/js/button.js"></script> -->
     <script src="/js/tableButtonClick.js"></script>
     
 
 
 </head>
-<body style="overflow-x: hidden; overflow-y: hidden ">
+<body style="overflow-x: hidden; overflow-y: hidden " class="text_cant_choose">
     <div id="Left">
         <div id="Left_Info" class="border">
             <div class="mytitle">Control Panel</div>
             <div id="Info">
                 <div id="L_1_1">
                     <table class="table" >
-                        <tr class="table">
+                        <tr class="table" style="height: 30px;">
                             <th class="table">
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                <select name="Data_select" style="border: 0ch; font-weight: lighter;" id="Left_d" >
-                                    <option value="cit-HepTh">cit-HepTh</option>
-                                    <option value="cit-HepTh">soc-sign</option>
+                                <select name="Data_select" style="border: 0ch; font-weight: lighter;" id="Left_d" onclick="changeData()">
+                                    <option value="ieee_visC">VISData</option>
+                                    <option value="soc-sign">SSB</option>
+                                    <option value="WW">WW</option>
+
+                                    <!-- <option value="cit-HepTh">cit-HepTh</option> -->
                                 </select>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                             </th>
-                            <th class="table bgc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nodes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            <th class="table bgc ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nodes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                             <th class="table bgc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edges&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                             <th class="table bgc">&nbsp;&nbsp;&nbsp;&nbsp;Community&nbsp;&nbsp;&nbsp;&nbsp;</th>
                         </tr>
-                        <tr class="table">
+                        <tr class="table" style="height: 25px">
                             <th id="th_data_name" class="table bgc">Origin:</th>
-                            <th id="th_nodes_num" class="table">11174</th>
-                            <th id="th_edges_num" class="table">23410</th>
-                            <th id="th_community_num" class="table">34</th>
+                            <th id="th_nodes_num" class="table">2114</th>
+                            <th id="th_edges_num" class="table">8964</th>
+                            <th id="th_community_num" class="table">14</th>
                         </tr>
-                        <tr class="table">
+                        <tr class="table" style="height: 25px">
                             <th class="table bgc">Sample:</th>
                             <th id="sample_nodes_num" class="table"></th>
                             <th id="sample_edges_num" class="table"></th>
@@ -56,8 +59,8 @@
                 </div>
                 <br>
                 <div id="L_1_2" style="line-height:40px">
-                    <select name="Left-select" id="Left-s">
-                            <option value="" selected disabled hidden>Sampling</option>
+                    <select name="Left-select" id="Left-s" style="width: 95px;">
+                            <option value="Sampling" selected disabled hidden>Sampling</option>
                             <option value="OUR">OUR</option>
                             <option value="ISRW">ISRW</option>
                             <option value="TIES">TIES</option>
@@ -67,19 +70,17 @@
                             <option value="RNS">RNS</option>
                     </select>
                     Density:
-                    <input type="range" min="5" max="100" value="0" class="range_ab" id="range1" step="5" >
-                    <b class="b1">0</b>
-                    &nbsp;&nbsp;
-                    Betweeness：
-                    <input type="range" min="5" max="100" value="100" class="range_ab" id="range2" step="5"> 
-                    <b class="b2">100</b>
+                    <input type="range" min="0" max="100" value="50" class="range_ab" id="range1" step="5" >
+                    <b class="b1">50</b>
+                    Betweeness:
+                    <input type="range" min="0" max="100" value="50" class="range_ab" id="range2" step="5"> 
+                    <b class="b2">50</b>
                     <br>                
                 </div>
                 <div id="L_1_3" class="noselect">
-
-                    Sampling Rate: &nbsp;&nbsp;&nbsp;
+                    Sampling Rate: 
                     <input type="range" min="5" max="100" value="100" class="range" id="range3" step="5">
-                    <b class="b3">100</b>
+                    <b class="b3" id="b3">100</b>
                     <br>
                     <script>
                         var elem1 = document.querySelector('input[id="range1"]');
@@ -125,7 +126,7 @@
                     <script src="/js/buttom_gai.js"></script>                    
                     <button id="button-sample" class="button_common ripple" value="Sample" onclick="buttom_sample_click()">Sample</button>
                     &nbsp;
-                    <button id="button-Reset" class="button_common ripple" value="Reset" onclick="sampling_func()">Reset</button>
+                    <button id="button-Reset" class="button_common ripple" value="Reset" onclick="reset()">Reset</button>
                 </div>
             </div>
         </div>
@@ -134,17 +135,17 @@
             <div class="mytitle">Metrics</div>
             <div id="Control_Up" >
                 <div id="Control_Up_Button">
-                    <button id="button_ABD" class="button_control_up" onclick="tableButton_click(this),button_table_click_ABD()">ABD</button>
-                    <button id="button_ACC" class="button_control_up" onclick="tableButton_click(this),force_change_color_shortestPath()">ACC</button>
-                    <button id="button_APL" class="button_control_up" onclick="tableButton_click(this),xx()">APL</button>
-                    <button id="button_LCC" class="button_control_up" onclick="tableButton_click(this),ssb_change_force()">LCC</button>
-                    <button id="button_CC"  class="button_control_up" onclick="tableButton_click(this), temp_draw_community()">CC</button>
+                    <button id="button_ABD" class="button_control_up" onclick="tableButton_click(this), click_ABD()">ABD</button>
+                    <button id="button_ACC" class="button_control_up" onclick="tableButton_click(this), click_ACC()">ACC</button>
+                    <button id="button_APL" class="button_control_up" onclick="tableButton_click(this), click_APL()">APL</button>
+                    <button id="button_LCC" class="button_control_up" onclick="tableButton_click(this), click_LCC()">LCC</button>
+                    <button id="button_CC"  class="button_control_up" onclick="tableButton_click(this), click_CC()">CC</button>
                     <button id="button_SCC" class="button_control_up" onclick="tableButton_click(this)">SCC</button>
                     <button id="button_QCS" class="button_control_up" onclick="tableButton_click(this)">QCS</button>
-                    <button id="button_GCC" class="button_control_up" onclick="tableButton_click(this), show_theBiggestBetweenness()">GCC</button>
+                    <button id="button_GCC" class="button_control_up" onclick="tableButton_click(this)">GCC</button>
                 </div>
                 <div id="Histogram">
-                    <!-- <script src="/js/Histogram.js"></script> -->
+                    <script src="/js/Histogram.js"></script>
                     <script src="/js/superNode.js"></script>
                 </div>
             </div>
@@ -155,6 +156,7 @@
             <div id="Node2vec">
                 <div id="Tsne_Button">
                     <script src="/js/tsne.js"></script>
+                    <!-- <script src="/js/TSNE_GAI.JS"></script> -->
                     <button id="buttom_tsne_choose" class="button_tsne ripple" onclick="button_move_click_on()"></button>
                     <button id="buttom_tsne_reflash" class="button_tsne ripple" onclick="reflash()"></button>
                 </div>

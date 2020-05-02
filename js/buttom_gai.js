@@ -1,14 +1,14 @@
 var buttom = document.querySelector('input[id="button-sample"]');
-var data_name = "cit-HepTh"
+var data_name = "ieee_visC"
 
 function buttom_sample_click(){
     var select_name = document.getElementById('Left-s');
     var index = select_name.selectedIndex;
     var select_n = select_name.options[index].value;
 
-    var sample_name = NaN;
-    var sample_rate = NaN;
-    if(select_n == 'BFS' || select_n == 'DFS' || select_n == 'OUR' || select_n == 'ISRW' || select_n == 'RES' || select_n == 'RJ' || select_n == 'RNS' || select_n == 'SRW' || select_n == 'TIES'){
+    var sample_name = 'NULL';
+    var sample_rate = 'NULL';
+    if(select_n == 'BFS' || select_n == 'DFS' || select_n == 'OUR' || select_n == 'ISRW' || select_n == 'RES' || select_n == 'RJ' || select_n == 'RNS' || select_n == 'SRW' || select_n == 'TIES' || select_n == 'OUR'){
         sample_name = select_n;
     }
 
@@ -19,8 +19,6 @@ function buttom_sample_click(){
     var edges_num = 23410*elem3.value*0.01;
 
 
-    // document.getElementById("sample_nodes_num").innerText= parseInt(nodes_num);
-    // document.getElementById("sample_edges_num").innerText= parseInt(edges_num);
 
     // 列表社区数量呈现
     // document.getElementById('sample_community_num').innerText = parseInt(xx);
@@ -29,63 +27,49 @@ function buttom_sample_click(){
         sample_rate = parseInt(elem3.value);
     }
 
-    // oregonf_sample_tsne_FF_5_nodes_edges.json
-
     var file_path = NaN;
-    // if(sample_name == "OUR"){
-    //     // if(elem1.value == '10' || elem1.value == '20' || elem1.value == '40'){
-    //         // const a = parseInt(elem1.value)/10;
-    //         // const b = 10 - a;
-    //         reflash();
-    //         // file_path = '/data/' + data_name + '/our_sample_nodes_edges2/our_sample_a_'+ a +'_b_'+ b +'_rate_' + sample_rate + '_nodes_egdes.json'
-    //         force_re = '/data_forSystem/' + data_name + '/' + sx(data_name) + '_' + sample_name +'_rate-'+sample_rate+'forcedata.json'
-    //         // sankey_file_name = '/data/' + data_name + '/our_sample_community_num_for_sankey2/oregonf_OUR_a_'+a+'_b_'+b+'_Rate_'+sample_rate+'for_sankey.json'
-    //         // sankey_color_file_name = '/data/' + data_name + '/our_sample_community_HX2/oregonf_OUR_a_'+a+'_b_'+b+'_Rate_'+sample_rate+'_for_sankey_HX.json'
 
-
-    //         force_file_name = file_path;
-    //         force_circle_r = 5;
-    //         drawforce_again(file_path);
-    //         document.getElementById('s2').value = 'force_sample';
-    
-    //         if(document.getElementById('tsne_svg'))document.getElementById('tsne_svg').remove()
-    //         draw_tsne();
-    
-    //         drawRadar(parseInt(sample_rate));
-    
-    //         community_num_file_name = '../data/oregonf/our_sample_community_num2/our_sample_a_'+a+'_b_'+b+'_rate_'+sample_rate+'_community_num.json'
-    //         draw_community_disribution_again();
-    
-    //         draw_sankey_again();
-    //     // }       
-    // }
-    // else if(!(sample_name == NaN || sample_rate == NaN)){
-    if(!(sample_name == NaN || sample_rate == NaN)){
-    
-        reflash();
-        // file_path = '/data/oregonf/all_oregonf_rate/oregonf_sample_tsne_' + sample_name + '_' + sample_rate + '_nodes_edges.json';
-        // force_re = '/data/oregonf/all_oregonf_rate_force_data/oregonf_force_data' + sample_name + '_' + sample_rate + '_nodes_edges.json'
+    if(sample_name != 'NULL' && sample_rate != "NULL"){
         
-        file_path = '/data_forSystem/' + data_name + '/force_data/tsne_' + sample_name + '_' + sample_rate + '_nodes_edges.json'
-        force_re = '/data_forSystem/' + data_name + '/force_data/' + sx(data_name) + '_' + sample_name +'_rate-'+sample_rate+'_forcedata.json'
+        document.getElementById("sample_nodes_num").innerText= parseInt(nodes_num);
+        document.getElementById("sample_edges_num").innerText= parseInt(edges_num);
+        
+        reflash();
 
-        sankey_file_name = '/data/oregonf/all_oregonf_rate_community_num_for_sankey_gai/oregonf_sample_tsne_' + sample_name + '_' + sample_rate + '_community_num_for_sankey.json'
-        sankey_color_file_name = '/data/oregonf/all_oregonf_rate_community_HX/oregonf_sample_tsne_' + sample_name +  '_' + sample_rate + '_HX.json'
+        force_file_name = '/data_forSystem/' + data_name + '/forceData/' + sx(data_name) +  '_forceData_' + sample_name + '_rate_' + sample_rate + '.json'
+        console.log(force_file_name)
+        // force_re = '/data_forSystem/' + data_name + '/force_data/' + sx(data_name) + '_' + sample_name +'_rate-'+sample_rate+'_forcedata.json'
 
-        force_file_name = file_path;
+        pg_sample_rate = 'rate-' + sample_rate
+        pg_file_name = '/data_forSystem/' + data_name + '/pdData/' + sx(data_name) + 'xxx' + sample_name + '1_Eva.json'
+        pg_file_name_ori = '/data_forSystem/' + data_name + '/pdData/' + sx(data_name) + 'xxxori_Eva.json'
+
+        APL_filePath_ori = '/data_forSystem/' + data_name + '/shortestPath/' + sx(data_name) + '_shortestPath.json'
+        APL_filePath = '/data_forSystem/' + data_name + '/shortestPath/' + sx(data_name) + '_' + sample_name + '_rate_' + sample_rate + '_shortestPath.json'
+
+        superNode_Data_File = '/data_forSystem/' + data_name + '/superNodeData/' + sx(data_name) + '_' + sample_name + '_rate_' + sample_rate + '_superNodeData.json'
+
+        d3.json(superNode_Data_File, function(error, data) {
+            var nodeList = data['nodes'];
+            console.log(nodeList)
+            document.getElementById("sample_community_num").innerText= parseInt(nodeList.length);
+          
+        })
         force_circle_r = 1;
-        drawforce_again(file_path);
+        drawforce_again(force_file_name);
         document.getElementById('s2').value = 'force_sample';
 
         if(document.getElementById('tsne_svg'))document.getElementById('tsne_svg').remove()
         draw_tsne(tsne_filename);
 
         // drawRadar(parseInt(sample_rate));
+        var radar_list = []
+        radar_list.push(sample_name)
+        console.log(radar_list)
+        // doRadar(radar_list, data_name, sample_rate);
 
-        // community_num_file_name = '/data/oregonf/all_oregonf_rate_community_num/oregonf_sample_tsne_' + sample_name + '_' + sample_rate + '_community_num.json';
-        community_num_file_name = '/data_forSystem/cit-HepTh/community_num/' + sx(data_name) + sample_name + '_rate_' + sample_rate+'_community_num.json'
-
-        draw_community_disribution_again();
+        click_CC();
+        show_CC();
     }
 }
 
@@ -108,6 +92,48 @@ function select2_change(){
         drawforce_again(force_re);
     }
 }
+
+
+
+function click_ABD(){
+    d3.select('#pg_svg').remove()
+    d3.select('#superNode_svg').remove()
+    draw_other(pg_sample_rate, 'ANB', pg_file_name, pg_file_name_ori)
+}
+
+function click_ACC(){
+    d3.select('#pg_svg').remove()
+    d3.select('#superNode_svg').remove()
+    draw_other(pg_sample_rate, 'ACC', pg_file_name, pg_file_name_ori)
+}
+
+function click_LCC(){
+    d3.select('#pg_svg').remove()
+    d3.select('#superNode_svg').remove()
+    draw_other(pg_sample_rate, 'LCC', pg_file_name, pg_file_name_ori)
+}
+
+function click_APL(){
+    d3.select('#pg_svg').remove()
+    d3.select('#superNode_svg').remove()
+    draw_APL(APL_filePath, APL_filePath_ori);
+}
+
+function click_CC(){
+    d3.select('#pg_svg').remove()
+    d3.select('#superNode_svg').remove()
+    draw_community(superNode_Data_File);
+}
+
+
+//返回数据集名字缩写
+function sx(name){
+    if(name == 'cit-HepTh')return 'CH';
+    if(name == 'soc-sign')return 'SSB';
+    if(name == 'ieee_visC') return 'IV';
+    if(name == 'web-webbase-2001') return 'WW';
+}
+
 
 // function select_community_change(){
 //     reflash();
@@ -156,8 +182,131 @@ function select2_change(){
 
 // }
 
-//返回数据集名字缩写
-function sx(name){
-    if(name == 'cit-HepTh')return 'CH';
-    if(name == 'soc-sign-bitcoinotc')return 'SSB';
+
+var if_first_change_data = true
+
+function changeData(){
+    var objS = document.getElementById("Left_d");
+    var new_data_name = objS.options[objS.selectedIndex].value;
+    if(new_data_name == 'soc-sign' && if_first_change_data)
+    {
+        document.getElementById("th_nodes_num").innerText= parseInt(5875);
+        document.getElementById("th_edges_num").innerText= parseInt(35587);
+        document.getElementById("th_community_num").innerText= parseInt(16);
+        
+
+        var all_options = document.getElementById("Left-s").options;
+        for (i=0; i<all_options.length; i++){
+           if (all_options[i].value == 'Sampling')  // 根据option标签的ID来进行判断  测试的代码这里是两个等号
+           {
+              all_options[i].selected = true;
+           }
+        }
+
+        document.getElementById("b3").innerHTML = 100
+        document.getElementById("range3").value = 100
+        
+
+
+        if_first_change_data = false
+
+        data_name = new_data_name;
+
+        reflash();
+
+        force_file_name = '/data_forSystem/soc-sign/SSBxy.json'
+        // force_re = '/data_forSystem/' + data_name + '/force_data/' + sx(data_name) + '_' + sample_name +'_rate-'+sample_rate+'_forcedata.json'
+
+        pg_sample_rate = 'rate-5'
+        pg_file_name = '/data_forSystem/soc-sign/pdData/SSBxxxori_Eva.json'
+        pg_file_name_ori = '/data_forSystem/soc-sign/pdData/SSBxxxori_Eva.json'
+
+        superNode_Data_File = '/data_forSystem/soc-sign/superNodeData/SSB_superNodeData.json'
+
+        APL_filePath_ori = '/data_forSystem/soc-sign/shortestPath/SSB_shortestPath.json'
+        APL_filePath = '/data_forSystem/soc-sign/shortestPath/SSB_shortestPath.json'
+
+        tsne_filename = '/data_forSystem/soc-sign/SSB_Tsne.csv'
+        force_circle_r = 1;
+        drawforce_again(force_file_name);
+        document.getElementById('s2').value = 'force_sample';
+
+        if(document.getElementById('tsne_svg'))document.getElementById('tsne_svg').remove()
+        draw_tsne(tsne_filename);
+
+        // drawRadar(parseInt(sample_rate));
+
+        d3.select('#radar_svg').remove()
+        // doRadar('ori', data_name, '5')
+
+        click_CC();
+        show_CC();        
+
+    } 
+
+
+}
+
+
+
+function changeData(){
+    var objS = document.getElementById("Left_d");
+    var new_data_name = objS.options[objS.selectedIndex].value;
+    if(new_data_name == 'WW' && if_first_change_data)
+    {
+        document.getElementById("th_nodes_num").innerText= parseInt(16062);
+        document.getElementById("th_edges_num").innerText= parseInt(25593);
+        document.getElementById("th_community_num").innerText= parseInt(16);
+        
+
+        var all_options = document.getElementById("Left-s").options;
+        for (i=0; i<all_options.length; i++){
+           if (all_options[i].value == 'Sampling')  // 根据option标签的ID来进行判断  测试的代码这里是两个等号
+           {
+              all_options[i].selected = true;
+           }
+        }
+
+        document.getElementById("b3").innerHTML = 100
+        document.getElementById("range3").value = 100
+        
+
+
+        if_first_change_data = false
+
+        data_name = 'web-webbase-2001'
+
+        reflash();
+
+        force_file_name = '/data_forSystem/web-webbase-2001/WWxy.json'
+        // force_re = '/data_forSystem/' + data_name + '/force_data/' + sx(data_name) + '_' + sample_name +'_rate-'+sample_rate+'_forcedata.json'
+
+        pg_sample_rate = 'rate-5'
+        pg_file_name = '/data_forSystem/soc-sign/pdData/SSBxxxori_Eva.json'
+        pg_file_name_ori = '/data_forSystem/soc-sign/pdData/SSBxxxori_Eva.json'
+
+        superNode_Data_File = '/data_forSystem/web-webbase-2001/superNodeData/WW_shotestPath.json'
+
+        APL_filePath_ori = '/data_forSystem/web-webbase-2001/shortestPath/WW_shortestPath.json'
+        APL_filePath = '/data_forSystem/web-webbase-2001/shortestPath/WW_shortestPath.json'
+
+        tsne_filename = '/data_forSystem/web-webbase-2001/WW_Tsne.csv'
+        force_circle_r = 1;
+        drawforce_again(force_file_name);
+        document.getElementById('s2').value = 'force_sample';
+
+        if(document.getElementById('tsne_svg'))document.getElementById('tsne_svg').remove()
+        draw_tsne(tsne_filename);
+
+        // drawRadar(parseInt(sample_rate));
+
+        d3.select('#radar_svg').remove()
+        // doRadar('ori', data_name, '5')
+
+        click_CC();
+        show_CC();        
+
+    } 
+
+
 }

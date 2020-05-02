@@ -60,7 +60,8 @@ function drawleida(win_name, data_li, rate, suanfanameli) {
     var width = document.getElementById(win_name).clientWidth
     var height = document.getElementById(win_name).clientHeight
 
-    var svg = d3.select("#" + win_name).append('svg').attr('width', width).attr('height', height)
+    d3.select('#radar_svg').remove()
+    var svg = d3.select("#" + win_name).append('svg').attr('width', width).attr('height', height).attr('id', 'radar_svg')
     var g = svg.append("g").attr("transform", "translate(" + marge.left + "," + marge.top + ")")
 
     var defs = svg.append("defs");
@@ -108,7 +109,7 @@ function drawleida(win_name, data_li, rate, suanfanameli) {
     k = 5
     for (var i = k; i >= 1; i--) {
         r = R / k * i
-        console.log(r)
+        // console.log(r)
         g.append("circle")
             .attr("cx", centerpoint.x)
             .attr("cy", centerpoint.y)
@@ -144,25 +145,25 @@ function drawleida(win_name, data_li, rate, suanfanameli) {
             .attr("stroke", "black")
             .attr("stroke-dasharray", "10 5")
             .attr("stroke-width", "0.5px");
-        g.append("rect")
-            .attr("x", (R * 1.29) * Math.sin(radim * i) + centerpoint.x - 13)
-            .attr("y", function () {
-                ans = (R * 1.29) * Math.cos(radim * i)
-                if (ans > 0) {
-                    return centerpoint.y - ans - 2
-                }
-                else {
-                    return centerpoint.y - ans - 10
-                }
-            })
-            .attr("id", "rect-" + i)
-            .attr("width", '25px')
-            .attr("height", '10px')
-            .style("fill", '#555')
-            .style("stroke", '#555')
-            .attr("class", "rects")
-            .attr("rx", '20')
-            .attr('opacity', '0.5')
+        // g.append("rect")
+        //     .attr("x", (R * 1.29) * Math.sin(radim * i) + centerpoint.x - 13)
+        //     .attr("y", function () {
+        //         ans = (R * 1.29) * Math.cos(radim * i)
+        //         if (ans > 0) {
+        //             return centerpoint.y - ans - 2
+        //         }
+        //         else {
+        //             return centerpoint.y - ans - 10
+        //         }
+        //     })
+        //     .attr("id", "rect-" + i)
+        //     .attr("width", '25px')
+        //     .attr("height", '10px')
+        //     .style("fill", '#555')
+        //     .style("stroke", '#555')
+        //     .attr("class", "rects")
+        //     .attr("rx", '20')
+        //     .attr('opacity', '0.5')
         g.append("text").attr("class", "kdtext").attr("x", (R * 1.29) * Math.sin(radim * i) + centerpoint.x - 13)
             .attr("y", function () {
                 ans = (R * 1.29) * Math.cos(radim * i)
@@ -201,7 +202,7 @@ function drawleida(win_name, data_li, rate, suanfanameli) {
                     .attr("y2", scaley_li[j](dat[k][j]))
                     .attr("stroke", mcolor[mm])
                     .attr("opacity", function () {
-                        console.log(suanfanameli.indexOf(dataname_li[k]))
+                        // console.log(suanfanameli.indexOf(dataname_li[k]))
                         if (suanfanameli.indexOf(dataname_li[k]) == -1) {
                             return 0
                         }
@@ -288,23 +289,22 @@ function drawleida(win_name, data_li, rate, suanfanameli) {
     //     }
 }
 
+// var data_name = "ieee_visC"
 
 
-
-function doRadar(sf_nali){
-    var  FILE_name = 'CH';
+function doRadar(sf_nali, dataName, rate){
+    var  FILE_name = sx(data_name);
     var namelist = ["ori", "OUR", "SRW", "ISRW", "RJ", "RNS", "RES", "TIES", "BFS", "DFS"]
 
-    d3.json("/data_forSystem/cit-HepTh/radar_data/" + FILE_name + "f" + namelist[0] + "new_Eva.json", function (ori) {
-            d3.json("/data_forSystem/cit-HepTh/radar_data/" + FILE_name + "f" + namelist[1] + "new_Eva.json", function (OUR) {
-                d3.json("/data_forSystem/cit-HepTh/radar_data/" + FILE_name + "f" + namelist[2] + "new_Eva.json", function (SRW) {
-                    d3.json("/data_forSystem/cit-HepTh/radar_data/" + FILE_name + "f" + namelist[3] + "new_Eva.json", function (ISRW) {
-                        d3.json("/data_forSystem/cit-HepTh/radar_data/" + FILE_name + "f" + namelist[4] + "new_Eva.json", function (RJ) {
-                            d3.json("/data_forSystem/cit-HepTh/radar_data/" + FILE_name + "f" + namelist[5] + "new_Eva.json", function (RNS) {
-                                d3.json("/data_forSystem/cit-HepTh/radar_data/" + FILE_name + "f" + namelist[6] + "new_Eva.json", function (RES) {
-                                    d3.json("/data_forSystem/cit-HepTh/radar_data/" + FILE_name + "f" + namelist[7] + "new_Eva.json", function (TIES) {
+    d3.json("/data_forSystem/" + dataName + "/radarData/" + FILE_name + "f3" + namelist[0] + "new_Eva.json", function (ori) {
+            d3.json("/data_forSystem//" + dataName + "/radarData/" + FILE_name + "f3" + namelist[1] + "new_Eva.json", function (OUR) {
+                d3.json("/data_forSystem/" + dataName + "/radarData/" + FILE_name + "f3" + namelist[2] + "new_Eva.json", function (SRW) {
+                    d3.json("/data_forSystem/" + dataName + "/radarData/" + FILE_name + "f3" + namelist[3] + "new_Eva.json", function (ISRW) {
+                        d3.json("/data_forSystem/" + dataName + "/radarData/" + FILE_name + "f3" + namelist[4] + "new_Eva.json", function (RJ) {
+                            d3.json("/data_forSystem/" + dataName + "/radarData/" + FILE_name + "f3" + namelist[5] + "new_Eva.json", function (RNS) {
+                                d3.json("/data_forSystem/" + dataName + "/radarData/" + FILE_name + "f3" + namelist[6] + "new_Eva.json", function (RES) {
+                                    d3.json("/data_forSystem/" + dataName + "/radarData/" + FILE_name + "f3" + namelist[7] + "new_Eva.json", function (TIES) {
                                             data_li = [OUR, SRW, ISRW, RJ, RNS, RES, TIES]
-                                            rate = "5"
                                             drawleida(rader_div_id,data_li,rate,sf_nali)
                                     })
                                 })
@@ -316,5 +316,5 @@ function doRadar(sf_nali){
     })
 }
 
-doRadar(['OUR']);
+// doRadar(['OUR'], data_name, '10');
 

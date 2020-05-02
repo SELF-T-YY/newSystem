@@ -38,7 +38,10 @@ function buttom_sample_click(){
         // force_re = '/data/oregonf/all_oregonf_rate_force_data/oregonf_force_data' + sample_name + '_' + sample_rate + '_nodes_edges.json'
         
         file_path = '/data_forSystem/' + data_name + '/force_data/tsne_' + sample_name + '_' + sample_rate + '_nodes_edges.json'
-        force_re = '/data_forSystem/' + data_name + '/force_data/' + sx(data_name) + '_' + sample_name +'_rate-'+sample_rate+'_forcedata.json'
+        // force_re = '/data_forSystem/' + data_name + '/force_data/' + sx(data_name) + '_' + sample_name +'_rate-'+sample_rate+'_forcedata.json'
+
+        pg_sample_rate = 'rate-' + sample_rate
+        pg_file_name = '/data_forSystem/' + data_name + '/pdData/' + sx(data_name) + 'xxx' + sample_name + '1_Eva.json'
 
         force_file_name = file_path;
         force_circle_r = 1;
@@ -48,8 +51,19 @@ function buttom_sample_click(){
         if(document.getElementById('tsne_svg'))document.getElementById('tsne_svg').remove()
         draw_tsne(tsne_filename);
 
+
+        click_ABD();
     }
 }
+
+// function return_pg_sample_rate(){
+//     console.log(pg_sample_rate)
+//     return pg_sample_rate;
+// }
+
+// function return_pg_file_name(){
+//     return pg_file_name;
+// }
 
 function select2_change(){
     reflash();
@@ -70,6 +84,28 @@ function select2_change(){
         drawforce_again(force_re);
     }
 }
+
+// function click_ABD(){
+//     console.log('xxxxxxxxxxxxxxxxxxxxxxx')
+//     d3.select('#pg_svg').remove()
+//     draw_other(pg_sample_rate, 'ANB', pg_file_name)
+//     console.log(pg_file_name, pg_sample_rate)
+// }
+
+// function click_ACC(){
+//     d3.select('#pg_svg').remove()
+//     draw_other(pg_sample_rate, 'ACC', pg_file_name)
+// }
+
+// function click_LCC(){
+//     d3.select('#pg_svg').remove()
+//     draw_other(pg_sample_rate, 'LCC', pg_file_name)
+// }
+
+// function click_APL(){
+//     d3.select('#pg_svg').remove()
+//     draw_APL(APL_filePath);
+// }
 
 //返回数据集名字缩写
 function sx(name){

@@ -29,7 +29,6 @@ body{
     width: auto;
     height: 21%;
 }
-
 #Left_Control{
     position: absolute;
     top: 28%;
@@ -281,7 +280,7 @@ body{
 .range{
     -webkit-appearance: none;
     height: 3px;
-    width: 62%;
+    width: 273px;
     outline: none;
     margin-top: -10px;
     background: #f1f1f1; 
@@ -418,12 +417,18 @@ input[type=range]::-webkit-slider-thumb {
     background-color: #f2f2f2;
 }
 
+.bgc_g{
+    background-color: #f0f0f0;
+}
+
 .kdtext{
     /* font-family:Arial, Helvetica, sans-serif;  */
     font-size:12px;
     stroke:#ffffff;
     line-height:35px;
-    text-shadow: 1px -1px rgb(252, 252, 252), 0.1px -1px whrgb(211, 13, 13);
+    text-shadow: 0 1px #555, 1px 0 #555, -1px 0 #555, 0 -1px #555;
+    /* -webkit-text-stroke: 2px red; */
+    /* text-shadow: 1px -1px rgb(252, 252, 252), 0.1px -1px whrgb(211, 13, 13); */
     /* -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -434,4 +439,13 @@ input[type=range]::-webkit-slider-thumb {
 .axis{
     font-family: "Microsoft Yahei";
     /* font-family: "Times New Roman"; */
+}
+
+.text_cant_choose{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

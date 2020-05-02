@@ -47,7 +47,7 @@ function force_change_color(i, color){
     // 9
     // d3.selectAll('.tsne_node').attr('fill', tsne_unselected_color);
     // var community_id_fileName = "/data_forSystem/cit-HepTh/community_num/community_id.json"
-    var community_id_fileName = "/data_forSystem/soc-sign-bitcoinotc.csv/community_num/community_id__.json"
+    var community_id_fileName = "/data_forSystem/soc-sign/community_id.json"
 
     d3.json(community_id_fileName, function(data_community)
     {
@@ -70,7 +70,7 @@ function force_change_color(i, color){
                         const now_y = (datas[choosed_point_data[node]].y);
                         d3.select("#tsne_node_"+choosed_point_data[node]).style("fill",circles_change_color);
                         circles_choose_change_color.beginFill(community_circle_color);
-                        circles_choose_change_color.drawCircle(now_x,now_y,1);
+                        circles_choose_change_color.drawCircle(now_x,now_y,0.8);
                         circles_choose_change_color.endFill();                        
                     }
                 }
@@ -87,10 +87,14 @@ function force_change_color(i, color){
 
 function tsne_choose_force_change_color(circle_list){
     d3.json(force_file_name, function(filename){
-        let datas = filename['nodes']
+        let datas_re = filename['nodes']
+        let datas = {}
+        for(var i in datas_re){
+            datas[datas_re[i]['id']] = datas_re[i]
+        }
         var circles_change_color = 0xff00ff;
         choosed_point_data = circle_list;
-        // console.log(choosed_point_data)
+        
         circles_choose.clear();
         circles_choose_change_color.clear();
         for(let node in  choosed_point_data)
@@ -98,9 +102,9 @@ function tsne_choose_force_change_color(circle_list){
             if(choosed_point_data[node] in datas){
                 const now_x = (datas[choosed_point_data[node]].x);
                 const now_y = (datas[choosed_point_data[node]].y);
-                d3.select("#tsne_node_"+choosed_point_data[node]).style("fill",circles_change_color);
-                circles_choose_change_color.beginFill(circles_change_color);
-                circles_choose_change_color.drawCircle(now_x,now_y,force_circle_r);
+                // d3.select("#tsne_node_"+choosed_point_data[node]).style("fill",circles_change_color);
+                circles_choose_change_color.beginFill('0xff0000');
+                circles_choose_change_color.drawCircle(now_x,now_y,force_circle_r*3);
                 circles_choose_change_color.endFill();                
             }
 
@@ -130,14 +134,21 @@ function connected_change_color(i){
 }
 
 function tsne_chanege_color_by_list(circle_list){
-    console.log(circle_list.length)
+    console.log(circle_list)
     // console.log(circle_list)
     d3.selectAll('.tsne_circle').attr('fill', tsne_circle_color);
     for(let key in circle_list){
         d3.select('#tsne_circle_' + circle_list[key]).attr('fill','red').attr('r', 3);
+        // d3.select('#Node2vec').attr('fill', 'red')
+        // .attr('cx', -51.761482 )
+        // .attr('cy', 40.945698)
     }
 }
 
+// 528686,-51.761482,40.945698
+// .attr('fill', tsne_circle_color)
+// .attr('cx', function(d){ return d['x']; })
+// .attr('cy', function(d){ return d['y']; })
 function community_click_do(d,i){
     community_change_color(i);
     sankey_change_color(i);
@@ -147,16 +158,16 @@ function community_click_do(d,i){
 }
 
 function reflash(){
-    d3.selectAll('.community').attr('fill', 'steelblue');
-    d3.selectAll(".community_Distribution").attr("fill", 'steelblue');
-    d3.selectAll('.sankey_top_node').style('opacity', 1)
-    d3.selectAll('.sankey_bottom_node').style('opacity', 1)
-    d3.selectAll('.sankey_community_path').style('opacity', 0.5)
+    // d3.selectAll('.community').attr('fill', 'steelblue');
+    // d3.selectAll(".community_Distribution").attr("fill", 'steelblue');
+    // d3.selectAll('.sankey_top_node').style('opacity', 1)
+    // d3.selectAll('.sankey_bottom_node').style('opacity', 1)
+    // d3.selectAll('.sankey_community_path').style('opacity', 0.5)
     circles_choose.clear();
     circles_choose_change_color.clear();
     d3.selectAll('.tsne_circle').attr('fill', tsne_circle_color);
-    d3.select('#tsne_brush').style('opacity', 0)
-    d3.selectAll('.connected').attr('fill', 'steelblue');
+    // d3.select('#tsne_brush').style('opacity', 0)
+    // d3.selectAll('.connected').attr('fill', 'steelblue');
 }
 
 function button_table_click_ABD(){
@@ -199,7 +210,7 @@ function force_change_color_shortestPath(){
                         const now_y = (datas[choosed_point_data[node]].y);
                         d3.select("#tsne_node_"+choosed_point_data[node]).style("fill",circles_change_color);
                         circles_choose_change_color.beginFill(circles_change_color);
-                        circles_choose_change_color.drawCircle(now_x,now_y,2);
+                        circles_choose_change_color.drawCircle(now_x,now_y, 2);
                         circles_choose_change_color.endFill();                        
                     }
                 }
@@ -255,8 +266,18 @@ function xx(){
 
 
 function ssb_change_force(){
-    force_change_color(3, 0xff0000);
-    force_change_color(5, 0x00ff00);
+    force_change_color(1, 0xffce66)
+    force_change_color(2, 0xff40dd)
+    force_change_color(3, 0xc0bfff);
+    force_change_color(4, 0x54a5fa);
+    force_change_color(5, 0x89c459);
+    force_change_color(6, 0xe62701);
+    force_change_color(10, 0xfe836b);
+    // force_change_color(17, 0xff0000);
+
+
+    // force_change_color(3, 0xff0000);
+    // force_change_color(5, 0x00ff00);
 }
 
 
@@ -275,7 +296,13 @@ function show_theBiggestBetweenness(){
             choose_circle_list.push(sort_list[i]['node'])
         }
         tsne_chanege_color_by_list(choose_circle_list);
-        
+        tsne_choose_force_change_color(choose_circle_list);
           
     })
 }
+
+function reset(){
+    location.reload();
+}
+
+

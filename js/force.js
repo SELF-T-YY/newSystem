@@ -3,18 +3,19 @@ var if_choose_point = false;
 var if_circle_choose = false;
 var force_community_num = 0;
 
-var force_file_name = "/data_forSystem/cit-HepTh/CH_force_gai.json"
+// var force_file_name = "/data_forSystem/cit-HepTh/CH_force_gai.json"
 // var force_file_name = "/data_forSystem/soc-sign-bitcoinotc.csv/SSB_force_gai.json"
 // var force_file_name = "/data_forSystem/soc-sign-bitcoinotc.csv/cs.json"
 
 
-var force_file_origin_name = "/data_forSystem/cit-HepTh/CH_force_gai.json"
+var force_file_origin_name = "/data_forSystem/ieee_visC/IV_forceData_new_gai.json"
 var force_re = ''
 
 // var force_file_name = "/data/oregonf/ISRW/oregonf_sample_tsne_ISRW_15_nodes_edges.json"
-force_file_name = "/data_forSystem/block2000/cs1.json"
+var force_file_name = "/data_forSystem/ieee_visC/IV_forceData_new_gai.json"
 
-var force_circle_r = 2;
+var force_circle_r = 1.5;
+var line_width = 0.5
 
 const force_width = document.getElementById('Force').offsetWidth;
 const force_height = document.getElementById('Force').offsetHeight-25;
@@ -28,6 +29,7 @@ var app = new PIXI.Application({
 var line_Color = 0xc6c6c6;
 // var force_community_circle_Color = 0x3A435E;
 var force_community_circle_Color = 0x9a9a9a;
+// var force_community_circle_Color = 0x4682b4;
 
 
 document.querySelector('#Force').appendChild(app.view);
@@ -59,7 +61,7 @@ function drawforce(if_draw_again){
 
         force_PIXIJS_lines = new PIXI.Graphics();
         for(var i = 0 ; i < f_links.length ; i++){
-            force_PIXIJS_lines.lineStyle(0.5,line_Color,1);
+            force_PIXIJS_lines.lineStyle(line_width,line_Color,1);
             force_PIXIJS_lines.moveTo(f_nodes[f_nodeID_key[f_links[i].source]].x,f_nodes[f_nodeID_key[f_links[i].source]].y);
             force_PIXIJS_lines.lineTo(f_nodes[f_nodeID_key[f_links[i].target]].x,f_nodes[f_nodeID_key[f_links[i].target]].y);
         }
@@ -281,8 +283,8 @@ function drawforce_again(file_name){
         console.log(datas);
         f_nodes = datas['nodes'];
         for(var node in datas['nodes']){
-            datas['nodes'][node].x = parseInt(datas['nodes'][node].x)
-            datas['nodes'][node].y = parseInt(datas['nodes'][node].y)
+            datas['nodes'][node].x = parseFloat(datas['nodes'][node].x)
+            datas['nodes'][node].y = parseFloat(datas['nodes'][node].y)
         }
         f_links = datas['edges'];
         f_nodeID_key = {}
@@ -291,10 +293,10 @@ function drawforce_again(file_name){
         }
 
         for(var i = 0 ; i < f_links.length ; i++){
-            force_PIXIJS_lines.lineStyle(0.4,line_Color,1);
+            force_PIXIJS_lines.lineStyle(line_width,line_Color,1);
             try{
-                force_PIXIJS_lines.moveTo(parseInt(f_nodes[f_nodeID_key[f_links[i].source]].x),parseInt(f_nodes[f_nodeID_key[f_links[i].source]].y));
-                force_PIXIJS_lines.lineTo(parseInt(f_nodes[f_nodeID_key[f_links[i].target]].x),parseInt(f_nodes[f_nodeID_key[f_links[i].target]].y));
+                force_PIXIJS_lines.moveTo(parseFloat(f_nodes[f_nodeID_key[f_links[i].source]].x),parseFloat(f_nodes[f_nodeID_key[f_links[i].source]].y));
+                force_PIXIJS_lines.lineTo(parseFloat(f_nodes[f_nodeID_key[f_links[i].target]].x),parseFloat(f_nodes[f_nodeID_key[f_links[i].target]].y));
             }catch(e){
                 // console.log('---------------------'+ i + '-----------------')
                 // console.log(f_links[i])
@@ -303,7 +305,7 @@ function drawforce_again(file_name){
         }
         for(var key in f_nodes){
             force_PIXIJS_circles.beginFill(force_community_circle_Color);
-            force_PIXIJS_circles.drawCircle(parseInt(f_nodes[key].x),parseInt(f_nodes[key].y),force_circle_r);
+            force_PIXIJS_circles.drawCircle(parseFloat(f_nodes[key].x),parseFloat(f_nodes[key].y),2);
             // console.log(parseInt(f_nodes[key].x))
             force_PIXIJS_circles.endFill();
         }
@@ -319,11 +321,7 @@ function temp_draw_community(){
         // var choosed_point_data = []
         var color_list = [0xff0000, 0xffff00, 0x008000, 0x0000ff, 0xff00ff, 0x800080, 0x000080, 0x808000, 0x00ff00]
         var color_list_tsne = ['#ff0000', '#ffff00', '#008000', '#0000ff', '#ff00ff', '#800080', '#000080', '#808000', '#00ff00']
-        // for(var i in data){
-        //     if(data[i] == community_num){
-        //         choosed_point_data.push(i);
-        //     }
-        // }
+
         d3.json(force_file_name, function(force_datas){
                 let temp_datas = force_datas['nodes'];
                 let temp_edges = force_datas['edges'];
@@ -343,7 +341,7 @@ function temp_draw_community(){
                     // d3.select("#tsne_node_"+ node).style("fill",color_list[community_num_data[node]]);
                     d3.select('#tsne_circle_' + node).attr('fill', color_list_tsne[community_num_data[node]]);
                     circles_choose_change_color.beginFill(color_list[community_num_data[node]]);
-                    circles_choose_change_color.drawCircle(now_x,now_y,3);
+                    circles_choose_change_color.drawCircle(now_x,now_y,force_circle_r);
                     circles_choose_change_color.endFill();
                 }
                 app.stage.addChild(circles_choose_change_color);

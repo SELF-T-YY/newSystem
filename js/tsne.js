@@ -7,14 +7,15 @@ const tsne_circle_choose_color = '#ff00ff'
 // var tsne_filename = "/data_forSystem/cit-HepTh/CH_Tsne.csv";
 // var tsne_filename = "/data_forSystem/block2000/B2_Tsne.csv";
 
-var tsne_filename = "/data_forSystem/ieee_visC/IV.csv";
+var tsne_filename = "/data_forSystem/ieee_visC/IV_Tsne.csv";
 function draw_tsne(filename){
     d3.csv(filename, function(tsne_datas){
         let tsne_dataset = [];
         let force_node = []
         d3.json(force_file_name, function(datas){
+
             var t_nodes = datas['nodes'];
-            console.log(t_nodes)
+
             for(let key in t_nodes){
                 force_node.push(t_nodes[key]['id']);
             }
@@ -23,7 +24,7 @@ function draw_tsne(filename){
                 data.x = parseFloat(tsne_datas[key].x);
                 data.y = parseFloat(tsne_datas[key].y);
                 data.id = parseInt(tsne_datas[key].id);
-                // if(force_node.indexOf(tsne_datas[key]['id'])> -1)
+                if(force_node.indexOf(tsne_datas[key]['id'])> -1)
                     tsne_dataset.push(data);
             }
 
@@ -84,7 +85,8 @@ function draw_tsne(filename){
                                     [tsne_width,tsne_height]
                                 ])
                                 .on('start brush', brushed)
-                                .on('end', brushend);
+                                .on('end', brushend)
+                                
                 svg.append('g')
                     .attr('id', 'tsne_brush')
                     .call(brush)
