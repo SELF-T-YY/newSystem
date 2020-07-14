@@ -30,10 +30,10 @@ function buttom_sample_click(){
     var file_path = NaN;
 
     if(sample_name != 'NULL' && sample_rate != "NULL"){
-        
+    
         document.getElementById("sample_nodes_num").innerText= parseInt(nodes_num);
         document.getElementById("sample_edges_num").innerText= parseInt(edges_num);
-        
+
         reflash();
 
         force_file_name = '/data_forSystem/' + data_name + '/forceData/' + sx(data_name) +  '_forceData_' + sample_name + '_rate_' + sample_rate + '.json'

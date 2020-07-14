@@ -8,18 +8,18 @@
 </head>
 <body>
     <script>
-        const tsne_width = 400;
-        const tsne_height = 400;
+        const tsne_width = 600;
+        const tsne_height = 600;
 
         const tsne_circle_color = '#3A435E';
         const tsne_circle_choose_color = '#ff00ff'
 
         // var tsne_filename = "/data_forSystem/cit-HepTh/CH_Tsne.csv";
-        var tsne_filename = "/data_forSystem/ieee_visC/IV_Tsne.csv";
+        var tsne_filename = "/data_forSystem/week2ball3line/week2ball3line_Tsne.csv";
         // var tsne_filename = "/data_forSystem/web-webbase-2001/WW_Tsne.csv";
 
-        var force_file_name = '/data_forSystem/ieee_visC/clh/ieee_ClassicalSample1.json'
-        // var force_file_name = '/data_forSystem/ieee_visC/our_sample_adv/our_sample_times_0_a_0.5_b_0.5_rata_10.json'
+        var force_file_name = '/data_forSystem/week2ball3line/week2ball3line_ClassicalSample1.json'
+        // var force_file_name = '/data_forSystem/week2ball3line/our_sample_adv/our_sample_times_0_a_0.5_b_0.5_rata_20.json'
         function draw_tsne(filename){
             d3.csv(filename, function(tsne_datas){
                 let tsne_dataset = [];
@@ -27,13 +27,19 @@
                 d3.json(force_file_name, function(f_datas){
                     var datas;
                     for(var i in f_datas){
-                        if(f_datas[i]['name'] == 'ISRW'){
-                            datas = f_datas[i]['rate-10'][0]
+                        if(f_datas[i]['name'] == 'SRW'){
+                            datas = f_datas[i]['rate-15'][0]
                             break
                         }
                     }
-                    var force_node = datas['nodes'];
+                    //sample
+                    var temp_force_node = datas['nodes'];
+                    var force_node = [];
+                    for(var key in temp_force_node){
+                        force_node.push(String(temp_force_node[key]));
+                    }
 
+                    //OUR
                     // var force_node = []
                     // f_datas_X = f_datas.nodes
                     // for(var i in f_datas_X){
@@ -42,17 +48,21 @@
 
 
                     console.log(force_node)
+
                     for(var key=0;key<tsne_datas.length; key++){
                         // console.log(tsne_datas[key]['id'])
                         // console.log(force_node.indexOf(tsne_datas[key]['id']))
-                        if(force_node.indexOf(parseInt(tsne_datas[key]['id']))> -1){
+                        // if(force_node.indexOf(parseInt(tsne_datas[key]['id'])) > -1){
+                        //     tsne_dataset.push(tsne_datas[key]);                            
+                        // }
                         //=================== 
-                        // if(force_node.indexOf(tsne_datas[key]['id'])> -1){
+                        if(force_node.indexOf(tsne_datas[key]['id'])> -1){
                             tsne_dataset.push(tsne_datas[key]);                            
                         }
                         // =============
                     }
-                    tsne_dataset = tsne_datas
+                    //原始数据
+                    // tsne_dataset = tsne_datas
                     console.log(tsne_dataset)
                     var svg = d3.select('body')
                                 .append('svg')
@@ -61,16 +71,16 @@
                                 .attr('height', tsne_height)
                     
 
-                    var x_max = d3.max(tsne_dataset,function(d){
+                    var x_max = d3.max(tsne_datas,function(d){
                         return parseInt(d['x']);
                     })
-                    var x_min = d3.min(tsne_dataset,function(d){
+                    var x_min = d3.min(tsne_datas,function(d){
                         return parseInt(d['x']);
                     })
-                    var y_max = d3.max(tsne_dataset,function(d){
+                    var y_max = d3.max(tsne_datas,function(d){
                         return parseInt(d['y']);
                     })
-                    var y_min = d3.min(tsne_dataset,function(d){
+                    var y_min = d3.min(tsne_datas,function(d){
                         return parseInt(d['y']);
                     })
 
@@ -101,71 +111,25 @@
                         .attr('id', function(d){
                             return 'tsne_circle_' + d['id']; 
                         })
-                        // .on('click', brush_draw())
-
-                    
-                    // function brush_draw(){
-                    //     var brush = d3.brush()
-                    //                     .extent([
-                    //                         [0,0],
-                    //                         [tsne_width,tsne_height]
-                    //                     ])
-                    //                     .on('start brush', brushed)
-                    //                     .on('end', brushend);
-                    //     svg.append('g')
-                    //         .attr('id', 'tsne_brush')
-                    //         .call(brush)
-
-
-                    //     function brushed(){
-                    //             d3.select('#tsne_brush').style('opacity', 1)
+                
+                        tsne_chanege_color_by_list(['1000', '1001', '1002', '1003', '1004', '1005', '1006', '1007', '1008'])
+                    // d3.json('/data_forSystem/2ball3line/2ball3line_id_x_y_kde_edges_betweenness.json', function(betweennessData){
+                    //     var arrList = []
+                    //     for(var node in betweennessData){
+                    //         arrList.push({'node': node,'betweenness':betweennessData[node]['betweenness']})
                     //     }
-                    //     function brushend(){
-                    //         reflash();
-                    //         d3.select('#tsne_brush').style('opacity', 1);
-
-                    //         var event = d3.event.selection;
-                    //         console.log(event)
-                    //         var x1 = event[0][0];
-                    //         var y1 = event[0][1];
-                    //         var x2 = event[1][0];
-                    //         var y2 = event[1][1];
-                    //         var x_max = d3.max([x1,x2]);
-                    //         var y_max = d3.max([y1,y2]);
-                    //         var x_min = d3.min([x1,x2]);
-                    //         var y_min = d3.min([y1,y2]);
-                    //         var circle_choosed = [];
-                    //         for(var key in tsne_dataset){
-                    //             var x = tsne_dataset[key].x;
-                    //             var y = tsne_dataset[key].y;
-                    //             if(x >= x_min && x <= x_max && y >= y_min && y <= y_max){
-                    //                 circle_choosed.push(tsne_dataset[key]['id']);
-                    //             }
-                    //         }
-                    //         // tsne_chanege_color_by_list(circle_choosed);
-                    //         // tsne_choose_force_change_color(circle_choosed);
+                    //     var sort_list = arrList.sort(function(a,b){
+                    //         return b['betweenness'] - a['betweenness'];
+                    //     })
+                    //     // console.log(sort_list)
+                    //     var choose_circle_list = []
+                    //     for(var i=0; i<3; i++){
+                    //         choose_circle_list.push(sort_list[i]['node'])
                     //     }
-                    // }
-
-
-
-                    d3.json('/data_forSystem/ieee_visC/IV_id_x_y_kde_edges_betweenness.json', function(betweennessData){
-                        var arrList = []
-                        for(var node in betweennessData){
-                            arrList.push({'node': node,'betweenness':betweennessData[node]['betweenness']})
-                        }
-                        var sort_list = arrList.sort(function(a,b){
-                            return b['betweenness'] - a['betweenness'];
-                        })
-                        // console.log(sort_list)
-                        var choose_circle_list = []
-                        for(var i=0; i<5; i++){
-                            choose_circle_list.push(sort_list[i]['node'])
-                        }
-                        tsne_chanege_color_by_list(choose_circle_list);
+                    //     tsne_chanege_color_by_list(choose_circle_list);
                         
                         
-                    })
+                    // })
                 })
 
 

@@ -8,13 +8,23 @@
 </head>
 <body>
     <script>
-        const width = 1500;
+        const width = 500;
         const height = 700;
         
-
-        d3.json('/data_forSystem/soc-sign-bitcoinotc.csv/SSB_forceData.json', function(err, data) {
+        // RES  RJ  RNS SRW TIES
+        // var file_name = '/data_forSystem/FourBallTest/other_sample/tsne_RES_20_nodes_edges.json'
+        var file_name = '/data_forSystem/FourBallTest/our_sample_adv/our_sample_times_0_a_0.5_b_0.5_rata_20.json'
+        
+        d3.json(file_name, function(err, data) {
             var nodesList = data['nodes'];
             var edgesList = data['edges'];
+
+            //ourSample
+            var temp_nodeList = []
+            for(var node in nodesList){
+                temp_nodeList.push(nodesList[node]['id']);
+            }
+            nodesList = temp_nodeList
 
             var nodes = [];
             for(var n in nodesList){
@@ -29,62 +39,45 @@
                     .attr("width",width)
                     .attr("height",height);
 
+
+
             var simulation = d3.forceSimulation(nodes)
-                                .force('link', 
-                                            d3.forceLink(links)
+                            .force('link', d3.forceLink(links)
                                                 .id(d => d['id'])
-                                                .distance(2))
-                                .force('charge', d3.forceManyBody().strength(-10))
-                                .force('center', d3.forceCenter(width/2, height/2))
-                                .force('collide', d3.forceCollide(100).strength(0.2).iterations(5))
+                                                .distance(10))
+                            .force('charge', d3.forceManyBody().strength(-10))
+                            .force('center', d3.forceCenter(width/2, height/2))
 
-
-
-                                // .on('end', ()=>{
-                                //     var x_max = d3.max(nodesID, d => d['x'])
-                                //     var x_min = d3.min(nodesID, d => d['x'])
-                                //     var y_max = d3.max(nodesID, d => d['y'])
-                                //     var y_min = d3.min(nodesID, d => d['y'])
-
-                                //     var xScale = d3.scaleLinear()
-                                //                     .domain([x_min, x_max])
-                                //                     .range([10, force_width]);
-                                //     var yScale = d3.scaleLinear()
-                                //                     .domain([y_min, y_max])
-                                //                     .range([10, force_height]);
-                                    
-                                //     for(var i in nodesID){
-                                //         nodesID[i].x = parseInt(xScale(nodesID[i].x));
-                                //         nodesID[i].y = parseInt(yScale(nodesID[i].y));
-                                //     }
-                                // })
-
-            // var svg_links = svg.selectAll("line")
-            //     .data(links)
-            //     .enter()
-            //     .append("line")
-            //     .style("stroke","#ccc")
-            //     .style("stroke-width",0.1);
 
             var svg_nodes = svg.selectAll("circle")
                 .data(nodes)
                 .enter()
                 .append("circle")
-                .attr("r",10)
-                .style("fill", 0xf4f4f4)    
+                .attr('id', function(d){return d.id})
+                .attr("r",2)
+                .style("fill", "steelblue")    
                 .attr("cx",function(d){return d.x;})
                 .attr("cy",function(d){return d.y;});
+
+            var svg_links = svg.selectAll("line")
+                .data(links)
+                .enter()
+                .append("line")
+                .attr("stoke-width",0.01)
+                .attr("stroke", "steelblue")
+                .attr("opacity",0.2)
+
+
             function draw(){
-                // svg_nodes
-                //     .attr("cx",function(d){return d.x;})
-                //     .attr("cy",function(d){return d.y;});
-    
-    
-                // svg_links
-                //     .attr("x1",function(d){return d.source.x; })
-                //      .attr("y1",function(d){ return d.source.y; })
-                //      .attr("x2",function(d){ return d.target.x; })
-                //      .attr("y2",function(d){ return d.target.y; });
+
+                svg_nodes
+                    .attr("cx",function(d){return d.x;})
+                    .attr("cy",function(d){return d.y;});
+                svg_links
+                    .attr("x1",function(d){return d.source.x; })
+                     .attr("y1",function(d){ return d.source.y; })
+                     .attr("x2",function(d){ return d.target.x; })
+                     .attr("y2",function(d){ return d.target.y; });
                 radius = 0
                 svg_nodes
                     .attr("cx", function(d) {
