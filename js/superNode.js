@@ -1,10 +1,11 @@
-const superNode_width = document.getElementById('Histogram').offsetWidth;
-const superNode_height = document.getElementById('Histogram').offsetHeight-10;
+const superNode_panal = 'superNode'
+const superNode_width = document.getElementById(superNode_panal).offsetWidth;
+const superNode_height = document.getElementById(superNode_panal).offsetHeight-10;
 const superNode_circle_Color = 0x3A435E;
 const superNode_line_Color = 0xc6c6c6;
 
-var a = d3.rgb(133, 193, 233);//绿色
-var b = d3.rgb(3, 56, 92 );//红色
+var a = d3.rgb(133, 193, 233);
+var b = d3.rgb(3, 56, 92 );
 
 var compute_color = d3.interpolate(a,b);
 
@@ -46,17 +47,17 @@ function draw_community(fileName){
             if(node_existed.indexOf(nodes[i].id) != -1)node_existed_list.push(nodes[i])
             else node_Unexisted_list.push(nodes[i]);
         }
-        console.log(nodes)
-        console.log(node_existed_list)
-        console.log(links)
-        var svg = d3.select("#Histogram")
+        // console.log(nodes)
+        // console.log(node_existed_list)
+        // console.log(links)
+        var svg = d3.select("#" + superNode_panal)
                     .append('svg')
                     .attr('id', 'superNode_svg')
                     .attr('width', superNode_width)
                     .attr('height', superNode_height);
         
         var simulation = d3.forceSimulation(nodes)
-                            .force('link', d3.forceLink(links).distance(40))
+                            .force('link', d3.forceLink(links).distance(100))
                             .force('charge', d3.forceManyBody()
                                 .strength(function(d){
                                     // console.log(node_existed.indexOf(d.id))
@@ -68,12 +69,8 @@ function draw_community(fileName){
                             .force('center', d3.forceCenter(superNode_width/2, superNode_height/2))
                             // .force('collide', d3.forceCollide(-10).strength(0.2))
 
-        simulation
-                .nodes(nodes)
+        simulation.nodes(nodes)
                 .on('tick', ticked)
-
-        
-        
         // simulation.nodes(node_Unexisted_list)
         //             .force('forceRadial', d3.forceRadial(3[50,50]))
         
@@ -105,7 +102,7 @@ function draw_community(fileName){
                                 .attr("cx", d => (d.x))
                                 .attr("cy", d => (d.y))
                                 // .attr('fill', d =>(d['color']))
-                                .attr("r", d =>(Math.log(d.num)))
+                                .attr("r", d =>(Math.log(d.num) * 2))
                                 .attr("class", "community")
                                 .attr('id', function(d,i){
                                     return 'community_' + i;
@@ -181,4 +178,4 @@ function draw_community(fileName){
 }
 
 
-// draw_community(superNode_Data_reFile);
+draw_community(superNode_Data_reFile);

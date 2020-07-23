@@ -19,14 +19,15 @@ function button_choose_point_click_on()
    if_button_point_click(true);
 }
 
-function sankey_change_color(i){
-    d3.selectAll('.sankey_top_node').style('opacity', 0.3)
-    d3.select('#sankey_community_top_' + i).style('opacity', 1)
-    d3.selectAll('.sankey_bottom_node').style('opacity', 0.3)
-    d3.select('#sankey_community_bottom_' + i).style('opacity', 1)
-    d3.selectAll('.sankey_community_path').style('opacity', 0)
-    d3.select('#sankey_community_path_' + i).style('opacity', 0.5)
-}
+
+// function sankey_change_color(i){
+//     d3.selectAll('.sankey_top_node').style('opacity', 0.3)
+//     d3.select('#sankey_community_top_' + i).style('opacity', 1)
+//     d3.selectAll('.sankey_bottom_node').style('opacity', 0.3)
+//     d3.select('#sankey_community_bottom_' + i).style('opacity', 1)
+//     d3.selectAll('.sankey_community_path').style('opacity', 0)
+//     d3.select('#sankey_community_path_' + i).style('opacity', 0.5)
+// }
 
 function if_button_move_click(flag){
     if_move = flag;
@@ -70,7 +71,7 @@ function force_change_color(i, color){
                         const now_y = (datas[choosed_point_data[node]].y);
                         d3.select("#tsne_node_"+choosed_point_data[node]).style("fill",circles_change_color);
                         circles_choose_change_color.beginFill(community_circle_color);
-                        circles_choose_change_color.drawCircle(now_x,now_y,0.8);
+                        circles_choose_change_color.drawCircle(now_x,now_y,force_circle_r);
                         circles_choose_change_color.endFill();                        
                     }
                 }
@@ -104,7 +105,7 @@ function tsne_choose_force_change_color(circle_list){
                 const now_y = (datas[choosed_point_data[node]].y);
                 // d3.select("#tsne_node_"+choosed_point_data[node]).style("fill",circles_change_color);
                 circles_choose_change_color.beginFill('0xff0000');
-                circles_choose_change_color.drawCircle(now_x,now_y,force_circle_r*3);
+                circles_choose_change_color.drawCircle(now_x,now_y,force_circle_r);
                 circles_choose_change_color.endFill();                
             }
 
@@ -138,7 +139,7 @@ function tsne_chanege_color_by_list(circle_list){
     // console.log(circle_list)
     d3.selectAll('.tsne_circle').attr('fill', tsne_circle_color);
     for(let key in circle_list){
-        d3.select('#tsne_circle_' + circle_list[key]).attr('fill','red').attr('r', 3);
+        d3.select('#tsne_circle_' + circle_list[key]).attr('fill','red').attr('r', tsne_circle_r);
         // d3.select('#Node2vec').attr('fill', 'red')
         // .attr('cx', -51.761482 )
         // .attr('cy', 40.945698)
@@ -210,7 +211,7 @@ function force_change_color_shortestPath(){
                         const now_y = (datas[choosed_point_data[node]].y);
                         d3.select("#tsne_node_"+choosed_point_data[node]).style("fill",circles_change_color);
                         circles_choose_change_color.beginFill(circles_change_color);
-                        circles_choose_change_color.drawCircle(now_x,now_y, 2);
+                        circles_choose_change_color.drawCircle(now_x,now_y,force_circle_r);
                         circles_choose_change_color.endFill();                        
                     }
                 }
@@ -252,7 +253,7 @@ function xx(){
             const now_x = parseInt(datas['8191'].x);
             const now_y = parseInt(datas['8191'].y);
             circles_choose_change_color.beginFill(circles_change_color);
-            circles_choose_change_color.drawCircle(now_x,now_y,2);
+            circles_choose_change_color.drawCircle(now_x,now_y,force_circle_r);
             circles_choose_change_color.endFill();                        
 
             // app.stage.addChild(force_links_shortestPath);
@@ -274,8 +275,6 @@ function ssb_change_force(){
     force_change_color(6, 0xe62701);
     force_change_color(10, 0xfe836b);
     // force_change_color(17, 0xff0000);
-
-
     // force_change_color(3, 0xff0000);
     // force_change_color(5, 0x00ff00);
 }
@@ -306,3 +305,15 @@ function reset(){
 }
 
 
+
+function selectFile(){
+    //触发 文件选择的click事件
+    $("#file").trigger("click");
+
+//其他code如 alert($("#file").attr("value"))
+}
+
+/* 获取 文件的路径 ，用于测试*/
+function getFilePath(){
+    alert($("#file").attr("value"));
+}

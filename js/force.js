@@ -14,8 +14,8 @@ var force_re = ''
 // var force_file_name = "/data/oregonf/ISRW/oregonf_sample_tsne_ISRW_15_nodes_edges.json"
 var force_file_name = "/data_forSystem/ieee_visC/IV_forceData_new_gai.json"
 
-var force_circle_r = 1.5;
-var line_width = 0.5
+var force_circle_r = 2;
+const line_width = 0.5
 
 const force_width = document.getElementById('Force').offsetWidth;
 const force_height = document.getElementById('Force').offsetHeight-25;
@@ -28,9 +28,8 @@ var app = new PIXI.Application({
 });
 var line_Color = 0xc6c6c6;
 // var force_community_circle_Color = 0x3A435E;
-var force_community_circle_Color = 0x9a9a9a;
-// var force_community_circle_Color = 0x4682b4;
-
+// var force_community_circle_Color = 0x9a9a9a;
+var force_community_circle_Color = 0x000000;
 
 document.querySelector('#Force').appendChild(app.view);
 app.renderer.backgroundColor = 0xffffff;
@@ -38,11 +37,14 @@ app.renderer.backgroundColor = 0xffffff;
 let f_nodes = [];
 let f_links = [];
 
-function drawforce(if_draw_again){
-    let scaleAll_xy = 1;//整体缩放
-    let moveAll_x = 0;//整体x移动
-    let moveAll_y = 0;//整体y移动
-    const circles_change_color = 0xff00ff;
+var scaleAll_xy = 4;//整体缩放
+var moveAll_x = -1200;//整体x移动
+var moveAll_y = -1000;//整体y移动
+
+
+function drawforce(){
+
+    const circles_change_color = 0xff0000;
     // var force_community_circle_Color = 0x3A435E;
     var line_Color = 0xc6c6c6;
     var circle_Choose_Color = 0x3A435E;
@@ -61,7 +63,7 @@ function drawforce(if_draw_again){
 
         force_PIXIJS_lines = new PIXI.Graphics();
         for(var i = 0 ; i < f_links.length ; i++){
-            force_PIXIJS_lines.lineStyle(line_width,line_Color,1);
+            force_PIXIJS_lines.lineStyle(line_width,line_Color,0.5);
             force_PIXIJS_lines.moveTo(f_nodes[f_nodeID_key[f_links[i].source]].x,f_nodes[f_nodeID_key[f_links[i].source]].y);
             force_PIXIJS_lines.lineTo(f_nodes[f_nodeID_key[f_links[i].target]].x,f_nodes[f_nodeID_key[f_links[i].target]].y);
         }
@@ -78,19 +80,23 @@ function drawforce(if_draw_again){
         const canvas = document.getElementsByTagName("canvas");
         const canvas_force = canvas[0];
 
-
         canvas_force.addEventListener('mousedown', onDragStart, false);
         canvas_force.addEventListener('mouseup', onDragEnd, false);
         canvas_force.addEventListener('mousemove', onDragMove, false);
         canvas_force.addEventListener('mouseout', onDragEnd,false);        
-
         canvas_force.addEventListener('DOMMouseScroll', wheel, false); 
-
 
         canvas_force.onmousewheel = wheel; //W3C鼠标滚轮事件
 
         circles_choose = new PIXI.Graphics();
         circles_choose_change_color = new PIXI.Graphics();
+
+        //控制位置
+        set_force_Scale(scaleAll_xy);
+        set_force_Position(moveAll_x, moveAll_y);
+
+
+
         function onDragStart() 
         {
             if(if_move == true){
@@ -109,8 +115,8 @@ function drawforce(if_draw_again){
 
         function onDragEnd() 
         {
+
             if(this.dragging)this.dragging = false;
-            
             else if(this.drawingCircle)
             {
                 reflash();
@@ -180,6 +186,7 @@ function drawforce(if_draw_again){
             }
             this.data = null;
         }
+
         function onDragMove()
         {
             if (this.dragging == true)
@@ -191,15 +198,7 @@ function drawforce(if_draw_again){
                 moveAll_x -= move_x;
                 moveAll_y -= move_y;
 
-                force_PIXIJS_circles.x = moveAll_x;
-                force_PIXIJS_circles.y = moveAll_y;
-                force_PIXIJS_lines.x = moveAll_x;
-                force_PIXIJS_lines.y = moveAll_y;
-                circles_choose.x = moveAll_x;
-                circles_choose.y = moveAll_y;
-
-                circles_choose_change_color.x = moveAll_x;
-                circles_choose_change_color.y = moveAll_y;
+                set_force_Position(moveAll_x, moveAll_y);
             }
 
             if(this.drawingCircle == true)
@@ -247,14 +246,8 @@ function drawforce(if_draw_again){
             }else{//向上滚动
                 scaleAll_xy /= 1.2;
             }
-            force_PIXIJS_circles.scale.x = scaleAll_xy;
-            force_PIXIJS_circles.scale.y = scaleAll_xy;
-            force_PIXIJS_lines.scale.x = scaleAll_xy;
-            force_PIXIJS_lines.scale.y = scaleAll_xy;
-            circles_choose.scale.x = scaleAll_xy;
-            circles_choose.scale.y = scaleAll_xy;
-            circles_choose_change_color.scale.x = scaleAll_xy;
-            circles_choose_change_color.scale.y = scaleAll_xy;
+
+            set_force_Scale(scaleAll_xy);
         }
 
 
@@ -265,7 +258,7 @@ function drawforce(if_draw_again){
                 const now_x = (nodes[node].x - moveAll_x) * scaleAll_xy;
                 const now_y = (nodes[node].y - moveAll_y) * scaleAll_xy;
                 circles_choose_change_color.beginFill(circles_change_color);
-                circles_choose_change_color.drawCircle(now_x,now_y,force_circle_r*scaleAll_xy*scaleAll_xy);
+                circles_choose_change_color.drawCircle(now_x,now_y,force_circle_r);
                 circles_choose_change_color.endFill();
             }
             app.stage.addChild(circles_choose_change_color);
@@ -293,19 +286,16 @@ function drawforce_again(file_name){
         }
 
         for(var i = 0 ; i < f_links.length ; i++){
-            force_PIXIJS_lines.lineStyle(line_width,line_Color,1);
+            force_PIXIJS_lines.lineStyle(line_width,line_Color,0.2);
             try{
                 force_PIXIJS_lines.moveTo(parseFloat(f_nodes[f_nodeID_key[f_links[i].source]].x),parseFloat(f_nodes[f_nodeID_key[f_links[i].source]].y));
                 force_PIXIJS_lines.lineTo(parseFloat(f_nodes[f_nodeID_key[f_links[i].target]].x),parseFloat(f_nodes[f_nodeID_key[f_links[i].target]].y));
             }catch(e){
-                // console.log('---------------------'+ i + '-----------------')
-                // console.log(f_links[i])
-                // console.log(e)
             }
         }
         for(var key in f_nodes){
             force_PIXIJS_circles.beginFill(force_community_circle_Color);
-            force_PIXIJS_circles.drawCircle(parseFloat(f_nodes[key].x),parseFloat(f_nodes[key].y),2);
+            force_PIXIJS_circles.drawCircle(parseFloat(f_nodes[key].x),parseFloat(f_nodes[key].y),force_circle_r);
             // console.log(parseInt(f_nodes[key].x))
             force_PIXIJS_circles.endFill();
         }
@@ -317,10 +307,33 @@ function drawforce_again(file_name){
 
 
 function temp_draw_community(){
-    d3.json('/data_forSystem/block2000/block2000_community_num.json', function(community_num_data){
+    file_path = '/data_forSystem/soc-sign/SSBori_community.json'
+    file_path = '/data_forSystem/ieee_visC/IV_community_num.json'
+    d3.json(file_path, function(community_num_data){
         // var choosed_point_data = []
-        var color_list = [0xff0000, 0xffff00, 0x008000, 0x0000ff, 0xff00ff, 0x800080, 0x000080, 0x808000, 0x00ff00]
-        var color_list_tsne = ['#ff0000', '#ffff00', '#008000', '#0000ff', '#ff00ff', '#800080', '#000080', '#808000', '#00ff00']
+        // var color_list = [0xff0000, 0xffff00, 0x008000, 0x0000ff, 0xff00ff, 0x800080, 0x000080, 0x808000, 0x00ff00]
+        // var color_list_tsne = ['#ff0000', '#ffff00', '#008000', '#0000ff', '#ff00ff', '#800080', '#000080', '#808000', '#00ff00']
+
+        var color_list = [
+            0xF66493,
+            0xDA7C69,
+            0x035F93,
+            0xD2E600,
+            0x8CBA68,
+            0xE9BF66,
+            0xBEBDFF,
+            0xDC2A07,
+            0xE942CC,
+            0x546BFB,
+            0x54A8FE,
+            0xAB5B80,
+            0x00B5F1,
+            0xFF3F3F,
+            0xFED9EF,
+            0xFFB265
+        ]
+
+        var community_to_color = [8, 6, 0, 5, 9, 4, 10, 11, 12, 3, 7, 2, 13, 1]
 
         d3.json(force_file_name, function(force_datas){
                 let temp_datas = force_datas['nodes'];
@@ -330,7 +343,7 @@ function temp_draw_community(){
                     data_id = temp_datas[key]['id'];
                     datas[data_id] = temp_datas[key];
                 }
-                var circles_change_color = 0xff00ff;
+                var circles_change_color = 0xff0000;
                 // console.log(choosed_point_data)
                 circles_choose.clear();
                 circles_choose_change_color.clear();
@@ -339,9 +352,10 @@ function temp_draw_community(){
                     const now_x = (datas[node].x);
                     const now_y = (datas[node].y);
                     // d3.select("#tsne_node_"+ node).style("fill",color_list[community_num_data[node]]);
-                    d3.select('#tsne_circle_' + node).attr('fill', color_list_tsne[community_num_data[node]]);
-                    circles_choose_change_color.beginFill(color_list[community_num_data[node]]);
-                    circles_choose_change_color.drawCircle(now_x,now_y,force_circle_r);
+                    // d3.select('#tsne_circle_' + node).attr('fill', color_list_tsne[community_num_data[node]]);
+                    circles_choose_change_color.beginFill(color_list[community_to_color[community_num_data[node]]]);
+                    circles_choose_change_color.drawCircle(now_x,now_y, force_circle_r);
+                    circles_choose_change_color.lineStyle(0.1, 0x050505, 0.7);
                     circles_choose_change_color.endFill();
                 }
                 app.stage.addChild(circles_choose_change_color);
@@ -352,5 +366,81 @@ function temp_draw_community(){
         })
 
 
+        //图例
+        const colorBar_width = 600;
+        const colorBar_height = 80;
+
+        let rect_width = 20;
+        let rect_height = 20;
+        var color_list_svg = [
+            '#F66493',
+            '#DA7C69',
+            '#035F93',
+            '#D2E600',
+            '#8CBA68',
+            '#E9BF66',
+            '#BEBDFF',
+            '#DC2A07',
+            '#E942CC',
+            '#546BFB',
+            '#54A8FE',
+            '#AB5B80',
+            "#00B5F1",
+            '#FF3F3F',
+            '#FED9EF',    
+            // '#FFB265'
+        ]
+        color_list_svg = ['#035F93', '#546BFB','#54A8FE',"#00B5F1",'#BEBDFF','#8CBA68','#D2E600',
+        '#FED9EF','#F66493', '#DA7C69', '#DC2A07','#FF3F3F','#E942CC','#AB5B80'];
+        var force_colorBar_svg = d3.select('#Force_colorBar')
+                                    .append('svg')
+                                    .attr('id', 'force_colorBar_svg')
+                                    .attr('width', colorBar_width)
+                                    .attr('height', colorBar_height);
+        
+        force_colorBar_svg.selectAll('colorBar_rect')
+                            .data(color_list_svg)
+                            .enter()                    
+                            .append('rect')
+                            .attr('class', 'colorBar_rect')
+                            .attr('width', rect_width)
+                            .attr('height', rect_height)
+                            .attr('fill', function(d){
+                                return d;
+                            })
+                            .attr('x', function(d, i){
+                                return  i*(rect_width+2);
+                            })
+                            .attr('y', 0);
+
+        
+        force_colorBar_svg.append('text')
+                            .text('14 communities')                    
+                            .attr('x', 200)
+                            .attr('y', 0)
+                            
     })
+}
+
+
+function set_force_Position(x, y){
+    force_PIXIJS_circles.x = x;
+    force_PIXIJS_circles.y = y;
+    force_PIXIJS_lines.x = x;
+    force_PIXIJS_lines.y = y;
+    circles_choose.x = x;
+    circles_choose.y = y;
+    circles_choose_change_color.x = x;
+    circles_choose_change_color.y = y;
+}
+
+function set_force_Scale(xy){
+    force_PIXIJS_circles.scale.x = xy;
+    force_PIXIJS_circles.scale.y = xy;
+    force_PIXIJS_lines.scale.x = xy;
+    force_PIXIJS_lines.scale.y = xy;
+    circles_choose.scale.x = xy;
+    circles_choose.scale.y = xy;
+    circles_choose_change_color.scale.x = xy;
+    circles_choose_change_color.scale.y = xy;
 }

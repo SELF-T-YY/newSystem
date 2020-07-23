@@ -1,8 +1,10 @@
 const tsne_width = document.getElementById('Node2vec').offsetWidth;
 const tsne_height = document.getElementById('Node2vec').offsetHeight - 25;
 
-const tsne_circle_color = '#3A435E';
+// const tsne_circle_color = '#3A435E';
+const tsne_circle_color = '#000000'
 const tsne_circle_choose_color = '#ff00ff'
+const tsne_circle_r = 2
 
 // var tsne_filename = "/data_forSystem/cit-HepTh/CH_Tsne.csv";
 // var tsne_filename = "/data_forSystem/block2000/B2_Tsne.csv";
@@ -67,7 +69,7 @@ function draw_tsne(filename){
                 .data(tsne_dataset)
                 .enter()
                 .append('circle')
-                .attr('r', 1)
+                .attr('r', tsne_circle_r)
                 .attr('fill', tsne_circle_color)
                 .attr('cx', function(d){ return d['x']; })
                 .attr('cy', function(d){ return d['y']; })

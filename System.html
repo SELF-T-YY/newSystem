@@ -14,18 +14,21 @@
     
     
     <script src="/js/function.js"></script>
-    <!-- <script src="/js/button.js"></script> -->
     <script src="/js/tableButtonClick.js"></script>
+    <script src="/js/buttom_gai.js"></script>
     
-
-
 </head>
 <body style="overflow-x: hidden; overflow-y: hidden " class="text_cant_choose">
     <div id="Left">
         <div id="Left_Info" class="border">
-            <div class="mytitle">Control Panel</div>
+            <div class="mytitle">Data Overview</div>
             <div id="Info">
                 <div id="L_1_1">
+                    <div id="dataSet">
+                        <button id="button-dataSet" class="button_dataSet ripple" value="dataSet" onclick="selectFile()">DataSet</button>
+                        <div id="dataName"><p style="line-height: 30px;">VISData</p></div>
+                    </div>
+                    <br>
                     <table class="table" >
                         <tr class="table" style="height: 30px;">
                             <th class="table">
@@ -39,9 +42,9 @@
                                 </select>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                             </th>
-                            <th class="table bgc ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nodes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                            <th class="table bgc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edges&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                            <th class="table bgc">&nbsp;&nbsp;&nbsp;&nbsp;Community&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            <th class="table bgc">&nbsp;&nbsp;Nodes&nbsp;&nbsp;&nbsp;</th>
+                            <th class="table bgc">&nbsp;&nbsp;&nbsp;Edges&nbsp;&nbsp;&nbsp;</th>
+                            <th class="table bgc">&nbsp;&nbsp;&nbsp;Community&nbsp;&nbsp;&nbsp;</th>
                         </tr>
                         <tr class="table" style="height: 25px">
                             <th id="th_data_name" class="table bgc">Origin:</th>
@@ -57,77 +60,70 @@
                         </tr>
                     </table>
                 </div>
+            </div>
+        </div>
+
+        <div id="Left_RateSet">
+            <div class="mytitle">Control Panel</div>
+            <div id="L_1_2" style="line-height:20px">
+                &nbsp;
+                <select name="Left-select" id="Left_S">
+                        <option value="Sampling" selected disabled hidden>Sampling</option>
+                        <option value="OUR">OUR</option>
+                        <option value="ISRW">ISRW</option>
+                        <option value="TIES">TIES</option>
+                        <option value="SRW">SRW</option>
+                        <option value="RES">RES</option>
+                        <option value="RJ">RJ</option>
+                        <option value="RNS">RNS</option>
+                </select>
+                <button id="button-sample" class="button_common ripple" value="Sample" onclick="buttom_sample_click()">Sample</button>
+                <button id="button-ShowCommunity" class="button_showcommunity ripple" value="ShowCommunity" onclick="temp_draw_community()">Community</button>
+                <button id="button-Reset" class="button_common ripple" value="Reset" onclick="reset()">Reset</button>
+                <br><br>
+                &nbsp;&nbsp;Density: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="range" min="0" max="100" value="50" class="range" id="range1" step="5" >
+                <b class="b1">50</b>%
                 <br>
-                <div id="L_1_2" style="line-height:40px">
-                    <select name="Left-select" id="Left-s" style="width: 95px;">
-                            <option value="Sampling" selected disabled hidden>Sampling</option>
-                            <option value="OUR">OUR</option>
-                            <option value="ISRW">ISRW</option>
-                            <option value="TIES">TIES</option>
-                            <option value="SRW">SRW</option>
-                            <option value="RES">RES</option>
-                            <option value="RJ">RJ</option>
-                            <option value="RNS">RNS</option>
-                    </select>
-                    Density:
-                    <input type="range" min="0" max="100" value="50" class="range_ab" id="range1" step="5" >
-                    <b class="b1">50</b>
-                    Betweeness:
-                    <input type="range" min="0" max="100" value="50" class="range_ab" id="range2" step="5"> 
-                    <b class="b2">50</b>
-                    <br>                
-                </div>
-                <div id="L_1_3" class="noselect">
-                    Sampling Rate: 
-                    <input type="range" min="5" max="100" value="100" class="range" id="range3" step="5">
-                    <b class="b3" id="b3">100</b>
-                    <br>
-                    <script>
-                        var elem1 = document.querySelector('input[id="range1"]');
-                        var elem2 = document.querySelector('input[id="range2"]');
+                &nbsp;&nbsp;Betweenness:&nbsp;&nbsp;&nbsp;
+                <input type="range" min="0" max="100" value="50" class="range" id="range2" step="5"> 
+                <b class="b2">50</b>%
+                &nbsp;&nbsp;Sampling Rate:
+                <input type="range" min="5" max="100" value="100" class="range" id="range3" step="5">
+                <b class="b3" id="b3">100</b>%
+                <script>
+                    var elem1 = document.querySelector('input[id="range1"]');
+                    var elem2 = document.querySelector('input[id="range2"]');
 
-                        var rangeValue1 = function(){
-                            var newValue1 = elem1.value;
-                            var target1 = document.querySelector('.b1');
-                            var target2 = document.querySelector('.b2');
+                    var rangeValue1 = function(){
+                        var newValue1 = elem1.value;
+                        var target1 = document.querySelector('.b1');
+                        var target2 = document.querySelector('.b2');
 
-                            target1.innerHTML = newValue1;
-                            target2.innerHTML = 100 - newValue1;
-                            elem2.value = 100 - newValue1;
-                        };
-                        elem1.addEventListener("input", rangeValue1);
+                        target1.innerHTML = newValue1;
+                        target2.innerHTML = 100 - newValue1;
+                        elem2.value = 100 - newValue1;
+                    };
+                    elem1.addEventListener("input", rangeValue1);
 
+                    var rangeValue2 = function(){
+                        var newValue2 = elem2.value;
+                        var target1 = document.querySelector('.b1');
+                        var target2 = document.querySelector('.b2');
+                        target2.innerHTML = newValue2;
+                        target1.innerHTML = 100 - newValue2;
+                        elem1.value = 100 - newValue2;
+                    };
+                    elem2.addEventListener("input", rangeValue2);
 
-                        var rangeValue2 = function(){
-                            var newValue1 = elem2.value;
-                            var target1 = document.querySelector('.b1');
-                            var target2 = document.querySelector('.b2');
-
-                            target2.innerHTML = newValue2;
-                            target1.innerHTML = 100 - newValue2;
-                            elem1.value = 100 - newValue2;
-                        };
-                        elem2.addEventListener("input", rangeValue2);
-
-                        var elem3 = document.querySelector('input[id="range3"]');
-                        var rangeValue3 = function(){
-                            var newValue3 = elem3.value;
-                            var target3 = document.querySelector('.b3');
-                            target3.innerHTML = newValue3;
-                        };
-                        elem3.addEventListener("input", rangeValue3);
-                    </script>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <script src="/js/buttom_gai.js"></script>                    
-                    <button id="button-sample" class="button_common ripple" value="Sample" onclick="buttom_sample_click()">Sample</button>
-                    &nbsp;
-                    <button id="button-Reset" class="button_common ripple" value="Reset" onclick="reset()">Reset</button>
-                </div>
+                    var elem3 = document.querySelector('input[id="range3"]');
+                    var rangeValue3 = function(){
+                        var newValue3 = elem3.value;
+                        var target3 = document.querySelector('.b3');
+                        target3.innerHTML = newValue3;
+                    };
+                    elem3.addEventListener("input", rangeValue3);
+                </script>
             </div>
         </div>
 
@@ -139,26 +135,18 @@
                     <button id="button_ACC" class="button_control_up" onclick="tableButton_click(this), click_ACC()">ACC</button>
                     <button id="button_APL" class="button_control_up" onclick="tableButton_click(this), click_APL()">APL</button>
                     <button id="button_LCC" class="button_control_up" onclick="tableButton_click(this), click_LCC()">LCC</button>
+                </div>
+                <div id="Histogram">
+                    <script src="/js/Histogram.js"></script>
+                </div>
+                <div id="Control_Down_Button">
                     <button id="button_CC"  class="button_control_up" onclick="tableButton_click(this), click_CC()">CC</button>
                     <button id="button_SCC" class="button_control_up" onclick="tableButton_click(this)">SCC</button>
                     <button id="button_QCS" class="button_control_up" onclick="tableButton_click(this)">QCS</button>
                     <button id="button_GCC" class="button_control_up" onclick="tableButton_click(this)">GCC</button>
                 </div>
-                <div id="Histogram">
-                    <script src="/js/Histogram.js"></script>
+                <div id="superNode">
                     <script src="/js/superNode.js"></script>
-                </div>
-            </div>
-        </div>
-
-        <div id="Left_Node2vec" class="border">
-            <div class="mytitle">Node2vec</div>
-            <div id="Node2vec">
-                <div id="Tsne_Button">
-                    <script src="/js/tsne.js"></script>
-                    <!-- <script src="/js/TSNE_GAI.JS"></script> -->
-                    <button id="buttom_tsne_choose" class="button_tsne ripple" onclick="button_move_click_on()"></button>
-                    <button id="buttom_tsne_reflash" class="button_tsne ripple" onclick="reflash()"></button>
                 </div>
             </div>
         </div>
@@ -168,11 +156,11 @@
         
         <div id="Right_Force" class="border">
             <div class="mytitle">Node-Link Diagram
-                <select name="Center_select" id="s2" style="font-size: 15px;" onchange="select2_change()">
+                <!-- <select name="Center_select" id="s2" style="font-size: 15px;" onchange="select2_change()">
                     <option value="force_origin">Origin</option>
                     <option value="force_sample">Sample</option>
                     <option value="force_re">Re</option>
-                </select>
+                </select> -->
             </div>
             <div id="Force">
                 <script src="/js/force.js"></script>
@@ -182,13 +170,31 @@
                     <button id="button_circle_choose" class="button_force ripple" onclick="button_circle_choose_click_on()"></button>
                     <button id="button_reflash" class="button_force ripple" onclick="reflash()"></button>
                 </div>
+                <div id="Force_colorBar"></div>
             </div>
 
-            <div id="radar">
-                <!-- <script src="/js/radar.js"></script> -->
-            </div>
+            <!-- <div id="radar">
+                <script src="/js/radar.js"></script>
+            </div> -->
+        </div>
+    </div>
 
-            
+    <div id="Right_add">
+        <div id="Right_Node2vec" class="border">
+            <div class="mytitle">Node2vec</div>
+            <div id="Node2vec">
+                <div id="Tsne_Button">
+                    <script src="/js/tsne.js"></script>
+                    <button id="buttom_tsne_choose" class="button_tsne ripple" onclick="button_move_click_on()"></button>
+                    <button id="buttom_tsne_reflash" class="button_tsne ripple" onclick="reflash()"></button>
+                </div>
+            </div>
+        </div>
+        <div id="Right_Radar" class="border">
+            <div class="mytitle">Radar</div>
+            <div id="Radar">
+                <script src="/js/radar_gai.js"></script>
+            </div>
         </div>
     </div>
 

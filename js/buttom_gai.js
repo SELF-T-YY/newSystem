@@ -2,7 +2,7 @@ var buttom = document.querySelector('input[id="button-sample"]');
 var data_name = "ieee_visC"
 
 function buttom_sample_click(){
-    var select_name = document.getElementById('Left-s');
+    var select_name = document.getElementById('Left_S');
     var index = select_name.selectedIndex;
     var select_n = select_name.options[index].value;
 
@@ -55,7 +55,7 @@ function buttom_sample_click(){
             document.getElementById("sample_community_num").innerText= parseInt(nodeList.length);
           
         })
-        force_circle_r = 1;
+        // force_circle_r = 1;
         drawforce_again(force_file_name);
         document.getElementById('s2').value = 'force_sample';
 
@@ -80,15 +80,15 @@ function select2_change(){
     var selected = select_name.options[select_name.selectedIndex].value;
 
     if(selected == 'force_origin'){
-        force_circle_r = 1;
+        // force_circle_r = 1;
         drawforce_again(force_file_origin_name);
     }
     else if(selected == 'force_sample'){
-        force_circle_r = 1;
+        // force_circle_r = 1;
         drawforce_again(force_file_name);
     }
     else if(selected == 'force_re'){
-        force_circle_r = 2;
+        // force_circle_r = 2;
         drawforce_again(force_re);
     }
 }
@@ -195,7 +195,7 @@ function changeData(){
         document.getElementById("th_community_num").innerText= parseInt(16);
         
 
-        var all_options = document.getElementById("Left-s").options;
+        var all_options = document.getElementById("Left_S").options;
         for (i=0; i<all_options.length; i++){
            if (all_options[i].value == 'Sampling')  // 根据option标签的ID来进行判断  测试的代码这里是两个等号
            {
@@ -205,8 +205,8 @@ function changeData(){
 
         document.getElementById("b3").innerHTML = 100
         document.getElementById("range3").value = 100
-        
 
+        force_circle_r = 1;
 
         if_first_change_data = false
 
@@ -227,9 +227,8 @@ function changeData(){
         APL_filePath = '/data_forSystem/soc-sign/shortestPath/SSB_shortestPath.json'
 
         tsne_filename = '/data_forSystem/soc-sign/SSB_Tsne.csv'
-        force_circle_r = 1;
         drawforce_again(force_file_name);
-        document.getElementById('s2').value = 'force_sample';
+        // document.getElementById('s2').value = 'force_sample';
 
         if(document.getElementById('tsne_svg'))document.getElementById('tsne_svg').remove()
         draw_tsne(tsne_filename);
@@ -240,8 +239,9 @@ function changeData(){
         // doRadar('ori', data_name, '5')
 
         click_CC();
-        show_CC();        
+        show_CC();
 
+        temp_draw_community();
     } 
 
 
@@ -249,64 +249,64 @@ function changeData(){
 
 
 
-function changeData(){
-    var objS = document.getElementById("Left_d");
-    var new_data_name = objS.options[objS.selectedIndex].value;
-    if(new_data_name == 'WW' && if_first_change_data)
-    {
-        document.getElementById("th_nodes_num").innerText= parseInt(16062);
-        document.getElementById("th_edges_num").innerText= parseInt(25593);
-        document.getElementById("th_community_num").innerText= parseInt(16);
+// function changeData(){
+//     var objS = document.getElementById("Left_d");
+//     var new_data_name = objS.options[objS.selectedIndex].value;
+//     if(new_data_name == 'WW' && if_first_change_data)
+//     {
+//         document.getElementById("th_nodes_num").innerText= parseInt(16062);
+//         document.getElementById("th_edges_num").innerText= parseInt(25593);
+//         document.getElementById("th_community_num").innerText= parseInt(16);
         
 
-        var all_options = document.getElementById("Left-s").options;
-        for (i=0; i<all_options.length; i++){
-           if (all_options[i].value == 'Sampling')  // 根据option标签的ID来进行判断  测试的代码这里是两个等号
-           {
-              all_options[i].selected = true;
-           }
-        }
+//         var all_options = document.getElementById("Left-s").options;
+//         for (i=0; i<all_options.length; i++){
+//            if (all_options[i].value == 'Sampling')  // 根据option标签的ID来进行判断  测试的代码这里是两个等号
+//            {
+//               all_options[i].selected = true;
+//            }
+//         }
 
-        document.getElementById("b3").innerHTML = 100
-        document.getElementById("range3").value = 100
+//         document.getElementById("b3").innerHTML = 100
+//         document.getElementById("range3").value = 100
         
 
 
-        if_first_change_data = false
+//         if_first_change_data = false
 
-        data_name = 'web-webbase-2001'
+//         data_name = 'web-webbase-2001'
 
-        reflash();
+//         reflash();
 
-        force_file_name = '/data_forSystem/web-webbase-2001/WWxy.json'
-        // force_re = '/data_forSystem/' + data_name + '/force_data/' + sx(data_name) + '_' + sample_name +'_rate-'+sample_rate+'_forcedata.json'
+//         force_file_name = '/data_forSystem/web-webbase-2001/WWxy.json'
+//         // force_re = '/data_forSystem/' + data_name + '/force_data/' + sx(data_name) + '_' + sample_name +'_rate-'+sample_rate+'_forcedata.json'
 
-        pg_sample_rate = 'rate-5'
-        pg_file_name = '/data_forSystem/soc-sign/pdData/SSBxxxori_Eva.json'
-        pg_file_name_ori = '/data_forSystem/soc-sign/pdData/SSBxxxori_Eva.json'
+//         pg_sample_rate = 'rate-5'
+//         pg_file_name = '/data_forSystem/soc-sign/pdData/SSBxxxori_Eva.json'
+//         pg_file_name_ori = '/data_forSystem/soc-sign/pdData/SSBxxxori_Eva.json'
 
-        superNode_Data_File = '/data_forSystem/web-webbase-2001/superNodeData/WW_shotestPath.json'
+//         superNode_Data_File = '/data_forSystem/web-webbase-2001/superNodeData/WW_shotestPath.json'
 
-        APL_filePath_ori = '/data_forSystem/web-webbase-2001/shortestPath/WW_shortestPath.json'
-        APL_filePath = '/data_forSystem/web-webbase-2001/shortestPath/WW_shortestPath.json'
+//         APL_filePath_ori = '/data_forSystem/web-webbase-2001/shortestPath/WW_shortestPath.json'
+//         APL_filePath = '/data_forSystem/web-webbase-2001/shortestPath/WW_shortestPath.json'
 
-        tsne_filename = '/data_forSystem/web-webbase-2001/WW_Tsne.csv'
-        force_circle_r = 1;
-        drawforce_again(force_file_name);
-        document.getElementById('s2').value = 'force_sample';
+//         tsne_filename = '/data_forSystem/web-webbase-2001/WW_Tsne.csv'
+//         force_circle_r = 1;
+//         drawforce_again(force_file_name);
+//         document.getElementById('s2').value = 'force_sample';
 
-        if(document.getElementById('tsne_svg'))document.getElementById('tsne_svg').remove()
-        draw_tsne(tsne_filename);
+//         if(document.getElementById('tsne_svg'))document.getElementById('tsne_svg').remove()
+//         draw_tsne(tsne_filename);
 
-        // drawRadar(parseInt(sample_rate));
+//         // drawRadar(parseInt(sample_rate));
 
-        d3.select('#radar_svg').remove()
-        // doRadar('ori', data_name, '5')
+//         d3.select('#radar_svg').remove()
+//         // doRadar('ori', data_name, '5')
 
-        click_CC();
-        show_CC();        
+//         click_CC();
+//         show_CC();        
 
-    } 
+//     } 
 
 
-}
+// }
