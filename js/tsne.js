@@ -64,7 +64,25 @@ function draw_tsne(filename){
             }
 
 
-            svg.append('g')
+            var container = svg.append('g');
+
+            // var zoom = d3.zoom()
+            //             .on("zoom", zoomed);
+    
+            // function zoomed() {
+            //     console.log(d3.event)
+            //     // if(d3.event.sourceEvent == 'WheelEvent'){
+                    
+            //     // }
+            //     x=d3.event.transform.x;
+            //     y=d3.event.transform.y;
+            //     s=d3.event.scale;
+            //     // container.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ")");
+            //     container.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ") scale(" + d3.event.scale + ")");
+            // }
+
+
+            container.append('g')
                 .selectAll('.tsne_circle')
                 .data(tsne_dataset)
                 .enter()
@@ -78,6 +96,7 @@ function draw_tsne(filename){
                     return 'tsne_circle_' + d['id']; 
                 })
                 .on('click', brush_draw())
+                // .call(zoom);
 
             
             function brush_draw(){

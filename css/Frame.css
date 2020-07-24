@@ -15,9 +15,8 @@ body{
 #Left_S{
     position: relative;
     top: 5px;
-    width: 100px;
+    width: 30%;
     height: 35px;
-    font-size: 17px;
     background-color: white;
     border: 1.5px solid #D3D3D3;
     outline:none;
@@ -26,11 +25,11 @@ body{
 
 #Left_RateSet{
     position: absolute;
-    top:21%;
+    top:16%;
     left: 0%;
     right: 0%;
     width: auto;
-    height: 18%;
+    height: 24%;
     margin-top: 2px;
     background-color: white;
 }
@@ -41,7 +40,7 @@ body{
     left: 0%;
     right: 0%;
     width: auto;
-    height: 20%;
+    height: 16%;
     margin-top: 2px;
     background-color: white;
 }
@@ -93,7 +92,7 @@ body{
 
 #Control_Down_Button{
     position: absolute;
-    top: 53%;
+    top: 46%;
     height: 25px;
     width: 100%;
 }
@@ -109,15 +108,15 @@ body{
     left: 0em;
     top: 10%;
     width: 100%;
-    height: 42%;
+    height: 35%;
 }
 
 #superNode{
     position: absolute;
-    top: 58%;
+    top: 51%;
     left: 0%;
     width: 100%;
-    height: 41%;
+    height: 48%;
 }
 
 #SketchMap{
@@ -177,6 +176,16 @@ body{
     background-color: white;
 }
 
+#back_color{
+    position: absolute;
+    right: 1%;
+    top: 6%;
+    width: 33px;
+    height: 132px;
+    background-color: white;
+    border: 0px solid rgba(255, 255, 255, 0.692);
+    border-radius: 10%;
+}
 
 #Right_add{
     position: absolute;
@@ -201,25 +210,31 @@ body{
     margin-right: 5px;
 }
 #button_move{
-    background-image: url(/images/移动.svg);
+    display:block;
+    margin:0 auto;
+    background: url(/images/移动.svg) center center no-repeat;
     position: absolute;
     top: 0%;
+    background-size: 80% 80%;
 }
 
 #button_point_click{
-    background-image: url(/images/点击.svg);
+    background: url(/images/点击.svg) center center no-repeat;
     position: absolute;
     top: 33px;
+    background-size: 80% 80%;
 }
 #button_circle_choose{
-    background-image: url(/images/圈选.svg);
+    background: url(/images/圈选.svg) center center no-repeat;
     position: absolute;
     top: 66px;
+    background-size: 80% 80%;
 }
 #button_reflash{
-    background-image: url(/images/刷新.svg);
+    background: url(/images/刷新.svg) center center no-repeat;
     position: absolute;
     top: 99px;
+    background-size: 80% 80%;
 }
 
 #buttom_tsne_choose{
@@ -338,9 +353,8 @@ body{
 .button_common{
     top: 5px;
     right: 0px;
-    width: 60px;
+    width: 30%;
     height: 35px;
-    font-size: 17px;
     background-color: white;
     border: 1.5px solid #D3D3D3;
     outline:none;
@@ -360,14 +374,15 @@ body{
 
 .button_dataSet{
     left: 10px;
-    top: 10px;
     width: 90px;
-    height: 35px;
-    font-size: 17px;
-    background-color: white;
-    border: 1.5px solid #D3D3D3;
-    outline:none;
-    border-radius: 5px;
+    height: 30px;
+    font-weight: lighter;
+    /* font-size: 17px; */
+    background-color: #ccc7c7;
+    /* border: 1.5px solid #D3D3D3; */
+    border: hidden;
+    outline: none;
+    /* border-radius: 5px; */
 }
 
 .range{
@@ -443,8 +458,18 @@ input[type=range]::-webkit-slider-thumb {
     height: 25px;
     display:inline-block;
     background-color: white;
-    border: 1px solid rgb(228, 228, 228);
+    border: 1px solid rgb(187, 187, 187);
+    align-items: center;
+    margin-right: 0%;
+}
+
+
+.button_control_down{
+    width: 25%;
+    height: 25px;
+    display:inline-block;
     background-color: white;
+    border: 1px solid rgb(187, 187, 187);
     align-items: center;
     margin-right: 0%;
 }
@@ -453,7 +478,7 @@ input[type=range]::-webkit-slider-thumb {
     position: absolute;
     left: 0%;
     background-color: white;
-    border: none;
+    /* border: none; */
 }
 #button_ACC{
     position: absolute;
@@ -474,7 +499,7 @@ input[type=range]::-webkit-slider-thumb {
 #button_CC{
     position: absolute;
     left: 0%;
-    background-color: #f2f2f2;
+    background-color: white;
 }
 
 #button_SCC{
@@ -495,12 +520,15 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .table{
+    /* border: 1.5px solid #D3D3D3; */
     border: 0px solid#cccccc;
     font-weight: lighter;
 }
 
 .bgc{
+    border: 1.5px solid #a7a7a7;
     background-color: #f2f2f2;
+
 }
 
 .bgc_g{
@@ -511,7 +539,7 @@ input[type=range]::-webkit-slider-thumb {
     font-size:12px;
     stroke:#ffffff;
     line-height:35px;
-    text-shadow: 0 1px #555, 1px 0 #555, -1px 0 #555, 0 -1px #555;
+    text-shadow: 0 1px #555, 1px 0 #555555, -1px 0 #555, 0 -1px #555;
 }
 
 .axis{

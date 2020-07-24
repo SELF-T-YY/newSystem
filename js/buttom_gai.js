@@ -57,7 +57,7 @@ function buttom_sample_click(){
         })
         // force_circle_r = 1;
         drawforce_again(force_file_name);
-        document.getElementById('s2').value = 'force_sample';
+
 
         if(document.getElementById('tsne_svg'))document.getElementById('tsne_svg').remove()
         draw_tsne(tsne_filename);
@@ -97,30 +97,25 @@ function select2_change(){
 
 function click_ABD(){
     d3.select('#pg_svg').remove()
-    d3.select('#superNode_svg').remove()
     draw_other(pg_sample_rate, 'ANB', pg_file_name, pg_file_name_ori)
 }
 
 function click_ACC(){
     d3.select('#pg_svg').remove()
-    d3.select('#superNode_svg').remove()
     draw_other(pg_sample_rate, 'ACC', pg_file_name, pg_file_name_ori)
 }
 
 function click_LCC(){
     d3.select('#pg_svg').remove()
-    d3.select('#superNode_svg').remove()
     draw_other(pg_sample_rate, 'LCC', pg_file_name, pg_file_name_ori)
 }
 
 function click_APL(){
     d3.select('#pg_svg').remove()
-    d3.select('#superNode_svg').remove()
     draw_APL(APL_filePath, APL_filePath_ori);
 }
 
 function click_CC(){
-    d3.select('#pg_svg').remove()
     d3.select('#superNode_svg').remove()
     draw_community(superNode_Data_File);
 }
@@ -156,30 +151,6 @@ function sx(name){
 //     else if(selected == 'Betweeness'){
         
 //     }
-// }
-
-
-// function range1(){
-//     var elem1 = document.querySelector('input[id="range1"]');
-//     var elem2 = document.querySelector('input[id="range2"]');
-
-//     elem2.value = String(100 - elem1.value);
-//     // document.querySelector('b[id="b1"]') = elem2.value;
-//     // document.querySelector('b[id="b2"]') = elem1.value;
-//     document.getElementById('b1').innerHTML = elem1.value;
-//     document.getElementById('b2').innerHTML = elem2.value;
-// }
-
-// function range2(){
-//     var elem1 = document.querySelector('input[id="range1"]');
-//     var elem2 = document.querySelector('input[id="range2"]');
-
-//     elem1.value = String(100 - elem2.value);
-//     // document.querySelector('b[id="b1"]') = elem2.value;
-//     // document.querySelector('b[id="b2"]') = elem1.value;
-//     document.getElementById('b1').innerHTML  = elem1.value;
-//     document.getElementById('b2').innerHTML  = elem2.value;
-
 // }
 
 
@@ -243,70 +214,14 @@ function changeData(){
 
         temp_draw_community();
     } 
-
-
 }
 
 
-
-// function changeData(){
-//     var objS = document.getElementById("Left_d");
-//     var new_data_name = objS.options[objS.selectedIndex].value;
-//     if(new_data_name == 'WW' && if_first_change_data)
-//     {
-//         document.getElementById("th_nodes_num").innerText= parseInt(16062);
-//         document.getElementById("th_edges_num").innerText= parseInt(25593);
-//         document.getElementById("th_community_num").innerText= parseInt(16);
-        
-
-//         var all_options = document.getElementById("Left-s").options;
-//         for (i=0; i<all_options.length; i++){
-//            if (all_options[i].value == 'Sampling')  // 根据option标签的ID来进行判断  测试的代码这里是两个等号
-//            {
-//               all_options[i].selected = true;
-//            }
-//         }
-
-//         document.getElementById("b3").innerHTML = 100
-//         document.getElementById("range3").value = 100
-        
-
-
-//         if_first_change_data = false
-
-//         data_name = 'web-webbase-2001'
-
-//         reflash();
-
-//         force_file_name = '/data_forSystem/web-webbase-2001/WWxy.json'
-//         // force_re = '/data_forSystem/' + data_name + '/force_data/' + sx(data_name) + '_' + sample_name +'_rate-'+sample_rate+'_forcedata.json'
-
-//         pg_sample_rate = 'rate-5'
-//         pg_file_name = '/data_forSystem/soc-sign/pdData/SSBxxxori_Eva.json'
-//         pg_file_name_ori = '/data_forSystem/soc-sign/pdData/SSBxxxori_Eva.json'
-
-//         superNode_Data_File = '/data_forSystem/web-webbase-2001/superNodeData/WW_shotestPath.json'
-
-//         APL_filePath_ori = '/data_forSystem/web-webbase-2001/shortestPath/WW_shortestPath.json'
-//         APL_filePath = '/data_forSystem/web-webbase-2001/shortestPath/WW_shortestPath.json'
-
-//         tsne_filename = '/data_forSystem/web-webbase-2001/WW_Tsne.csv'
-//         force_circle_r = 1;
-//         drawforce_again(force_file_name);
-//         document.getElementById('s2').value = 'force_sample';
-
-//         if(document.getElementById('tsne_svg'))document.getElementById('tsne_svg').remove()
-//         draw_tsne(tsne_filename);
-
-//         // drawRadar(parseInt(sample_rate));
-
-//         d3.select('#radar_svg').remove()
-//         // doRadar('ori', data_name, '5')
-
-//         click_CC();
-//         show_CC();        
-
-//     } 
-
-
-// }
+d3.json('/data_forSystem/ieee_visC/IVori_community.json', function(error, data) {
+    var maxcommuntiy = 0;
+    for(let i in data){
+        maxcommuntiy = Math.max(data[i], maxcommuntiy);
+    }
+    set_Ori_communityNum(maxcommuntiy+1);
+  
+})

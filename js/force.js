@@ -56,6 +56,9 @@ function drawforce(){
         // f_links = datas['edges'];
         f_links = datas['edges'];
 
+        set_Ori_nodeNum(f_nodes.length);
+        set_Ori_edgeNum(f_links.length);
+
         f_nodeID_key = {}
         for(let key in f_nodes){
             f_nodeID_key[f_nodes[key]['id']] = key;
@@ -63,7 +66,7 @@ function drawforce(){
 
         force_PIXIJS_lines = new PIXI.Graphics();
         for(var i = 0 ; i < f_links.length ; i++){
-            force_PIXIJS_lines.lineStyle(line_width,line_Color,0.5);
+            force_PIXIJS_lines.lineStyle(line_width,line_Color,0.2);
             force_PIXIJS_lines.moveTo(f_nodes[f_nodeID_key[f_links[i].source]].x,f_nodes[f_nodeID_key[f_links[i].source]].y);
             force_PIXIJS_lines.lineTo(f_nodes[f_nodeID_key[f_links[i].target]].x,f_nodes[f_nodeID_key[f_links[i].target]].y);
         }
@@ -307,8 +310,8 @@ function drawforce_again(file_name){
 
 
 function temp_draw_community(){
-    file_path = '/data_forSystem/soc-sign/SSBori_community.json'
-    file_path = '/data_forSystem/ieee_visC/IV_community_num.json'
+    // file_path = '/data_forSystem/soc-sign/SSBori_community.json'
+    file_path = '/data_forSystem/ieee_visC/IVori_community.json'
     d3.json(file_path, function(community_num_data){
         // var choosed_point_data = []
         // var color_list = [0xff0000, 0xffff00, 0x008000, 0x0000ff, 0xff00ff, 0x800080, 0x000080, 0x808000, 0x00ff00]
@@ -333,7 +336,26 @@ function temp_draw_community(){
             0xFFB265
         ]
 
-        var community_to_color = [8, 6, 0, 5, 9, 4, 10, 11, 12, 3, 7, 2, 13, 1]
+        var color_list_svg = [
+            '#F66493',
+            '#DA7C69',
+            '#035F93',
+            '#D2E600',
+            '#8CBA68',
+            '#E9BF66',
+            '#BEBDFF',
+            '#DC2A07',
+            '#E942CC',
+            '#546BFB',
+            '#54A8FE',
+            '#AB5B80',
+            '#00B5F1',
+            '#FF3F3F',
+            '#FED9EF',    
+            '#FFB265'
+        ]
+
+        var community_to_color = [8, 6, 0, 5, 9, 4, 10, 11, 12, 3, 7, 2, 13, 1, 14]
 
         d3.json(force_file_name, function(force_datas){
                 let temp_datas = force_datas['nodes'];
@@ -352,11 +374,22 @@ function temp_draw_community(){
                     const now_x = (datas[node].x);
                     const now_y = (datas[node].y);
                     // d3.select("#tsne_node_"+ node).style("fill",color_list[community_num_data[node]]);
-                    // d3.select('#tsne_circle_' + node).attr('fill', color_list_tsne[community_num_data[node]]);
-                    circles_choose_change_color.beginFill(color_list[community_to_color[community_num_data[node]]]);
-                    circles_choose_change_color.drawCircle(now_x,now_y, force_circle_r);
-                    circles_choose_change_color.lineStyle(0.1, 0x050505, 0.7);
-                    circles_choose_change_color.endFill();
+                    if (community_num_data[node] >= community_to_color.length - 1)
+                    {
+                        console.log(community_num_data[node])
+                        d3.select('#tsne_circle_' + node).attr('fill',  '#ccc');
+                        circles_choose_change_color.beginFill(0xcccccc);
+                        circles_choose_change_color.drawCircle(now_x,now_y, force_circle_r);
+                        circles_choose_change_color.lineStyle(0.1, 0x050505, 0.7);
+                        circles_choose_change_color.endFill();
+                    }
+                    else{
+                        d3.select('#tsne_circle_' + node).attr('fill', color_list_svg[community_to_color[community_num_data[node]]]);
+                        circles_choose_change_color.beginFill(color_list[community_to_color[community_num_data[node]]]);
+                        circles_choose_change_color.drawCircle(now_x,now_y, force_circle_r);
+                        circles_choose_change_color.lineStyle(0.1, 0x050505, 0.7);
+                        circles_choose_change_color.endFill();
+                    }
                 }
                 app.stage.addChild(circles_choose_change_color);
                 //tsne该颜色
@@ -372,24 +405,6 @@ function temp_draw_community(){
 
         let rect_width = 20;
         let rect_height = 20;
-        var color_list_svg = [
-            '#F66493',
-            '#DA7C69',
-            '#035F93',
-            '#D2E600',
-            '#8CBA68',
-            '#E9BF66',
-            '#BEBDFF',
-            '#DC2A07',
-            '#E942CC',
-            '#546BFB',
-            '#54A8FE',
-            '#AB5B80',
-            "#00B5F1",
-            '#FF3F3F',
-            '#FED9EF',    
-            // '#FFB265'
-        ]
         color_list_svg = ['#035F93', '#546BFB','#54A8FE',"#00B5F1",'#BEBDFF','#8CBA68','#D2E600',
         '#FED9EF','#F66493', '#DA7C69', '#DC2A07','#FF3F3F','#E942CC','#AB5B80'];
         var force_colorBar_svg = d3.select('#Force_colorBar')
@@ -415,7 +430,7 @@ function temp_draw_community(){
 
         
         force_colorBar_svg.append('text')
-                            .text('14 communities')                    
+                            .text('15 communities')                    
                             .attr('x', 200)
                             .attr('y', 0)
                             
@@ -443,4 +458,8 @@ function set_force_Scale(xy){
     circles_choose.scale.y = xy;
     circles_choose_change_color.scale.x = xy;
     circles_choose_change_color.scale.y = xy;
+}
+
+function colorBar_clear(){
+    
 }

@@ -159,16 +159,9 @@ function community_click_do(d,i){
 }
 
 function reflash(){
-    // d3.selectAll('.community').attr('fill', 'steelblue');
-    // d3.selectAll(".community_Distribution").attr("fill", 'steelblue');
-    // d3.selectAll('.sankey_top_node').style('opacity', 1)
-    // d3.selectAll('.sankey_bottom_node').style('opacity', 1)
-    // d3.selectAll('.sankey_community_path').style('opacity', 0.5)
     circles_choose.clear();
     circles_choose_change_color.clear();
     d3.selectAll('.tsne_circle').attr('fill', tsne_circle_color);
-    // d3.select('#tsne_brush').style('opacity', 0)
-    // d3.selectAll('.connected').attr('fill', 'steelblue');
 }
 
 function button_table_click_ABD(){
@@ -180,15 +173,11 @@ function button_table_click_ABD(){
         for(let key in ANB_data_List){
             d3.select('#tsne_circle_' + ANB_data_List[key]).attr('fill','blue').style('opacity', 1);
         }
-        // for(let key in ACC_data_List){
-        //     d3.select('#tsne_circle_' + ACC_data_List[key]).attr('fill','purple').style('opacity', 1);
-        // }
     })
 }
 
 
 function force_change_color_shortestPath(){
-    // d3.selectAll('.tsne_node').attr('fill', tsne_unselected_color);
     d3.json("/data_forSystem/cit-HepTh/shortest_path/ORI_force.json", function(shortest_path_data)
     {
         console.log(shortest_path_data.length)
@@ -305,15 +294,26 @@ function reset(){
 }
 
 
-
-function selectFile(){
-    //触发 文件选择的click事件
-    $("#file").trigger("click");
-
-//其他code如 alert($("#file").attr("value"))
+function set_Ori_communityNum(cNUm){
+    document.getElementById('th_community_num').innerText = parseInt(cNUm);
 }
 
-/* 获取 文件的路径 ，用于测试*/
-function getFilePath(){
-    alert($("#file").attr("value"));
+function set_sample_communityNum(cNum){
+    document.getElementById('sample_community_num').innerText = parseInt(cNum);
+}
+
+function set_Ori_nodeNum(cNUm){
+    document.getElementById('th_nodes_num').innerText = parseInt(cNUm);
+}
+
+function set_sample_nodeNum(cNum){
+    document.getElementById('sample_nodes_num').innerText = parseInt(cNum);
+}
+
+function set_Ori_edgeNum(cNUm){
+    document.getElementById('th_edges_num').innerText = parseInt(cNUm);
+}
+
+function set_sample_edgeNum(cNum){
+    document.getElementById('sample_edges_num').innerText = parseInt(cNum);
 }

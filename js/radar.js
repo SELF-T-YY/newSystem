@@ -294,24 +294,24 @@ var namelist = ['ori', 'our', 'SRW', 'ISRW', 'RJ', 'RNS', 'RES', 'TIES'];
 var rate = 5;
 var sf_nali = [];
 
-d3.json("/data_forSystem/" + dataName + "/radarData/" + FILE_name + "f3" + namelist[0] + "new_Eva.json", function (ori) {
-        d3.json("/data_forSystem//" + dataName + "/radarData/" + FILE_name + "f3" + namelist[1] + "new_Eva.json", function (OUR) {
-            d3.json("/data_forSystem/" + dataName + "/radarData/" + FILE_name + "f3" + namelist[2] + "new_Eva.json", function (SRW) {
-                d3.json("/data_forSystem/" + dataName + "/radarData/" + FILE_name + "f3" + namelist[3] + "new_Eva.json", function (ISRW) {
-                    d3.json("/data_forSystem/" + dataName + "/radarData/" + FILE_name + "f3" + namelist[4] + "new_Eva.json", function (RJ) {
-                        d3.json("/data_forSystem/" + dataName + "/radarData/" + FILE_name + "f3" + namelist[5] + "new_Eva.json", function (RNS) {
-                            d3.json("/data_forSystem/" + dataName + "/radarData/" + FILE_name + "f3" + namelist[6] + "new_Eva.json", function (RES) {
-                                d3.json("/data_forSystem/" + dataName + "/radarData/" + FILE_name + "f3" + namelist[7] + "new_Eva.json", function (TIES) {
-                                        data_li = [OUR, SRW, ISRW, RJ, RNS, RES, TIES]
-                                        drawleida(rader_div_id,data_li,rate,sf_nali)
-                                })
-                            })
-                        })
-                    })
-                })
-            })
-        })
-})
+// d3.json("/data_forSystem/" + dataName + "/radarData/" + FILE_name + "f3" + namelist[0] + "new_Eva.json", function (ori) {
+//         d3.json("/data_forSystem//" + dataName + "/radarData/" + FILE_name + "f3" + namelist[1] + "new_Eva.json", function (OUR) {
+//             d3.json("/data_forSystem/" + dataName + "/radarData/" + FILE_name + "f3" + namelist[2] + "new_Eva.json", function (SRW) {
+//                 d3.json("/data_forSystem/" + dataName + "/radarData/" + FILE_name + "f3" + namelist[3] + "new_Eva.json", function (ISRW) {
+//                     d3.json("/data_forSystem/" + dataName + "/radarData/" + FILE_name + "f3" + namelist[4] + "new_Eva.json", function (RJ) {
+//                         d3.json("/data_forSystem/" + dataName + "/radarData/" + FILE_name + "f3" + namelist[5] + "new_Eva.json", function (RNS) {
+//                             d3.json("/data_forSystem/" + dataName + "/radarData/" + FILE_name + "f3" + namelist[6] + "new_Eva.json", function (RES) {
+//                                 d3.json("/data_forSystem/" + dataName + "/radarData/" + FILE_name + "f3" + namelist[7] + "new_Eva.json", function (TIES) {
+//                                         data_li = [OUR, SRW, ISRW, RJ, RNS, RES, TIES]
+//                                         drawleida(rader_div_id,data_li,rate,sf_nali)
+//                                 })
+//                             })
+//                         })
+//                     })
+//                 })
+//             })
+//         })
+// })
 
 function doRadar(sf_nali, dataName, rate){
     var  FILE_name = sx(data_name);
@@ -325,6 +325,7 @@ function doRadar(sf_nali, dataName, rate){
                             d3.json("/data_forSystem/" + dataName + "/radarData/" + FILE_name + "f3" + namelist[6] + "new_Eva.json", function (RES) {
                                 d3.json("/data_forSystem/" + dataName + "/radarData/" + FILE_name + "f3" + namelist[7] + "new_Eva.json", function (TIES) {
                                         data_li = [OUR, SRW, ISRW, RJ, RNS, RES, TIES]
+                                        console.log(data_li)
                                         drawleida(rader_div_id,data_li,rate,sf_nali)
                                 })
                             })
@@ -335,5 +336,5 @@ function doRadar(sf_nali, dataName, rate){
         })
     })
 }
-// doRadar(['OUR'], data_name, '10');
+doRadar(['OUR'], data_name, '10');
 
