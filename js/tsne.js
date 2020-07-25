@@ -151,3 +151,23 @@ function draw_tsne(filename){
 
 draw_tsne(tsne_filename);
 
+
+
+function tsne_betweenness_color(){
+    var a = d3.rgb(133, 193, 233);
+    var b = d3.rgb(3, 56, 92 );
+
+
+    var compute_color = d3.interpolate(a,b);
+    var filename = '../data_forSystem/ieee_visC/IV_id_x_y_kde_edges_betweenness.json'
+    d3.json(filename, function(error, data) {
+        var nodes = [];
+        for(let i in data){
+            let node = {};
+            // console.log(data[i])
+
+        }
+    })
+}
+
+tsne_betweenness_color()

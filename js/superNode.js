@@ -1,6 +1,6 @@
 const superNode_panal = 'superNode'
 const superNode_width = document.getElementById(superNode_panal).offsetWidth;
-const superNode_height = document.getElementById(superNode_panal).offsetHeight-10;
+const superNode_height = document.getElementById(superNode_panal).offsetHeight;
 const superNode_circle_Color = 0x3A435E;
 const superNode_line_Color = 0xc6c6c6;
 
@@ -41,12 +41,36 @@ function draw_community(fileName){
             node_existed.push(edgesList[i]['target']);
         }
 
-        var node_existed_list = [];
-        var node_Unexisted_list = [];
-        for(var i in nodes){
-            if(node_existed.indexOf(nodes[i].id) != -1)node_existed_list.push(nodes[i])
-            else node_Unexisted_list.push(nodes[i]);
+        //获得最大值和最小值
+        var node_Num_Min = 1000000000000;
+        var node_Num_Max = 0;
+        for(let item in nodes){
+            node_Num_Max = Math.max(node_Num_Max, nodes[item].num);
         }
+
+        for(let item in nodes){
+            node_Num_Min = Math.min(node_Num_Min, nodes[item].num);
+        }
+
+        //归一化处理
+
+        
+        function normalization(distribution, max, min) {
+            let normalizationRatio = (distribution - min) / (max - min)
+            return normalizationRatio
+        }
+
+        function minnest(num){
+            return Math.max(2, num);
+        }
+
+
+        // var node_existed_list = [];
+        // var node_Unexisted_list = [];
+        // for(var i in nodes){
+        //     if(node_existed.indexOf(nodes[i].id) != -1)node_existed_list.push(nodes[i])
+        //     else node_Unexisted_list.push(nodes[i]);
+        // }
         // console.log(nodes)
         // console.log(node_existed_list)
         // console.log(links)
@@ -57,7 +81,7 @@ function draw_community(fileName){
                     .attr('height', superNode_height);
         
         var simulation = d3.forceSimulation(nodes)
-                            .force('link', d3.forceLink(links).distance(100))
+                            .force('link', d3.forceLink(links).distance(150))
                             .force('charge', d3.forceManyBody()
                                 .strength(function(d){
                                     // console.log(node_existed.indexOf(d.id))
@@ -101,13 +125,12 @@ function draw_community(fileName){
                                 .append("circle")
                                 .attr("cx", d => (d.x))
                                 .attr("cy", d => (d.y))
-                                // .attr('fill', d =>(d['color']))
-                                .attr("r", d =>(Math.log(d.num) * 2))
+                                .attr("r", d =>(minnest(normalization(d.num, node_Num_Max, node_Num_Min)*20)))
                                 .attr("class", "community")
                                 .attr('id', function(d,i){
                                     return 'community_' + i;
                                 })
-                                .attr("fill", d =>(compute_color(Math.log(d.num)/10)))
+                                .attr("fill", d =>(compute_color(normalization(d.num, node_Num_Max, node_Num_Min))))
                                 // .on("click",community_click_do);
 
         function dragstarted(d) {
@@ -149,7 +172,7 @@ function draw_community(fileName){
             //         }
             // }       
 
-            var radius = 10
+            var radius = 20
             svg_nodes
                 .attr("cx", function(d) {
                     return (d.x = Math.max(radius, Math.min(superNode_width - radius, d.x)));

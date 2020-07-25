@@ -213,7 +213,7 @@ function changeData(){
         show_CC();
 
         temp_draw_community();
-    } 
+    }
 }
 
 

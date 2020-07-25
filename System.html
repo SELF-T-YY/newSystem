@@ -33,17 +33,17 @@
                     <table class="table bgc" >
                         <tr class="table bgc" style="height: 30px;">
                             <th class="table" style="background-color:#ccc7c7;">
-                                <!-- <button id="button-dataSet" class="button_dataSet ripple" value="dataSet" onclick="selectFile()">DataSet</button> -->
+                                <!-- <button id="button-dataSet" class="butto·n_dataSet ripple" value="dataSet" onclick="selectFile()">DataSet</button> -->
                                 <select name="Data_select" style="border: 0ch; font-weight: lighter;" id="Left_d" onclick="changeData()">
-                                    <option value="ieee_visC">VISData</option>
+                                    <option value="Sampling" disabled hidden>Data</option>
+                                    <option value="ieee_visC" selected>IV</option>
                                     <option value="soc-sign">SSB</option>
                                     <option value="WW">WW</option>
                                 </select>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
                             </th>
-                            <th class="table bgc">&nbsp;&nbsp;Nodes&nbsp;&nbsp;&nbsp;</th>
-                            <th class="table bgc">&nbsp;&nbsp;&nbsp;Edges&nbsp;&nbsp;&nbsp;</th>
-                            <th class="table bgc">&nbsp;&nbsp;&nbsp;Community&nbsp;&nbsp;&nbsp;</th>
+                            <th class="table bgc">&nbsp;&nbsp;&nbsp;&nbsp;Nodes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            <th class="table bgc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edges&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            <th class="table bgc">&nbsp;Community&nbsp;</th>
                         </tr>
                         <tr class="table bgc" style="height: 25px">
                             <th id="th_data_name" class="table bgc">Origin:</th>
@@ -187,7 +187,9 @@
             <div id="Node2vec">
                 <div id="Tsne_Button">
                     <script src="/js/tsne.js"></script>
-                    <button id="buttom_tsne_choose" class="button_tsne ripple" onclick="button_move_click_on()"></button>
+                    <button id="buttom_tsne_move" class="button_tsne ripple"></button>
+                    <button id="buttom_tsne_point_click" class="button_tsne ripple"></button>
+                    <button id="buttom_tsne_choose" class="button_tsne ripple"></button>
                     <button id="buttom_tsne_reflash" class="button_tsne ripple" onclick="reflash()"></button>
                 </div>
             </div>

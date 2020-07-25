@@ -317,3 +317,4 @@ function set_Ori_edgeNum(cNUm){
 function set_sample_edgeNum(cNum){
     document.getElementById('sample_edges_num').innerText = parseInt(cNum);
 }
+

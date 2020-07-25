@@ -149,10 +149,9 @@ var pg_file_name_ori = '/data_forSystem/ieee_visC/pdData/IVxxxori_Eva.json'
 
 
 function draw_APL(file_name, orifileName){
-    var range_num = 25
+    var range_num = 15
     d3.json(file_name, function(datas)
     {
-        console.log(datas)
         var dataset = []
         var cnum = 1
         var temp_sum = 0
@@ -280,6 +279,7 @@ function draw_APL(file_name, orifileName){
                     .attr('class','axis')
                     .attr("transform","translate(" + padding.left + "," + (c_height - padding.bottom) + ")")
                     .call(d3.axisBottom(xScale));//d3.axisBottom(xScale)  --V4版本
+            
             svg.append('g')
                     .attr('class','axis')
                     .attr("transform","translate(" + padding.left + "," + padding.top + ")")
@@ -316,11 +316,6 @@ function draw_APL(file_name, orifileName){
                     .attr('x', c_width - padding.right - 25)
                     .attr('y', 33)                
 
-
-
-
-
-
         });
     })
 
@@ -328,7 +323,9 @@ function draw_APL(file_name, orifileName){
 
 
 function draw_other(sample_rate, pg_name, file_name, ori_file_name){
-    var range_num = 25
+    var range_num = 22
+    var y_zhouNum = 2;
+    var x_zhouNum = 18;
     d3.json(file_name, function(sample_data)
     {
         var dataset = []
@@ -366,8 +363,6 @@ function draw_other(sample_rate, pg_name, file_name, ori_file_name){
             rect_data.push(dataset[key].num);
         }
 
-        // console.log(rect_data)
-
         d3.json(ori_file_name, function(ori_data){
             var ori_dataset = []
             var ori_datas_all = ori_data['rate-5'][pg_name][0];
@@ -384,6 +379,8 @@ function draw_other(sample_rate, pg_name, file_name, ori_file_name){
                     if(ori_datas[key] == 0) data['num'] = 0;
                     else data['num'] = Math.log10(ori_datas[key]);
                     // data['num'] = (datas[key]);
+                    y_zhouNum = parseInt(Math.max(y_zhouNum, data['num']));
+                    x_zhouNum = cnum;
                     ori_dataset.push(data);                
                 }
                 else if(cnum>=range_num){
@@ -395,9 +392,17 @@ function draw_other(sample_rate, pg_name, file_name, ori_file_name){
                     if(ori_datas[key] == 0) data['num'] = 0;
                     else data['num'] = Math.log10(temp_sum);
                     // data['num'] = (datas[key]);
+                    
+                    y_zhouNum = parseInt(Math.max(y_zhouNum, data['num']));
+                    x_zhouNum = range_num;
+                    console.log(data['num']);
+
+
                     ori_dataset.push(data);       
                 }
             }
+
+            y_zhouNum++;
             
             let ori_rect_data = [];
             for(var key in ori_dataset){
@@ -413,11 +418,11 @@ function draw_other(sample_rate, pg_name, file_name, ori_file_name){
                         .attr('height', c_height);
             var xScale = d3.scaleBand()
                     // .domain(d3.range(0, rect_data.length))
-                    .domain(d3.range(0, 25))
+                    .domain(d3.range(0, x_zhouNum))
                     .range([0, c_width - padding.left - padding.right]);
             yScale = d3.scaleLinear()//V4版本
                     // .domain([0, 7])
-                    .domain([0, 7])
+                    .domain([0, y_zhouNum])
                     .range([c_height-padding.bottom-padding.top,0]);
             
             var rects_re = svg.selectAll('MyRect_re')
@@ -468,7 +473,7 @@ function draw_other(sample_rate, pg_name, file_name, ori_file_name){
             svg.append('g')
                     .attr('class','axis')
                     .attr("transform","translate(" + padding.left + "," + padding.top + ")")
-                    .call(d3.axisLeft(yScale).ticks(7))//d3.axisLeft(yScale) --V4版本
+                    .call(d3.axisLeft(yScale).ticks(y_zhouNum))//d3.axisLeft(yScale) --V4版本
             
             svg.append('text')
                     .text("lgx")
@@ -512,7 +517,6 @@ function draw_community_disribution_again(){
     d3.json(community_num_file_name, function(community_num){
         var dataset = []
         for(var i =0;i<=33;i++){
-
             var rect = d3.select('#community_Distribution_' + i)
                             .transition()
                             .duration(2000)
@@ -522,7 +526,6 @@ function draw_community_disribution_again(){
             var data = {};
             data['id'] = key;
             data['num'] = Math.log10(community_num[key]);
-
             var rect = d3.select('#community_Distribution_' + key)
                             .transition()
                             .duration(2000)
