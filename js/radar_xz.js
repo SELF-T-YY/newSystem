@@ -107,7 +107,6 @@ function drawRadar(rate){
                                 axis:indexArr[i],
                                 value:axis_max,
                             }
-                            
                         }
                         else{
                             d={
@@ -129,8 +128,6 @@ function drawRadar(rate){
                 data.push(array[j]);
             }
         }
-        console.log(array)
-        console.log(data)
         var color = d3.scaleOrdinal()
                 .range(["#0000FF","#b3cde3","#ccebc5","#decbe4","#fed9a6","#e5d8bd"]);
                 

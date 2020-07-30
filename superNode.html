@@ -29,8 +29,8 @@
         var compute_color = d3.interpolate(a,b);
 
         // const superNode_Data_reFile = '/data_forSystem/cit-HepTh/superNodeData/CH_superNodeData.json'
-        // const superNode_Data_reFile = '/data_forSystem/web-webbase-2001/superNodeData/WW_TIES_rate_10_superNodeData.json'
-        const superNode_Data_reFile = '/data_forSystem/web-webbase-2001/superNodeData/WW_shotestPath.json'
+        // const superNode_Data_reFile = '/data_forSystem/web-webbase-2001/superNodeData/WW_OUR_rate_15_superNodeData.json'
+        const superNode_Data_reFile = '/data_forSystem/web-webbase-2001/superNodeData/WW_superNodeData.json'
         draw_community(superNode_Data_reFile)
         console.log('x')
         function draw_community(fileName){
@@ -136,41 +136,49 @@
                                         .attr('id', function(d,i){
                                             return 'community_' + i;
                                         })
-                                        // .attr("fill", d =>(compute_color(Math.log(d.num)/8)))
-                                        .attr("fill", function(d){
-                                            comm = parseInt(d.id);
-                                            if (comm == 44) {
-                                            return mcolor[0]
-                                            }
-                                            if (comm == 8) {
-                                            return mcolor[6]
-                                            }
-                                            if (comm == 12) {
-                                            return mcolor[10]
-                                            }
-                                            if (comm == 6) {
-                                            return mcolor[8]
-                                            }
-                                            if (comm == 39) {
-                                            return mcolor[2]
-                                            }
-                                            if (comm == 42) {
-                                            return mcolor[12]
-                                            } if (comm == 57) {
-                                            return mcolor[4]
-                                            }
-                                            if (comm == 14) {
-                                            return mcolor[5]
-                                            }
-                                            if (comm == 43) {
-                                            return mcolor[7]
-                                            }
-                                            if (comm == 40) {
-                                            return mcolor[11]
-                                            }
-                                            return 'rgb(126, 126, 126)'
-                                        })
-
+                                        .attr("fill", d =>(compute_color(Math.log(d.num)/8)))
+                                        .call(d3.drag()
+                                        .on('start', dragstarted)
+                                        .on('drag', dragged)
+                                        .on('end', dragended))
+                                        // .attr("fill", function(d){
+                                        //     comm = parseInt(d.id);
+                                        //     if (comm == 44) {
+                                        //     return mcolor[0]
+                                        //     }
+                                        //     if (comm == 8) {
+                                        //     return mcolor[6]
+                                        //     }
+                                        //     if (comm == 12) {
+                                        //     return mcolor[10]
+                                        //     }
+                                        //     if (comm == 6) {
+                                        //     return mcolor[8]
+                                        //     }
+                                        //     if (comm == 39) {
+                                        //     return mcolor[2]
+                                        //     }
+                                        //     if (comm == 42) {
+                                        //     return mcolor[12]
+                                        //     } if (comm == 57) {
+                                        //     return mcolor[4]
+                                        //     }
+                                        //     if (comm == 14) {
+                                        //     return mcolor[5]
+                                        //     }
+                                        //     if (comm == 43) {
+                                        //     return mcolor[7]
+                                        //     }
+                                        //     if (comm == 40) {
+                                        //     return mcolor[11]
+                                        //     }
+                                        //     return 'rgb(126, 126, 126)'
+                                        // })
+                                        // .call(d3.drag()
+                                        //     .on('start', dragstarted)
+                                        //     .on('drag', dragged)
+                                        //     .on('end', dragended)
+                                        // )
                                         // .on("click",community_click_do);
 
                 function dragstarted(d) {

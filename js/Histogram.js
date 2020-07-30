@@ -2,12 +2,12 @@ let dataset = [];
 const filter_color = 0x123123;
 const rest_color = 0x354985;
 const choose_color = 0xff00ff;
-const padding = {left:40, right: 20, top:50, bottom:30};
+const padding = {left:22, right: 15, top:24, bottom:20};
 
 const c_width = document.getElementById('Histogram').offsetWidth;
 const c_height = document.getElementById('Histogram').offsetHeight;
 
-var APL_filePath_ori='/data_forSystem/ieee_visC/shortestPath/IV_shortestPath.json'
+var APL_filePath_ori = '/data_forSystem/ieee_visC/shortestPath/IV_shortestPath.json'
 var APL_filePath = '/data_forSystem/ieee_visC/shortestPath/IV_shortestPath.json'
 
 var pg_sample_rate = 'rate-5'
@@ -149,7 +149,7 @@ var pg_file_name_ori = '/data_forSystem/ieee_visC/pdData/IVxxxori_Eva.json'
 
 
 function draw_APL(file_name, orifileName){
-    var range_num = 15
+    var range_num = 21
     d3.json(file_name, function(datas)
     {
         var dataset = []
@@ -220,6 +220,7 @@ function draw_APL(file_name, orifileName){
             }         
             const rectWidth = 4;
     
+            d3.select('#pg_svg').remove();
             var svg = d3.select('#Histogram')
                         .append('svg')
                         .attr('id', 'pg_svg')
@@ -227,7 +228,7 @@ function draw_APL(file_name, orifileName){
                         .attr('height', c_height);
             var xScale = d3.scaleBand()
                     // .domain(d3.range(0, rect_data.length))
-                    .domain(d3.range(0, range_num))
+                    .domain(d3.range(0, range_num + 2))
                     .range([0, c_width - padding.left - padding.right]);
             yScale = d3.scaleLinear()//V4版本
                     // .domain([0, 7])
@@ -274,6 +275,21 @@ function draw_APL(file_name, orifileName){
                             })
                             .attr("class", "community_Distribution")
                             .on("click",function(d,i){community_click_do(d, dataset[i].id)});
+
+            
+            for(let i in rect_data){
+                if(rect_data[i] > ori_rect_data[i]){
+                    svg.append('rect')
+                        .attr("transform","translate(" + padding.left + "," + padding.top + ")")
+                        .attr('x',xScale(i) + rectWidth/2)
+                        .attr('y',yScale(ori_rect_data[i]))
+                        .attr('width',xScale.bandwidth() - rectWidth)
+                        .attr('height',c_height-padding.bottom-padding.top-yScale(ori_rect_data[i]))
+                        .attr('fill','#a3c1da')
+                        .attr("id", "community_Distribution_re_" + dataset[i].id)
+                        .attr("class", "community_Distribution")
+                }
+            }
                             
             svg.append('g')
                     .attr('class','axis')
@@ -292,29 +308,29 @@ function draw_APL(file_name, orifileName){
     
     
             svg.append('rect')
-                    .attr('width', 10)
-                    .attr('height', 10)
-                    .style('opacity', 0.5)
-                    .style('fill', 'steelblue')
-                    .attr('x', c_width - padding.right - 40)
-                    .attr('y', 10)
-    
+                .attr('width', 10)
+                .attr('height', 10)
+                .style('opacity', 0.5)
+                .style('fill', 'steelblue')
+                .attr('x', c_width - padding.right - 45)
+                .attr('y', 10)
+
             svg.append('text')
-                    .text('sample')
-                    .attr('x', c_width - padding.right - 25)
+                    .text('origin')
+                    .attr('x', c_width - padding.right - 30)
                     .attr('y', 18)
                     
             svg.append('rect')
                     .attr('width', 10)
                     .attr('height', 10)
                     .style('fill', 'steelblue')
-                    .attr('x', c_width - padding.right - 40)
+                    .attr('x', c_width - padding.right - 45)
                     .attr('y', 25)
-    
+
             svg.append('text')
-                    .text('origin')
-                    .attr('x', c_width - padding.right - 25)
-                    .attr('y', 33)                
+                    .text('sample')
+                    .attr('x', c_width - padding.right - 30)
+                    .attr('y', 33)
 
         });
     })
@@ -328,6 +344,7 @@ function draw_other(sample_rate, pg_name, file_name, ori_file_name){
     var x_zhouNum = 18;
     d3.json(file_name, function(sample_data)
     {
+        console.log(sample_data[sample_rate])
         var dataset = []
         var datas_all = sample_data[sample_rate][pg_name][0];
         var datas = datas_all.value;
@@ -411,6 +428,8 @@ function draw_other(sample_rate, pg_name, file_name, ori_file_name){
 
             const rectWidth = 4;
 
+
+            d3.select('#pg_svg').remove();
             var svg = d3.select('#Histogram')
                         .append('svg')
                         .attr('id', 'pg_svg')
@@ -465,6 +484,22 @@ function draw_other(sample_rate, pg_name, file_name, ori_file_name){
                             })
                             .attr("class", "community_Distribution")
                             .on("click",function(d,i){community_click_do(d, dataset[i].id)});
+
+
+
+            for(let i in rect_data){
+                if(rect_data[i] > ori_rect_data[i]){
+                    svg.append('rect')
+                        .attr("transform","translate(" + padding.left + "," + padding.top + ")")
+                        .attr('x',xScale(i) + rectWidth/2)
+                        .attr('y',yScale(ori_rect_data[i]))
+                        .attr('width',xScale.bandwidth() - rectWidth)
+                        .attr('height',c_height-padding.bottom-padding.top-yScale(ori_rect_data[i]))
+                        .attr('fill','#a3c1da')
+                        .attr("id", "community_Distribution_re_" + dataset[i].id)
+                        .attr("class", "community_Distribution")
+                }
+            }
                             
             svg.append('g')
                     .attr('class','axis')
@@ -486,24 +521,24 @@ function draw_other(sample_rate, pg_name, file_name, ori_file_name){
                     .attr('height', 10)
                     .style('opacity', 0.5)
                     .style('fill', 'steelblue')
-                    .attr('x', c_width - padding.right - 40)
+                    .attr('x', c_width - padding.right - 45)
                     .attr('y', 10)
 
             svg.append('text')
                     .text('origin')
-                    .attr('x', c_width - padding.right - 25)
+                    .attr('x', c_width - padding.right - 30)
                     .attr('y', 18)
                     
             svg.append('rect')
                     .attr('width', 10)
                     .attr('height', 10)
                     .style('fill', 'steelblue')
-                    .attr('x', c_width - padding.right - 40)
+                    .attr('x', c_width - padding.right - 45)
                     .attr('y', 25)
 
             svg.append('text')
                     .text('sample')
-                    .attr('x', c_width - padding.right - 25)
+                    .attr('x', c_width - padding.right - 30)
                     .attr('y', 33)                
         })
 

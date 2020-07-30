@@ -23,7 +23,7 @@
         <div id="Left_Info" class="border">
             <div class="mytitle">Data Overview</div>
             <div id="Info">
-                <div id="L_1_1">
+                <div id="L_1_1" style="text-align: center;">
                     <!-- <div id="dataSet">
                         <button id="button-dataSet" class="button_dataSet ripple" value="dataSet" onclick="selectFile()">DataSet</button>
                         <div id="dataName"><p style="line-height: 30px;">VISData</p></div>
@@ -34,11 +34,11 @@
                         <tr class="table bgc" style="height: 30px;">
                             <th class="table" style="background-color:#ccc7c7;">
                                 <!-- <button id="button-dataSet" class="butto·n_dataSet ripple" value="dataSet" onclick="selectFile()">DataSet</button> -->
-                                <select name="Data_select" style="border: 0ch; font-weight: lighter;" id="Left_d" onclick="changeData()">
+                                <select name="Data_select" id="Left_d" onclick="changeData()">
                                     <option value="Sampling" disabled hidden>Data</option>
-                                    <option value="ieee_visC" selected>IV</option>
-                                    <option value="soc-sign">SSB</option>
-                                    <option value="WW">WW</option>
+                                    <option value="ieee_visC" selected>&nbsp;&nbsp;&nbsp;&nbsp;Ieeevis</option>
+                                    <option value="soc-sign">&nbsp;&nbsp;&nbsp;Bitcoin</option>
+                                    <option value="web-webbase-2001">&nbsp;Webbase</option>
                                 </select>
                             </th>
                             <th class="table bgc">&nbsp;&nbsp;&nbsp;&nbsp;Nodes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
@@ -47,9 +47,9 @@
                         </tr>
                         <tr class="table bgc" style="height: 25px">
                             <th id="th_data_name" class="table bgc">Origin:</th>
-                            <th id="th_nodes_num" class="table bgc">2114</th>
-                            <th id="th_edges_num" class="table bgc">8964</th>
-                            <th id="th_community_num" class="table bgc">14</th>
+                            <th id="th_nodes_num" class="table bgc"></th>
+                            <th id="th_edges_num" class="table bgc"></th>
+                            <th id="th_community_num" class="table bgc"></th>
                         </tr>
                         <tr class="table bgc" style="height: 25px">
                             <th class="table bgc">Sample:</th>
@@ -64,7 +64,7 @@
 
         <div id="Left_RateSet">
             <div class="mytitle">Control Panel</div>
-            <div id="L_1_2" style="line-height:30px">
+            <div id="L_1_2" style="line-height:15px">
                 &nbsp;&nbsp;
                 <select name="Left-select" id="Left_S" class="button_common">
                         <option value="Sampling" selected disabled hidden>Methods</option>
@@ -78,17 +78,19 @@
                 </select>
                 <button id="button-sample" class="button_common ripple" value="Sample" onclick="buttom_sample_click()">Sample</button>
                 <button id="button-Reset" class="button_common ripple" value="Reset" onclick="reflash()">Reset</button>    
-                <br>
+                <br><br>
                 &nbsp;&nbsp;&nbsp;Density: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="range" min="0" max="100" value="50" class="range" id="range1" step="5" >
-                <b class="b1">50</b>%
-                <br>
+                <input type="range" min="0" max="100" value="100" class="range" id="range1" step="5" >
+                <b class="b1">100</b>%
+                <br><br>
                 &nbsp;&nbsp;&nbsp;Betweenness:&nbsp;&nbsp;
-                <input type="range" min="0" max="100" value="50" class="range" id="range2" step="5"> 
-                <b class="b2">50</b>%
+                <input type="range" min="0" max="100" value="0" class="range" id="range2" step="5"> 
+                <b class="b2">0</b>%
+                <br><br>
                 &nbsp;&nbsp;&nbsp;Sampling Rate:
                 <input type="range" min="5" max="100" value="100" class="range" id="range3" step="5">
                 <b class="b3" id="b3">100</b>%
+                <br>
                 <script>
                     var elem1 = document.querySelector('input[id="range1"]');
                     var elem2 = document.querySelector('input[id="range2"]');
@@ -123,11 +125,11 @@
                     elem3.addEventListener("input", rangeValue3);
                 </script>
 
-                <br>
+                
                 &nbsp;&nbsp;
-                <button id="button-Connection" class="button_common ripple" value="Connection">Connection</button>
-                <button id="button-Betweenness" class="button_common ripple" value="Betweenness">Betweenness</button>
-                <button id="button-ShowCommunity" class="button_common ripple" value="ShowCommunity" onclick="temp_draw_community()">Community</button>
+                <button id="button-Connection" class="button_common_down ripple" value="Connection" onclick="draw_connection()">Connection</button>
+                <button id="button-Betweenness" class="button_common_down ripple" value="Betweenness" onclick="tsne_betweenness_color()">Betweenness</button>
+                <button id="button-ShowCommunity" class="button_common_down ripple" value="ShowCommunity" onclick="temp_draw_community()">Community</button>
 
             </div>
         </div>
@@ -148,7 +150,7 @@
                     <button id="button_CC"  class="button_control_down" onclick="tableButton_click_down(this), click_CC()">CC</button>
                     <button id="button_SCC" class="button_control_down" onclick="tableButton_click_down(this)">SCC</button>
                     <button id="button_QCS" class="button_control_down" onclick="tableButton_click_down(this)">QCS</button>
-                    <button id="button_GCC" class="button_control_down" onclick="tableButton_click_down(this)">GCC</button>
+                    <button id="button_GCC" class="button_control_down" onclick="show_theBiggestBetweenness()">GCC</button>
                 </div>
                 <div id="superNode">
                     <script src="/js/superNode.js"></script>
@@ -189,7 +191,7 @@
                     <script src="/js/tsne.js"></script>
                     <button id="buttom_tsne_move" class="button_tsne ripple"></button>
                     <button id="buttom_tsne_point_click" class="button_tsne ripple"></button>
-                    <button id="buttom_tsne_choose" class="button_tsne ripple"></button>
+                    <button id="buttom_tsne_choose" class="button_tsne ripple" onclick="brush_draw()"></button>
                     <button id="buttom_tsne_reflash" class="button_tsne ripple" onclick="reflash()"></button>
                 </div>
             </div>

@@ -34,8 +34,8 @@ var force_community_num = 0;
 
 
 // var force_file_name = 
-var force_file_name = "/data_forSystem/FourBallTest/FourBallTest_forceData_x_y.json"
-var sample_file_name = "/data_forSystem/week2ball3line/other_sample/tsne_BFS_5_nodes_edges.json"
+var force_file_name = "/data_forSystem/ieee_visC/IVxy.json"
+var sample_file_name = "/data_forSystem/ieee_visC/our_sample_times_0_a_1_b_0_rata_20.json"
 
 var force_circle_r = 1.5;
 var line_width = 0.5
@@ -50,8 +50,8 @@ var app = new PIXI.Application({
     resolution : 1,
 });
 var line_Color = 0xc6c6c6;
-var force_community_circle_Color = 0x3A435E;
-// var force_community_circle_Color = 0x9a9a9a;
+// var force_community_circle_Color = 0x3A435E;
+var force_community_circle_Color = 0xa8a8a8;
 // var force_community_circle_Color = 0x4682b4;
 
 
@@ -294,6 +294,28 @@ function drawforce(if_draw_again){
                 circles_choose_change_color.scale.y = scaleAll_xy;
             }
 
+
+
+
+            let datas = {};
+            for(let key in f_nodes_all){
+                data_id = f_nodes_all[key]['id'];
+                datas[data_id] = f_nodes_all[key];
+            }
+
+
+
+            var choosed_point_data = ["885694", "146402", "1250384", "528686", "175815"]
+            for(let node in choosed_point_data)
+            {
+                console.log(datas[choosed_point_data[node]])
+                const now_x = (datas[choosed_point_data[node]].x);
+                const now_y = (datas[choosed_point_data[node]].y);
+                // d3.select("#tsne_node_"+choosed_point_data[node]).style("fill",circles_change_color);
+                circles_choose_change_color.beginFill('0xff0000');
+                circles_choose_change_color.drawCircle(now_x,now_y,force_circle_r*3);
+                circles_choose_change_color.endFill();       
+            }
 
             //改变颜色
             // const now_x = (datas[choosed_point_data[node]].x);

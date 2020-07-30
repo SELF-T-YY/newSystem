@@ -15,11 +15,11 @@
         const tsne_circle_choose_color = '#ff00ff'
 
         // var tsne_filename = "/data_forSystem/cit-HepTh/CH_Tsne.csv";
-        var tsne_filename = "/data_forSystem/week2ball3line/week2ball3line_Tsne.csv";
-        // var tsne_filename = "/data_forSystem/web-webbase-2001/WW_Tsne.csv";
+        // var tsne_filename = "/data_forSystem/week2ball3line/week2ball3line_Tsne.csv";
+        var tsne_filename = "/data_forSystem/ieee_visC/IV_Tsne.csv";
 
-        var force_file_name = '/data_forSystem/week2ball3line/week2ball3line_ClassicalSample1.json'
-        // var force_file_name = '/data_forSystem/week2ball3line/our_sample_adv/our_sample_times_0_a_0.5_b_0.5_rata_20.json'
+        // var force_file_name = '/data_forSystem/week2ball3line/week2ball3line_ClassicalSample1.json'
+        var force_file_name = '/data_forSystem/ieee_visC/our_sample_times_0_a_1_b_0_rata_20.json'
         function draw_tsne(filename){
             d3.csv(filename, function(tsne_datas){
                 let tsne_dataset = [];
@@ -33,18 +33,18 @@
                         }
                     }
                     //sample
-                    var temp_force_node = datas['nodes'];
-                    var force_node = [];
-                    for(var key in temp_force_node){
-                        force_node.push(String(temp_force_node[key]));
-                    }
-
-                    //OUR
-                    // var force_node = []
-                    // f_datas_X = f_datas.nodes
-                    // for(var i in f_datas_X){
-                    //     force_node.push(f_datas_X[i]['id']);
+                    // var temp_force_node = datas['nodes'];
+                    // var force_node = [];
+                    // for(var key in temp_force_node){
+                    //     force_node.push(String(temp_force_node[key]));
                     // }
+
+                    // OUR
+                    var force_node = []
+                    f_datas_X = f_datas.nodes
+                    for(var i in f_datas_X){
+                        force_node.push(f_datas_X[i]['id']);
+                    }
 
 
                     console.log(force_node)
@@ -103,7 +103,7 @@
                         .data(tsne_dataset)
                         .enter()
                         .append('circle')
-                        .attr('r', 1)
+                        .attr('r', 2)
                         .attr('fill', tsne_circle_color)
                         .attr('cx', function(d){ return parseInt(d['x']); })
                         .attr('cy', function(d){ return parseInt(d['y']); })
@@ -112,8 +112,8 @@
                             return 'tsne_circle_' + d['id']; 
                         })
                 
-                        tsne_chanege_color_by_list(['1000', '1001', '1002', '1003', '1004', '1005', '1006', '1007', '1008'])
-                    // d3.json('/data_forSystem/2ball3line/2ball3line_id_x_y_kde_edges_betweenness.json', function(betweennessData){
+                        tsne_chanege_color_by_list(["885694", "146402", "1250384", "528686", "175815"])
+                    // d3.json('/data_forSystem/ieee_visC/IV_id_x_y_kde_edges_betweenness.json', function(betweennessData){
                     //     var arrList = []
                     //     for(var node in betweennessData){
                     //         arrList.push({'node': node,'betweenness':betweennessData[node]['betweenness']})
@@ -127,8 +127,6 @@
                     //         choose_circle_list.push(sort_list[i]['node'])
                     //     }
                     //     tsne_chanege_color_by_list(choose_circle_list);
-                        
-                        
                     // })
                 })
 
@@ -146,7 +144,7 @@
             // console.log(circle_list)
             // d3.selectAll('.tsne_circle').attr('fill', tsne_circle_color);
             for(let key in circle_list){
-                d3.select('#tsne_circle_' + circle_list[key]).attr('fill','red').attr('r', 3);
+                d3.select('#tsne_circle_' + circle_list[key]).attr('fill','red').attr('r', 4);
             }
         }
     </script>
