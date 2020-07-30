@@ -30,12 +30,12 @@ var RadarChart = {
 		color: colorscale
 	};
 	  if(if_100){
-		d = [
+		var d = [
 			[
 				{axis:"LCC"},
 				{axis:"GCC"},
-				{axis:"QCS"},
-				{axis:"SCC"},
+				{axis:"S C"},
+				{axis:"SSC"},
 				{axis:"APL"},
 				{axis:"C C"},
 				{axis:"ACC"},
@@ -249,8 +249,8 @@ function drawRadar(data, if_100){
 		[
 			{axis:"LCC"},
 			{axis:"GCC"},
-			{axis:"QCS"},
-			{axis:"SCC"},
+			{axis:"S C"},
+			{axis:"SSC"},
 			{axis:"APL"},
 			{axis:"C C"},
 			{axis:"ACC"},
@@ -363,8 +363,8 @@ function radar_data(rate){
 
 		data.push({axis:"LCC", value: 8 - temp_data['LCC']})
 		data.push({axis:"GCC", value: 8 - temp_data['GCC']})
-		data.push({axis:"QCS", value: 8 - temp_data['QCS']})
-		data.push({axis:"SCC", value: 8 - temp_data['SCS']})
+		data.push({axis:"S C", value: 8 - temp_data['QCS']})
+		data.push({axis:"SSC", value: 8 - temp_data['SCS']})
 		data.push({axis:"APL", value: 8 - temp_data['SP']})
 		data.push({axis:"C C", value: 8 - temp_data['CC']})
 		data.push({axis:"ACC", value: 8 - temp_data['ACC']})
