@@ -82,7 +82,8 @@ var RadarChart = {
          .attr("y2", function(d, i){return levelFactor*(1-cfg.factor*Math.cos((i+1)*cfg.radians/total));})
          .attr("class", "line")
          .style("stroke", "#ccc")
-         .style("stroke-opacity", "0.7")
+        //  .style("stroke-opacity", "0.7")
+         .style("stroke-opacity", "1")
          .style("stroke-width", "2px")
          .attr("transform", "translate(" + (cfg.w/2-levelFactor) + ", " + (cfg.h/2-levelFactor) + ")");
 
@@ -241,7 +242,7 @@ function drawRadar(data, if_100){
 	// .range(["#0000FF","#b3cde3","#ccebc5","#decbe4","#fed9a6","#e5d8bd", '#cccccc']);
 
 	//Legend titles
-	var LegendOptions = ['OUR', 'ISRW', 'TIES', 'SRW', 'RES', 'RJ', 'RNS'];
+	var LegendOptions = ['ISRW', 'TIES', 'SRW', 'RES', 'RJ', 'RNS'];
 	var colorscale =d3.scaleOrdinal()
 	.range(['#0000FF','#BEBDFF','#8CBA68','#D2E600','#F66493', '#DA7C69','#AB5B80'])
 	//Data
@@ -325,7 +326,42 @@ function read_pgData(rate){
                         d3.json("/data_forSystem/" + dataName + "/sort/" + FILE_name + "ave" + namelist[6] + "sort.json", function (RES) {
                             d3.json("/data_forSystem/" + dataName + "/sort/" + FILE_name + "ave" + namelist[7] + "sort.json", function (TIES) {
 								pg_data_List = [ISRW,TIES,SRW,RES,RJ,RNS, OUR]
-								// pg_data_List = [OUR]
+								// if(sample_name == 'OUR'){
+								// 	pg_data_List = [OUR]
+								// 	colorscale =d3.scaleOrdinal()
+								// 	.range(['#0000FF'])
+								// }
+								// else if(sample_name == 'ISRW'){
+								// 	pg_data_List = [ISRW]
+								// 	colorscale =d3.scaleOrdinal()
+								// 	.range(['#BEBDFF','#8CBA68','#D2E600','#F66493', '#DA7C69','#AB5B80','#0000FF'])
+								// }
+								// else if(sample_name == 'TIES'){
+								// 	pg_data_List = [TIES]
+								// 	colorscale =d3.scaleOrdinal()
+								// 	.range(['#8CBA68','#D2E600','#F66493', '#DA7C69','#AB5B80','#0000FF'])
+								// }
+								// else if(sample_name == 'SRW'){
+								// 	pg_data_List = [SRW]
+								// 	colorscale =d3.scaleOrdinal()
+								// 	.range(['#D2E600','#F66493', '#DA7C69','#AB5B80','#0000FF'])
+								// }
+								// else if(sample_name == 'RES'){
+								// 	pg_data_List = [RES]
+								// 	colorscale =d3.scaleOrdinal()
+								// 	.range(['#F66493', '#DA7C69','#AB5B80','#0000FF'])
+								// }
+								// else if(sample_name == 'RJ'){
+								// 	pg_data_List = [RJ]
+								// 	colorscale =d3.scaleOrdinal()
+								// 	.range([ '#DA7C69','#AB5B80','#0000FF'])
+								// }
+								// else if(sample_name == 'RNS'){
+								// 	pg_data_List = [RNS]
+								// 	colorscale =d3.scaleOrdinal()
+								// 	.range(['#AB5B80','#0000FF'])
+								// }
+								
 								radar_data(rate)
                             })
                         })

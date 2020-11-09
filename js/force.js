@@ -38,6 +38,8 @@ app.renderer.backgroundColor = 0xffffff;
 let f_nodes = [];
 let f_links = [];
 
+
+//4 -1200 -1000
 var scaleAll_xy = 4;//整体缩放
 var moveAll_x = -1200;//整体x移动
 var moveAll_y = -1000;//整体y移动
@@ -57,6 +59,7 @@ function drawforce(){
         // f_links = datas['edges'];
         f_links = datas['edges'];
 
+        
         set_Ori_nodeNum(f_nodes.length);
         set_Ori_edgeNum(f_links.length);
 
@@ -448,10 +451,11 @@ function temp_draw_community(){
 
                 //superNode
                 d3.selectAll('.community').attr('fill', '#ccc')
-                for(let i=0 ;i< color_list_svg.length; i++){
-                    let xx = community_to_color[i]
-                    if(sx(data_name) == 'WW') xx = WW_community_color(i);
-                    d3.select('#community_' + i).attr('fill', color_list_svg[xx])
+                for(let i=0 ;i< 71; i++){
+                    // let xx = community_to_color[i]
+                    xx = WW_community_color(i);
+                    d3.select('#community_' + i).attr('fill', color_list_svg[xx-1]);
+                    if(xx == 0)d3.select('#community_' + i).attr('fill', '#ccc');
                 }
         })
 
@@ -619,16 +623,8 @@ function draw_connection(){
     reflash();
     file_path = connection_file_name
     rate = pg_sample_rate
-    d3.json(file_path, function(connnectionData){
 
-        var color_list = [
-            0x035F93, 0x546BFB,0x54A8FE,0x00B5F1,0xBEBDFF,0x8CBA68,0xD2E600,
-            0xFED9EF,0xF66493, 0xDA7C69, 0xDC2A07,0xFF3F3F,0xE942CC,0xAB5B80
-        ]
-        var color_list_svg = ['#035F93', '#546BFB',"#00B5F1",'#BEBDFF','#8CBA68','#D2E600',
-            '#FED9EF','#F66493',  '#FF3F3F','#AB5B80'];
-
-        var community_to_color = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+    if(sample_name == 'OUR'){    
 
         d3.json(force_file_name, function(force_datas){
                 let temp_datas = force_datas['nodes'];
@@ -641,67 +637,20 @@ function draw_connection(){
                 circles_choose.clear();
                 circles_choose_change_color.clear();
 
-
-                var connnection_Dict_Data = connnectionData[rate]
-                for(let connnectionNum in connnection_Dict_Data){
-                    console.log(connnectionNum)
-                    connectionList = connnection_Dict_Data[connnectionNum]
-                    for(let i in connectionList){
-                        node = connectionList[i]
-                        if(node in datas){
-                            const now_x = datas[node].x
-                            const now_y = datas[node].y
-                            if (parseInt(connnectionNum) >= community_to_color.length - 1){
-                                d3.select('#tsne_circle_' + node).attr('fill',  '#ccc');
-                                circles_choose_change_color.beginFill(0xcccccc);
-                                circles_choose_change_color.drawCircle(now_x,now_y, force_circle_r);
-                                circles_choose_change_color.lineStyle(0.1, 0x050505, 0.7);
-                                circles_choose_change_color.endFill();
-                            }
-                            else{
-                                console.log(color_list[0])
-                                d3.select('#tsne_circle_' + node).attr('fill', color_list_svg[parseInt(connnectionNum)]);
-                                circles_choose_change_color.beginFill(color_list[parseInt(connnectionNum)]);
-                                circles_choose_change_color.drawCircle(now_x,now_y, force_circle_r);
-                                circles_choose_change_color.lineStyle(0.1, 0x050505, 0.7);
-                                circles_choose_change_color.endFill();
-                            }
-                        }
-                        else{
-                            console.log(node)
-                        }
-                    }
-                    app.stage.addChild(circles_choose_change_color);
+                for(let node in datas){
+                    
+                    const now_x = datas[node].x
+                    const now_y = datas[node].y
+                    d3.select('#tsne_circle_' + node).attr('fill',  '#546BFB');
+                    circles_choose_change_color.beginFill(0x546BFB);
+                    circles_choose_change_color.drawCircle(now_x,now_y, force_circle_r);
+                    circles_choose_change_color.lineStyle(0.1, 0x050505, 0.7);
+                    circles_choose_change_color.endFill();
                     
                 }
-
-
-                // for(let node in  datas)
-                // {
-                //     const now_x = (datas[node].x);
-                //     const now_y = (datas[node].y);
-                //     // d3.select("#tsne_node_"+ node).style("fill",color_list[community_num_data[node]]);
-                //     if (community_num_data[node] >= community_to_color.length - 1){
-                //         console.log(community_num_data[node])
-                //         d3.select('#tsne_circle_' + node).attr('fill',  '#ccc');
-                //         circles_choose_change_color.beginFill(0xcccccc);
-                //         circles_choose_change_color.drawCircle(now_x,now_y, force_circle_r);
-                //         circles_choose_change_color.lineStyle(0.1, 0x050505, 0.7);
-                //         circles_choose_change_color.endFill();
-                //     }
-                //     else{
-                //         d3.select('#tsne_circle_' + node).attr('fill', color_list_svg[community_to_color[community_num_data[node]]]);
-                //         circles_choose_change_color.beginFill(color_list[community_to_color[community_num_data[node]]]);
-                //         circles_choose_change_color.drawCircle(now_x,now_y, force_circle_r);
-                //         circles_choose_change_color.lineStyle(0.1, 0x050505, 0.7);
-                //         circles_choose_change_color.endFill();
-                //     }
-                // }
-                // app.stage.addChild(circles_choose_change_color);
-                
-
-
-        //图例
+                app.stage.addChild(circles_choose_change_color);
+                    
+            //图例
         const colorBar_width = 600;
         const colorBar_height = 80;
 
@@ -731,7 +680,124 @@ function draw_connection(){
                             })
                             .attr('y', 0);
         })
-    })
+    }
+    else{
+        d3.json(file_path, function(connnectionData){
+
+            var color_list = [
+                0x035F93, 0x546BFB,0x54A8FE,0x00B5F1,0xBEBDFF,0x8CBA68,0xD2E600,
+                0xFED9EF,0xF66493, 0xDA7C69, 0xDC2A07,0xFF3F3F,0xE942CC,0xAB5B80
+            ]
+            var color_list_svg = ['#035F93', '#546BFB',"#00B5F1",'#BEBDFF','#8CBA68','#D2E600',
+                '#FED9EF','#F66493',  '#FF3F3F','#AB5B80'];
+
+            var community_to_color = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+
+            d3.json(force_file_name, function(force_datas){
+                    let temp_datas = force_datas['nodes'];
+                    let temp_edges = force_datas['edges'];
+                    let datas = {};
+                    for(let key in temp_datas){
+                        data_id = temp_datas[key]['id'];
+                        datas[data_id] = temp_datas[key];
+                    }
+                    circles_choose.clear();
+                    circles_choose_change_color.clear();
+
+
+                    var connnection_Dict_Data = connnectionData[rate]
+                    for(let connnectionNum in connnection_Dict_Data){
+                        console.log(connnectionNum)
+                        connectionList = connnection_Dict_Data[connnectionNum]
+                        for(let i in connectionList){
+                            node = connectionList[i]
+                            if(node in datas){
+                                const now_x = datas[node].x
+                                const now_y = datas[node].y
+                                if (parseInt(connnectionNum) >= community_to_color.length - 1){
+                                    d3.select('#tsne_circle_' + node).attr('fill',  '#ccc');
+                                    circles_choose_change_color.beginFill(0xcccccc);
+                                    circles_choose_change_color.drawCircle(now_x,now_y, force_circle_r);
+                                    circles_choose_change_color.lineStyle(0.1, 0x050505, 0.7);
+                                    circles_choose_change_color.endFill();
+                                }
+                                else{
+                                    console.log(color_list[0])
+                                    d3.select('#tsne_circle_' + node).attr('fill', color_list_svg[parseInt(connnectionNum)]);
+                                    circles_choose_change_color.beginFill(color_list[parseInt(connnectionNum)]);
+                                    circles_choose_change_color.drawCircle(now_x,now_y, force_circle_r);
+                                    circles_choose_change_color.lineStyle(0.1, 0x050505, 0.7);
+                                    circles_choose_change_color.endFill();
+                                }
+                            }
+                            else{
+                                console.log(node)
+                            }
+                        }
+                        app.stage.addChild(circles_choose_change_color);
+                        
+                    }
+
+
+                    // for(let node in  datas)
+                    // {
+                    //     const now_x = (datas[node].x);
+                    //     const now_y = (datas[node].y);
+                    //     // d3.select("#tsne_node_"+ node).style("fill",color_list[community_num_data[node]]);
+                    //     if (community_num_data[node] >= community_to_color.length - 1){
+                    //         console.log(community_num_data[node])
+                    //         d3.select('#tsne_circle_' + node).attr('fill',  '#ccc');
+                    //         circles_choose_change_color.beginFill(0xcccccc);
+                    //         circles_choose_change_color.drawCircle(now_x,now_y, force_circle_r);
+                    //         circles_choose_change_color.lineStyle(0.1, 0x050505, 0.7);
+                    //         circles_choose_change_color.endFill();
+                    //     }
+                    //     else{
+                    //         d3.select('#tsne_circle_' + node).attr('fill', color_list_svg[community_to_color[community_num_data[node]]]);
+                    //         circles_choose_change_color.beginFill(color_list[community_to_color[community_num_data[node]]]);
+                    //         circles_choose_change_color.drawCircle(now_x,now_y, force_circle_r);
+                    //         circles_choose_change_color.lineStyle(0.1, 0x050505, 0.7);
+                    //         circles_choose_change_color.endFill();
+                    //     }
+                    // }
+                    // app.stage.addChild(circles_choose_change_color);
+                    
+
+
+            //图例
+            const colorBar_width = 600;
+            const colorBar_height = 80;
+
+            let rect_width = 20;
+            let rect_height = 20;
+            color_list_svg = ['#035F93', '#546BFB',"#00B5F1",'#BEBDFF','#8CBA68','#D2E600',
+            '#FED9EF','#F66493',  '#FF3F3F','#AB5B80'];
+            var force_colorBar_svg = d3.select('#Force_colorBar')
+                                        .append('svg')
+                                        .attr('id', 'force_colorBar_svg')
+                                        .attr('width', colorBar_width)
+                                        .attr('height', colorBar_height)
+                                        .attr("transform", "translate(0, 20)");
+            
+            force_colorBar_svg.selectAll('colorBar_rect')
+                                .data(color_list_svg)
+                                .enter()                    
+                                .append('rect')
+                                .attr('class', 'colorBar_rect')
+                                .attr('width', rect_width)
+                                .attr('height', rect_height)
+                                .attr('fill', function(d){
+                                    return d;
+                                })
+                                .attr('x', function(d, i){
+                                    return  i*(rect_width+2);
+                                })
+                                .attr('y', 0);
+            })
+        })        
+    }
+
+
 }
 
 

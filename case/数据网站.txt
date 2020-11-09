@@ -1,0 +1,5 @@
+ww			http://networkrepository.com/web-webbase-2001.php
+CH	cit-HepTh		http://snap.stanford.edu/data/cit-HepTh.html
+SSB 			http://snap.stanford.edu/data/soc-sign-bitcoin-otc.html
+ER	er_graph_1k_10k	http://networkrepository.com/er-graph-1k-10k.php
+FPP	fb-pages-politician	http://networkrepository.com/fb-pages-politician.php

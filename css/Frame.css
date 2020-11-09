@@ -12,6 +12,17 @@ body{
     left: 0.5%;
 }
 
+#demo{
+    position: absolute;
+    top: 5%;
+    left: 20%;
+    right: 20%;
+    width: auto;
+    bottom: 5%;
+    margin-top: 2px;
+    background-color: white;
+}
+
 #Left_S{
     position: relative;
     top: 5px;
@@ -42,7 +53,7 @@ body{
     left: 0%;
     right: 0%;
     width: auto;
-    height: 24%;
+    height: 20%;
     margin-top: 2px;
     background-color: white;
 }
@@ -81,7 +92,7 @@ body{
 
 #Left_Control{
     position: absolute;
-    top: 40%;
+    top: 36%;
     bottom: 0%;
     left: 0%;
     right: 0%;
@@ -463,6 +474,11 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple_1{
     position: relative;
     overflow: hidden;
 }

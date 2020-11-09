@@ -274,11 +274,7 @@ function draw_community(fileName){
             //                     .style("font-size", "15px")
             //                     .style('font-weight', 'lighter') 
             //                     // .attr("text-anchor", "middle")
-            //                     .attr("dy", "1em")  
-            
-
-
-
+            //                     .attr("dy", "1em")
 
             // var svg_nodes = svg.selectAll("circle")
             // .data(nodes)

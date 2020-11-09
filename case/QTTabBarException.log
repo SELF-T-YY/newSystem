@@ -1,0 +1,67 @@
+This file was created by QTTabBar for debugging. Sorry for inconvenients. You can delete this without any harm.
+--------------
+
+2020/06/22 18:00:54.1557
+OS ver: 10.0.18363.0
+QT ver: 1040.0
+System.ArgumentException: “0”的值对于“emSize”无效。“emSize”应该大于 0 且小于或等于 System.Single.MaxValue。
+参数名: emSize
+   在 System.Drawing.Font.Initialize(FontFamily family, Single emSize, FontStyle style, GraphicsUnit unit, Byte gdiCharSet, Boolean gdiVerticalFont)
+   在 System.Drawing.Font..ctor(FontFamily family, Single emSize, FontStyle style)
+   在 QTTabBarLib.BreadcrumbsAddressBar.CreateDefaultFont()
+--------------
+
+2020/06/22 18:00:54.2025
+OS ver: 10.0.18363.0
+QT ver: 1040.0
+System.ArgumentOutOfRangeException: InvalidArgument=“0”的值对于“ItemHeight”无效。
+参数名: ItemHeight
+   在 System.Windows.Forms.ComboBox.set_ItemHeight(Int32 value)
+   在 QTTabBarLib.BreadcrumbsAddressBar.InitializeComponentsAfterDesigner()
+   在 QTTabBarLib.BreadcrumbsAddressBar..ctor(Boolean fWindows7)
+   在 QTTabBarLib.QSecondViewBar.InitializeComponent()
+   在 QTTabBarLib.QSecondViewBar..ctor()
+--------------
+
+2020/06/22 18:00:54.2854
+OS ver: 10.0.18363.0
+QT ver: 1040.0
+System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 QTTabBarLib.QSecondViewBar.ProcessStartups1()
+--------------
+
+2020/06/22 18:00:54.3182
+OS ver: 10.0.18363.0
+QT ver: 1040.0
+System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 QTTabBarLib.QSecondViewBar.get_ActiveTab()
+   在 QTTabBarLib.QSecondViewBar.get_IsActiveTabAvailable()
+   在 QTTabBarLib.QSecondViewBar.UpdateView(Boolean fShow)
+Optional information : QTTabBarLib.QThirdViewBar.UpdateView
+--------------
+
+2020/06/22 18:00:54.3594
+OS ver: 10.0.18363.0
+QT ver: 1040.0
+System.ArgumentNullException: 值不能为 null。
+参数名: value
+   在 System.Windows.Forms.ToolStripItemCollection.CheckCanAddOrInsertItem(ToolStripItem value)
+   在 System.Windows.Forms.ToolStripItemCollection.Add(ToolStripItem value)
+   在 System.Windows.Forms.ToolStripItemCollection.AddRange(ToolStripItem[] toolStripItems)
+   在 QTTabBarLib.TabBarBase.InitializeNavButtons(Boolean fSync, Int32 configValue, Boolean fResumeLayout)
+   在 QTTabBarLib.QSecondViewBar.UpdateNavigationControl(Boolean fSyncTravelState)
+   在 QTTabBarLib.QSecondViewBar.ShowDW(Boolean fShow)
+--------------
+
+2020/06/22 18:00:54.4202
+OS ver: 10.0.18363.0
+QT ver: 1040.0
+System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 QTTabBarLib.QSecondViewBar.get_ActiveTab()
+   在 QTTabBarLib.QSecondViewBar.get_IsActiveTabAvailable()
+   在 QTTabBarLib.ExplorerManager.GetViewFromHwnd(IntPtr hwnd)
+   在 QTTabBarLib.ExplorerManager.DispatchMouseMessage(MSG* msg)
+   在 QTTabBarLib.ExplorerManager.GetMsgProc(Int32 nCode, IntPtr wParam, IntPtr lParam)
+Optional information : UnhandledException, Terminating: True
+--------------
+

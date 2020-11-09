@@ -71,3 +71,17 @@ function show_ABD(){
     document.getElementById('button_ABD').style.background = 'white';
     // document.getElementById('button_ABD').style.border = 'none';
 }
+
+function show_APL(){
+    var tableButton = document.getElementsByClassName('button_control_up')
+    document.getElementById('button_CC').style.border = '1px solid rgb(187, 187, 187)';
+    document.getElementById('button_SCC').style.border = '1px solid rgb(187, 187, 187)';
+    document.getElementById('button_QCS').style.border = '1px solid rgb(187, 187, 187)';
+    document.getElementById('button_GCC').style.border = '1px solid rgb(187, 187, 187)';
+    
+    for(var i = 0; i<tableButton.length; i++){
+        tableButton[i].style.background = '#f2f2f2';
+    }
+
+    document.getElementById('button_APL').style.background = 'white';
+}

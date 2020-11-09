@@ -5,6 +5,7 @@ const tsne_circle_color = '#777';
 // const tsne_circle_color = '#000000'
 const tsne_circle_choose_color = '#ff00ff'
 var tsne_circle_r = 2
+var if_show_theBiggestBetweenness = false
 
 // var tsne_filename = "/data_forSystem/cit-HepTh/CH_Tsne.csv";
 // var tsne_filename = "/data_forSystem/block2000/B2_Tsne.csv";
@@ -72,22 +73,6 @@ function draw_tsne(filename){
 
             var container = svg.append('g');
 
-            // var zoom = d3.zoom()
-            //             .on("zoom", zoomed);
-    
-            // function zoomed() {
-            //     console.log(d3.event)
-            //     // if(d3.event.sourceEvent == 'WheelEvent'){
-                    
-            //     // }
-            //     x=d3.event.transform.x;
-            //     y=d3.event.transform.y;
-            //     s=d3.event.scale;
-            //     // container.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ")");
-            //     container.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ") scale(" + d3.event.scale + ")");
-            // }
-
-
             container.append('g')
                 .selectAll('.tsne_circle')
                 .data(tsne_dataset)
@@ -152,7 +137,13 @@ function draw_tsne(filename){
             }
         })
 
-
+        
+        // if(if_show_theBiggestBetweenness){
+        //     show_theBiggestBetweenness();
+        // }
+        // else{
+        //     if_show_theBiggestBetweenness = true;
+        // }
 
     })
 }

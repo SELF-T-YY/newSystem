@@ -1,12 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="/js/pixi.min.js"></script>
-</head>
+<html>
+
 <body>
-    <script src="/js//force.js"></script>
+    <canvas id="myCanvas" width="1500px" height="1500px" style="border:1px solid #d3d3d3;"></canvas>
+
+    <script>
+        function getInterpolatedColor(colorscale, min, max, val) {
+            var maxIndex = colorscale.length - 1,
+                colorIncrement = (max - min) / maxIndex;
+
+            if (colorIncrement === 0) {
+                return 255;
+            }
+
+            var baseColor = Math.floor((val - min) / colorIncrement),
+                percentage = (val - (min + colorIncrement * baseColor)) / colorIncrement;
+            if (percentage > 1.0) {
+                percentage = 0.0;
+                baseColor = baseColor + 1;
+            }
+
+            var color = 255;
+            if ((baseColor >= 0) && (baseColor < (maxIndex))) {
+                color = colorscale[baseColor] +
+                    ((colorscale[baseColor + 1] - colorscale[baseColor]) * percentage);
+            } else {
+                color = (baseColor < 0) ? colorscale[0] : colorscale[maxIndex];
+            }
+
+            return color;
+        }
+
+
+        var canv = document.getElementById('myCanvas'),
+            xSize = 1500,
+            ySize = 1500,
+            count = xSize * ySize,
+            values = new Array(count),
+            min = 101,
+            max = -1;
+
+        for (var i = 0; i < count; ++i) {
+            var val = Math.random() * 100;
+            values[i] = val;
+            if (val > max) max = val;
+            if (val < min) min = val;
+        }
+
+        // #FF0000 #FF8000 #FFFF00 #00FF00 #0000FF #4C007F
+        var rgbScale = {
+            "red": [255, 255, 255, 0, 0, 76],
+            "green": [0, 128, 255, 255, 0, 0],
+            "blue": [0, 0, 0, 0, 255, 127]
+        };
+
+        var ctx = canv.getContext("2d"),
+            id = ctx.getImageData(0, 0, xSize, ySize),
+            data = id.data;
+        for (var xIndex = 0; xIndex < xSize; ++xIndex) {
+            for (var yIndex = 0; yIndex < ySize; ++yIndex) {
+                var index = ((xIndex * ySize) + yIndex),
+                    canvasId = index * 4,
+                    val = values[index] * 1;
+
+                var red = Math.floor(getInterpolatedColor(rgbScale["red"], min, max, val));
+                red = (red > 255) ? 255 : red;
+
+                var green = Math.floor(getInterpolatedColor(rgbScale["green"], min, max, val));
+                green = (green > 255) ? 255 : green;
+
+                var blue = Math.floor(getInterpolatedColor(rgbScale["blue"], min, max, val));
+                blue = (blue > 255) ? 255 : blue;
+
+                data[canvasId + 0] = red;
+                data[canvasId + 1] = green;
+                data[canvasId + 2] = blue;
+                data[canvasId + 3] = 255;
+            }
+        }
+
+        ctx.putImageData(id, 0, 0);
+
+    </script>
 </body>
+
 </html>

@@ -16,6 +16,7 @@
     <script src="/js/function.js"></script>
     <script src="/js/tableButtonClick.js"></script>
     <script src="/js/buttom_gai.js"></script>
+    <script src="/js/heatmap.min.js"></script>
     
 </head>
 <body style="overflow-x: hidden; overflow-y: hidden " class="text_cant_choose">
@@ -36,9 +37,13 @@
                                 <!-- <button id="button-dataSet" class="butto·n_dataSet ripple" value="dataSet" onclick="selectFile()">DataSet</button> -->
                                 <select name="Data_select" id="Left_d" onclick="changeData()">
                                     <option value="Sampling" disabled hidden>Data</option>
-                                    <option value="ieee_visC" selected>&nbsp;&nbsp;&nbsp;Ieeevis</option>
+                                    <option value="ieee_visC" selected>&nbsp;IEEE_VIS</option>
                                     <option value="soc-sign">&nbsp;&nbsp;&nbsp;Bitcoin</option>
                                     <option value="web-webbase-2001">&nbsp;Webbase</option>
+                                    <option value="HepTh">&nbsp;&nbsp;&nbsp;HepTh</option>
+                                    <option value="Facebook">&nbsp; Facebook</option>
+                                    <option value="ER_Graph">&nbsp;ER_Graph</option>
+1
                                 </select>
                             </th>
                             <th class="table bgc">&nbsp;&nbsp;&nbsp;&nbsp;Nodes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
@@ -65,57 +70,13 @@
         <div id="Left_RateSet">
             <div class="mytitle">Control Panel</div>
             <div id="L_1_2" style="line-height:15px">
-                &nbsp;&nbsp;
-                <select name="Left-select" id="Left_S" class="button_common">
-                        <option value="Sampling" selected disabled hidden>Methods</option>
-                        <option value="OUR">OUR</option>
-                        <option value="ISRW">ISRW</option>
-                        <option value="TIES">TIES</option>
-                        <option value="SRW">SRW</option>
-                        <option value="RES">RES</option>
-                        <option value="RJ">RJ</option>
-                        <option value="RNS">RNS</option>
-                </select>
-                <button id="button-sample" class="button_common ripple" value="Sample" onclick="buttom_sample_click()">Sample</button>
-                <button id="button-Reset" class="button_common ripple" value="Reset" onclick="reflash()">Reset</button>    
-                <br><br>
-                &nbsp;&nbsp;&nbsp;Density: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="range" min="0" max="100" value="100" class="range" id="range1" step="5" >
-                <b class="b1">100</b>%
-                <br><br>
-                &nbsp;&nbsp;&nbsp;Betweenness:&nbsp;&nbsp;
-                <input type="range" min="0" max="100" value="0" class="range" id="range2" step="5"> 
-                <b class="b2">0</b>%
-                <br><br>
+
+                <br>
                 &nbsp;&nbsp;&nbsp;Sampling Rate:
                 <input type="range" min="5" max="100" value="100" class="range" id="range3" step="5">
                 <b class="b3" id="b3">100</b>%
                 <br>
                 <script>
-                    var elem1 = document.querySelector('input[id="range1"]');
-                    var elem2 = document.querySelector('input[id="range2"]');
-
-                    var rangeValue1 = function(){
-                        var newValue1 = elem1.value;
-                        var target1 = document.querySelector('.b1');
-                        var target2 = document.querySelector('.b2');
-
-                        target1.innerHTML = newValue1;
-                        target2.innerHTML = 100 - newValue1;
-                        elem2.value = 100 - newValue1;
-                    };
-                    elem1.addEventListener("input", rangeValue1);
-
-                    var rangeValue2 = function(){
-                        var newValue2 = elem2.value;
-                        var target1 = document.querySelector('.b1');
-                        var target2 = document.querySelector('.b2');
-                        target2.innerHTML = newValue2;
-                        target1.innerHTML = 100 - newValue2;
-                        elem1.value = 100 - newValue2;
-                    };
-                    elem2.addEventListener("input", rangeValue2);
-
                     var elem3 = document.querySelector('input[id="range3"]');
                     var rangeValue3 = function(){
                         var newValue3 = elem3.value;
@@ -124,13 +85,25 @@
                     };
                     elem3.addEventListener("input", rangeValue3);
                 </script>
-
-                
+                <br>
+                &nbsp;&nbsp;
+                <select name="Left-select" id="Left_S" class="button_common">
+                    <option value="Sampling" selected disabled hidden>Methods</option>
+                    <!-- <option value="OUR">OUR</option> -->
+                    <option value="ISRW">ISRW</option>
+                    <option value="TIES">TIES</option>
+                    <option value="SRW">SRW</option>
+                    <option value="RES">RES</option>
+                    <option value="RJ">RJ</option>
+                    <option value="RNS">RNS</option>
+                </select>
+                <button id="button-sample" class="button_common ripple" value="Sample" onclick="buttom_sample_click()">Sample</button>
+                <button id="button-Reset" class="button_common ripple_1" value="Reset" onclick="show_theBiggestBetweenness()">Reset</button>    
+                <br>
                 &nbsp;&nbsp;
                 <button id="button-Connection" class="button_common_down ripple" value="Connection" onclick="draw_connection()">Connection</button>
                 <button id="button-Betweenness" class="button_common_down ripple" value="Betweenness" onclick="tsne_betweenness_color()">Betweenness</button>
                 <button id="button-ShowCommunity" class="button_common_down ripple" value="ShowCommunity" onclick="temp_draw_community()">Community</button>
-
             </div>
         </div>
 
@@ -163,14 +136,14 @@
         
         <div id="Right_Force" class="border">
             <div class="mytitle">Node-Link Diagram
-                <!-- <select name="Center_select" id="s2" style="font-size: 15px;" onchange="select2_change()">
-                    <option value="force_origin">Origin</option>
-                    <option value="force_sample">Sample</option>
-                    <option value="force_re">Re</option>
-                </select> -->
+                <select name="Center_select" id="s2" style="font-size: 15px;" onchange="select2_change()">
+                    <option value="force">force</option>
+                    <option value="heatmap">heatmap</option>
+                </select>
             </div>
             <div id="Force">
                 <script src="/js/force.js"></script>
+                <script src="/js/hotmap.js"></script>
                 <div id="back_color"></div>
                 <div id="Force_Botton">
                     <button id="button_move" class="button_force ripple" onclick="button_move_click_on()"></button>
@@ -192,7 +165,7 @@
                     <button id="buttom_tsne_move" class="button_tsne ripple"></button>
                     <button id="buttom_tsne_point_click" class="button_tsne ripple"></button>
                     <button id="buttom_tsne_choose" class="button_tsne ripple" onclick="brush_draw()"></button>
-                    <button id="buttom_tsne_reflash" class="button_tsne ripple" onclick="reflash()"></button>
+                    <button id="buttom_tsne_reflash" class="button_tsne ripple" onclick="show_theBiggestBetweenness()"></button>
                 </div>
             </div>
         </div>
